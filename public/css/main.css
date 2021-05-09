@@ -1623,11 +1623,22 @@
 			}
 
 		}
-
+		.tabs img{
+			height: 45px;
+			margin-left: 30px;
+			cursor: pointer;
+			padding:10px
+		}
 		@media screen and (max-width: 480px) {
 
 			body, input, select, textarea {
 				font-size: 12pt;
+			}
+			.tabs img{
+				height: 27px;
+				margin-left: 30px;
+				cursor: pointer;
+				padding: 0px
 			}
 
 		}
@@ -2000,12 +2011,7 @@
     margin-bottom: 70px;
     margin-top: 50px
 }
-.tabs img{
-    height: 45px;
-    margin-left: 30px;
-    cursor: pointer;
-    padding: 10px
-}
+
 .outcome{
     display: flex;
     margin-top: 0px;

@@ -6,11 +6,29 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="./css/main.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
         <link rel="icon" href="./favicon.png">
+        <script type="text/javascript">
+      
+            function changeTimezone() {
+                    
+                var values = document.getElementsByClassName("date");
+                
+                Object.keys(values).forEach((element) => {
+                    var stillUtc = moment.utc(values[element].innerHTML).toDate();
+                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
+                    values[element].innerHTML = time2;
+
+                })
+          
+                    
+            }
+        </script>
+        
 	</head>
-	<body>
+	<body onload=changeTimezone()>
 
 		<!-- Header -->
 			<header id="header">
@@ -74,7 +92,6 @@
 
                         {{#each outcomes}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
-                            <h3>{{this.docs.timeStart}}</h3>
                             <div style="width:85%">
                                 <div style="padding: 0.6em;">
                                     <h2>{{this.docs.team1}}</h2>
@@ -86,7 +103,7 @@
                                     <h2>Draw</h2>
                                 </div>
                                 <div style="padding: 0.6em;">
-                                    <h2 class="date">{{this.timeStart}}</h2>
+                                    <h2 class="date">{{this.docs.timeStart}}</h2>
                                 </div>
                             </div>
                             {{#each this.docs.option1}} 
@@ -153,6 +170,7 @@
 			<script src="./js/skel.min.js"></script>
 			<script src="./js/util.js"></script>
 			<script src="./js/main.js"></script>
-
+            
+           
 	</body>
 </html>
