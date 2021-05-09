@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Meow</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="./css/main.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+        <link rel="icon" href="./favicon.png">
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="index.html" class="logo"><img src="./logo.png"></a>
+					<nav id="nav">
+						<a href="/">Home</a>
+						<a href="bets">Commands</a>
+                        <a href="tokens">Get Tokens (free!)</a>
+                        <a href="account">Account</a>
+                        
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner" style="padding-bottom: 5em">
+                <div class="landing">
+                    <div class="desc">
+                        <h1>Bet</h1>
+                            <div>
+                            <p style="margin-bottom: 0"><span style="font-weight: bold">Command:</span> !bet &lt;Tokens&gt; &lt;Code&gt;</p>
+                            <p><span style="font-weight: bold">Ex.</span> !bet 500 LIVTOT1</p>
+                        </div>
+                    </div>
+                </div>
+			</section>
+
+		<!-- One -->
+			<section id="one" style="padding-bottom: 5em">
+                <div class="content">
+                    <div class="desc">
+                        <div class="tabs">
+                            <a href="/bets"><img src="./images/football.svg" style="margin-left: 0"></a>
+                            <a href="/betsg"><img src="./images/gamepad.svg"></a>
+                            <a href="/betsbb"><img src="./images/bb.svg" style="border-bottom: 1px solid white"></a>
+                            <!--<a href="/betft"><img src="./images/footbal.svg"></a>-->
+                            <a href="/betsst"><img src="./images/risk.svg"></a>
+                            <a href="/betscr"><img src="./images/bitcoin.svg"></a>
+                            <a href="/casino"><img src="./images/cards.svg"></a>
+                            <a href="/betsq"><img src="./images/q.svg"></a>
+                        </div>
+                        <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Match</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+
+
+                        {{#each outcomes}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+
+
+                        
+                        
+                         <div class="calculator">
+                            <h1>Estimate Winnings</h1>
+                            <form>
+                                <input placeholder="Tokens" style="margin-left: 0"><br/>
+                                <input placeholder="Code"><br/>
+                                <button>Enter</button>
+                            </form>
+                    </div>
+                    </div>
+                </div>
+			</section>
+		
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="flex">
+						<div class="copyright">
+                            &copy; Meow.gg <span style="margin-left: 20px">Terms and Conditions</span><span style="margin-left: 20px">Support@meow.gg</span>
+						</div>
+
+						<ul class="icons">
+							<li><a href="#" class="icon fa-facebook"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+
+		
+			<script src="./js/jquery.min.js"></script>
+			<script src="./js/skel.min.js"></script>
+			<script src="./js/util.js"></script>
+			<script src="./js/main.js"></script>
+
+	</body>
+</html>
