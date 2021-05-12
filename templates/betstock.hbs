@@ -9,8 +9,25 @@
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
         <link rel="icon" href="./favicon.png">
+        <script type="text/javascript">
+      
+            function changeTimezone() {
+                    
+                var values = document.getElementsByClassName("datestock");
+                
+                Object.keys(values).forEach((element) => {
+                    var stillUtc = moment.utc(values[element].innerHTML, 'hh:mm').toDate();
+                    console.log(stillUtc)
+                    var time2 = moment(stillUtc).local().format('hh:mm A');
+                    values[element].innerHTML = time2;
+
+                })
+          
+                    
+            }
+        </script>
 	</head>
-	<body>
+	<body onload=changeTimezone()>
 
 		<!-- Header -->
 			<header id="header">
@@ -56,7 +73,7 @@
                         </div>
                         <h2>Pick which stock will rise the most during the day (from 9:30am to 4pm New York Time)! <br>
                          Stocks Updated every week!</h2><br>
-                         <h2>Place your command between the hours of {{time1}} to {{time2}} in your local time.</h2>
+                         <h2>Place your command between the hours of <span class="datestock">{{time1}}</span> to <span class="datestock">{{time2}}</span> in your local time.</h2>
                         <div style="display: flex;padding: 0.2em;margin-top:40px">
                             
                             <div style="width: 90%;padding: 0.6em;">
