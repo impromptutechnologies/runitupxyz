@@ -121,9 +121,17 @@ app.get('/betsg', async (req, res) => {
 })
 
 app.get('/betscr', async (req, res) => {
+    var day = moment.utc().format('DD')
+    var month = moment.utc().format('MM')
+    var date1 = moment.utc().format(`${parseInt(month)}-${parseInt(day)} 13:30`);
+    var date2 = moment.utc().format(`${parseInt(month)}-${parseInt(day)} 20:00`);
+    var stillUtc = moment.utc(date1).toDate();
+    var stillUtc2 = moment.utc(date2).toDate();
+    var time1 = moment(stillUtc).local().format('hh:mm A');
+    var time2 = moment(stillUtc2).local().format('hh:mm A');
     try{
         const outcomes = await Crypto.find({});
-        res.render('betcrypto', {outcomes:outcomes});
+        res.render('betcrypto', {outcomes:outcomes, time1:time2, time2:time1});
     } catch(err){
         console.log(err);
     }
@@ -141,6 +149,7 @@ app.get('/betsst', async (req, res) => {
     var time2 = moment(stillUtc2).local().format('hh:mm A');
     try{
         const outcomes = await Stock.find({});
+        console.log(stillUtc, stillUtc2, time1, time2)
         res.render('betstock', {outcomes:outcomes, time1:time2, time2:time1});
     } catch(err){
         console.log(err);
