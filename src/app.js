@@ -121,13 +121,9 @@ app.get('/betsg', async (req, res) => {
 })
 
 app.get('/betscr', async (req, res) => {
-    var stillUtc = moment.utc(`13:30`, 'hh:mm A').toDate();
-    var stillUtc2 = moment.utc(`20:00`, 'hh:mm A').toDate();
-    var time1 = moment(stillUtc).local().format('hh:mm A');
-    var time2 = moment(stillUtc2).local().format('hh:mm A');
     try{
         const outcomes = await Crypto.find({});
-        res.render('betcrypto', {outcomes:outcomes, time1:time2, time2:time1});
+        res.render('betcrypto', {outcomes:outcomes, time2:'13:30', time1:'20:00'});
     } catch(err){
         console.log(err);
     }
@@ -135,14 +131,9 @@ app.get('/betscr', async (req, res) => {
 
 
 app.get('/betsst', async (req, res) => {
-    var stillUtc = moment.utc(`13:30`, 'hh:mm A').toDate();
-    var stillUtc2 = moment.utc(`20:00`, 'hh:mm A').toDate();
-    var time1 = moment(stillUtc).local().format('hh:mm A');
-    var time2 = moment(stillUtc2).local().format('hh:mm A');
     try{
         const outcomes = await Stock.find({});
-        console.log(stillUtc2, stillUtc);
-        res.render('betstock', {outcomes:outcomes, time1:time2, time2:time1});
+        res.render('betstock', {outcomes:outcomes, time2:'13:30', time1:'20:00'});
     } catch(err){
         console.log(err);
     }
