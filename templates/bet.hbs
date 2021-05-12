@@ -82,7 +82,7 @@
                                 <h2 style="font-weight: bold">Match</h2>
                             </div>
                             <div style="padding: 0.6em;">
-                                <h2 style="font-weight: bold">Odds</h2>
+                                <h2 style="font-weight: bold">Return</h2>
                             </div>
                             <div style="margin-left:20px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Code</h2>
@@ -90,8 +90,8 @@
                         </div>
 
 
-
-                        {{#each outcomes}}
+                        {{#if outcomes}}
+                            {{#each outcomes}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="width:85%">
                                 <div style="padding: 0.6em;">
@@ -110,13 +110,13 @@
                             {{#each this.docs.option1}} 
                             <div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
                                 </div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
                                 </div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds3}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds3}}x</h2>
                                 </div>
                             </div>
                             <div style="margin-left:10px">
@@ -133,18 +133,19 @@
                             {{/each}} 
                         </div>
                         {{/each}}
-
+                        {{else}}
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Matches</h2>
+                                </div>
+                                </div>
+                            </div>
+                        {{/if}}
+                        
 
                         
                         
-                         <div class="calculator">
-                            <h1>Estimate Winnings</h1>
-                            <form>
-                                <input placeholder="Tokens" style="margin-left: 0"><br/>
-                                <input placeholder="Code"><br/>
-                                <button>Enter</button>
-                            </form>
-                    </div>
+                         
                     </div>
                 </div>
 			</section>

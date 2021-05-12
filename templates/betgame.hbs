@@ -27,6 +27,7 @@
           
                     
             }
+
         </script>
         
 	</head>
@@ -74,20 +75,21 @@
                             <a href="/casino"><img src="./images/cards.svg"></a>
                             <a href="/betsq"><img src="./images/q.svg"></a>
                         </div>
-                        <div style="display: flex;padding: 0.2em;">
+                        
+                        
+
+                         {{#if outcomes}}
+                         <div style="display: flex;padding: 0.2em;">
                             <div style="width: 81%;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Match</h2>
+                                <h2 style="font-weight: bold">CDL league</h2>
                             </div>
                             <div style="padding: 0.6em;">
-                                <h2 style="font-weight: bold">Odds</h2>
+                                <h2 style="font-weight: bold">Return</h2>
                             </div>
                             <div style="margin-left:20px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Code</h2>
                             </div>
                         </div>
-
-
-
                         {{#each outcomes}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="width:85%">
@@ -104,10 +106,10 @@
                             {{#each this.option1}} 
                             <div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
                                 </div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
                                 </div>
                             </div>
                             <div style="margin-left:10px">
@@ -121,18 +123,256 @@
                             {{/each}} 
                         </div>
                         {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">CDL league</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No CDL Matches</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
 
 
-                        
-                        
-                         <div class="calculator">
-                            <h1>Estimate Winnings</h1>
-                            <form>
-                                <input placeholder="Tokens" style="margin-left: 0"><br/>
-                                <input placeholder="Code"><br/>
-                                <button>Enter</button>
-                            </form>
+
+
+
+
+
+                            {{#if outcomesgo}}
+                            <div style="display: flex;padding: 0.2em;margin-top:80px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">CSGO</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        {{#each outcomesgo}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">CSGO</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No CSGO Matches</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+                        {{#if outcomesd}}
+                            <div style="display: flex;padding: 0.2em;margin-top:80px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Dota 2</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        {{#each outcomesd}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Dota 2</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Dota 2 Matches</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+
+
+
+
+
+
+                            {{#if outcomeslol}}
+                            <div style="display: flex;padding: 0.2em;margin-top:80px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">League of Legends</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        {{#each outcomeslol}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">League of Legends</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No League of Legends Matches</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     </div>
+
+
+                        
+        
+                            
+
+
+                        
+                        
+                         
                     </div>
                 </div>
 			</section>
@@ -162,3 +402,4 @@
 
 	</body>
 </html>
+

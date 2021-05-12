@@ -110,8 +110,11 @@ app.get('/betsbb', async (req, res) => {
 app.get('/betsg', async (req, res) => {
     var date = moment.utc().format("MM-DD HH:mm");
     try{
-        const outcomes = await Outcome.find({category:"esports", timeStart: { $gt: date }}).sort({timeStart:1});
-        res.render('betgame', {outcomes:outcomes});
+        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }}).sort({timeStart:1});
+        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }}).sort({timeStart:1});
+        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }}).sort({timeStart:1});
+        const outcomeslol = await Outcome.find({category:"esportsleague", timeStart: { $gt: date }}).sort({timeStart:1});
+        res.render('betgame', {outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol});
     } catch(err){
         console.log(err);
     }
