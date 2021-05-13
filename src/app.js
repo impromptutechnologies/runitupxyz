@@ -14,7 +14,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'https://meow-web.herokuapp.com',
+    baseURL: 'http://meow-web.herokuapp.com',
     clientID: 'w2CVpyrckqpgONLHBJydkIJOEc6W7GSS',
     issuerBaseURL: 'https://meowbot.us.auth0.com'
   };
