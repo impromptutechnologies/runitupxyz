@@ -47,6 +47,10 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
+app.post('/callback', requiresAuth(), async (req, res) => {
+    res.redirect('account')
+})
+
 app.get('/account', requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
     res.render('account', {id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: userProfile.coins});
