@@ -6,6 +6,19 @@ const Outcome = require('./models/outcomeSchema')
 const Casino = require('./models/casinoSchema')
 const Stock = require('./models/stockSchema.js')
 const Crypto = require('./models/cryptoSchema.js')
+const { auth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
+
+
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: 'a long, randomly-generated string stored in env',
+    baseURL: 'https://meow-web.herokuapp.com',
+    clientID: 'w2CVpyrckqpgONLHBJydkIJOEc6W7GSS',
+    issuerBaseURL: 'https://meowbot.us.auth0.com'
+  };
+
 const dirname = __dirname
 require('./db/mongoose')
 const app = express()
@@ -25,40 +38,26 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)*
 //set up static directory
 app.use(express.static(publicdirectory))
+app.use(auth(config));
 
 
 
 app.get('/', (req, res) => {
+    //res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
     res.render('index');
-    /*console.log(moment().format('LT'));
-    console.log(moment.tz("America/New_York"));
-    console.log(moment.tz.guess());
-    newYork.clone().tz("Europe/London");
-    console.log(moment().utcOffset())
+})
 
-    const time = moment().format('LT')
-    console.log(moment(date_to_convert).utc().format("YYYY-MM-DD HH:mm:ss"))*/
-    var day = moment.utc().format('DD')
-    var month = moment.utc().format('MM')
-    var date = moment.utc().format('MM-DD HH:mm');
-    var date1 = moment.utc().format(`${parseInt(month)}-${parseInt(day)} 13:30`);
-    var date2 = moment.utc().format(`${parseInt(month)}-${parseInt(day)} 20:00`);
-    var stillUtc = moment.utc(date1).toDate();
-    var local = moment(stillUtc).local().format('MM-DD HH:mm');
-    var stillUtc2 = moment.utc(date2).toDate();
-    var local2 = moment(stillUtc2).local().format('MM-DD HH:mm');
-    console.log(date1)
-    console.log(date2)
-    console.log(local)
-    console.log(local2)
-    if(date < date1 && date > date2){
-        console.log('hellooooo')
-    }
-    
+app.get('/account', requiresAuth(), async (req, res) => {
+    const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
+    res.render('account', {id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: userProfile.coins});
 })
 
 app.get('', (req, res) => {
     res.render('index')
+})
+
+app.get('/about', (req, res) => {
+    res.render('about')
 })
 
 app.get('/testing', (req, res) => {
@@ -148,7 +147,9 @@ app.get('/casino', async (req, res) => {
     }
 })
 
-app.get('/tokens', async (req, res) => {
+app.get('/tokens',requiresAuth(), async (req, res) => {
+    const userProfile = await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {});
+    await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {coins: userProfile.coins + 10000});
     try{
         res.render('tokens');
     } catch(err){

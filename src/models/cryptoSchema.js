@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const cryptoSchema = new mongoose.Schema({
-   Crypto: { type: String, required: true },
+  Crypto: { type: String, required: true },
   symbol: { type: String, required: true },
+  openPrice: {type: String, required: true},
+  closePrice: {type: String, required: true},
   return: { type: Number, required: true },
   Odds: { type: Number, required: true },
 });
