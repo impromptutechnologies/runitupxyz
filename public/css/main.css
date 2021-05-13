@@ -1623,6 +1623,10 @@
 			}
 
 		}
+		.desc img{
+			height: 49px;
+			margin-bottom: 20px;
+		}
 		.tabs img{
 			height: 45px;
 			margin-left: 30px;
@@ -2066,10 +2070,7 @@
     margin-bottom: 0
     
 }
-.desc img{
-	height: 49px;
-    margin-bottom: 20px;
-}
+
 .outcome h3{
     font-family: 'Quicksand';
     font-weight: 300;
