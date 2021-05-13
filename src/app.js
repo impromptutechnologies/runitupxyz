@@ -16,7 +16,6 @@ const config = {
     secret: 'a long, randomly-generated string stored in env',
     baseURL: 'http://meow-web.herokuapp.com',
     clientID: 'w2CVpyrckqpgONLHBJydkIJOEc6W7GSS',
-    redirectUrl: 'http://meow-web.herokuapp.com/account',
     issuerBaseURL: 'https://meowbot.us.auth0.com'
   };
 
