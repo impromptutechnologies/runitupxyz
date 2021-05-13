@@ -53,7 +53,7 @@ app.post('/callback', requiresAuth(), async (req, res) => {
 
 app.get('/account', requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
-    res.render('account', {id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: userProfile.coins.round(2)});
+    res.render('account', {id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: Math.round(userProfile.coins, 2)});
 })
 
 app.get('', (req, res) => {
