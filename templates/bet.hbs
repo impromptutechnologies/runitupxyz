@@ -65,7 +65,7 @@
                 <div class="content">
                     <div class="desc">
                         <div style="border:1px solid white;padding:14px;padding-top:11px;height:39px">
-                            <h2 style="font-weight: 900;">American Football, Formula 1 and Tennis COMING SOON!</h2>
+                            <h2 style="font-weight: 900;">American Football, Cricket and Tennis COMING SOON!</h2>
 
                         </div>
                         <div class="tabs">
@@ -76,22 +76,24 @@
                             <a href="/betsst"><img src="./images/risk.svg"></a>
                             <a href="/betscr"><img src="./images/bitcoin.svg"></a>
                             <a href="/casino"><img src="./images/cards.svg"></a>
+                            <a href="/premium"><img src="./images/prem.svg"></a>
                             <a href="/betsq"><img src="./images/q.svg"></a>
                         </div>
-                        <div style="display: flex;padding: 0.2em;">
+                        
+
+
+                        {{#if outcomes}}
+                            <div style="display: flex;padding: 0.2em;">
                             <div style="width: 81%;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Match</h2>
+                                <h2 style="font-weight: bold">Premier League</h2>
                             </div>
                             <div style="padding: 0.6em;">
-                                <h2 style="font-weight: bold">Return</h2>
+                                <h2 style="font-weight: bold">Odds</h2>
                             </div>
                             <div style="margin-left:20px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Code</h2>
                             </div>
                         </div>
-
-
-                        {{#if outcomes}}
                             {{#each outcomes}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="width:85%">
@@ -135,13 +137,194 @@
                         </div>
                         {{/each}}
                         {{else}}
-                        <div style="width:85%">
+                        
+                            <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Premier League</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                            </div>
+
+                            <div style="width:85%">
                                 <div style="padding: 0.6em;">
-                                    <h2>No Matches</h2>
+                                    <h2>No Premier League Matches</h2>
                                 </div>
+                        
+                            </div>
+                            
+                        {{/if}}
+
+
+
+
+
+                        {{#if outcomesi}}
+                            <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Other Big Teams</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                            {{#each outcomesi}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>Draw</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.docs.timeStart}}</h2>
                                 </div>
                             </div>
+                            {{#each this.docs.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds3}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code3}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Other Big Teams</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Big Matches</h2>
+                                </div>
+                                </div>
                         {{/if}}
+
+
+
+
+
+
+
+                        {{#if outcomesc}}
+                            <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Champions League</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                            {{#each outcomesc}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>Draw</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.docs.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.docs.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds3}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code3}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;margin-top:50px">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Champions League</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Champions League Matches</h2>
+                                </div>
+                                </div>
+                        {{/if}}
+
+                    </div>
+
+
+
+
+
+
+
+
+
                         
 
                         

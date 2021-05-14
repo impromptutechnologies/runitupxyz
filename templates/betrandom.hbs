@@ -6,28 +6,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="./css/main.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
         <link rel="icon" href="./favicon.png">
-        <script type="text/javascript">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <link rel="icon" href="./favicon.png">
+	<script type="text/javascript">
       
             function changeTimezone() {
                     
-                var values = document.getElementsByClassName("datestock");
+                var values = document.getElementsByClassName("date");
                 
                 Object.keys(values).forEach((element) => {
-                    var stillUtc = moment.utc(values[element].innerHTML, 'hh:mm A').toDate();
+                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
                     console.log(stillUtc)
-                    var time2 = moment(stillUtc).local().format('hh:mm A');
+                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
                     values[element].innerHTML = time2;
+
+            
 
                 })
           
                     
             }
         </script>
+        
 	</head>
 	<body onload=changeTimezone()>
 
@@ -51,10 +55,10 @@
 			<section id="banner" style="padding-bottom: 5em">
                 <div class="landing">
                     <div class="desc">
-                        <h1>Invest</h1>
+                        <h1>Bet</h1>
                             <div>
-                            <p style="margin-bottom: 0"><span style="font-weight: bold">Command:</span> !invcrypto &lt;Tokens&gt; &lt;Symbol&gt;</p>
-                            <p><span style="font-weight: bold">Ex.</span> !invcrypto 500 bitcoin</p>
+                            <p style="margin-bottom: 0"><span style="font-weight: bold">Command:</span> !bet &lt;Tokens&gt; &lt;Code&gt;</p>
+                            <p><span style="font-weight: bold">Ex.</span> !bet 500 LIVTOT1</p>
                         </div>
                     </div>
                 </div>
@@ -70,40 +74,70 @@
                             <a href="/betsbb"><img src="./images/bb.svg"></a>
                             <!--<a href="/betft"><img src="./images/footbal.svg"></a>-->
                             <a href="/betsst"><img src="./images/risk.svg"></a>
-                            <a href="/betscr"><img src="./images/bitcoin.svg" style="border-bottom: 1px solid white"></a>
+                            <a href="/betscr"><img src="./images/bitcoin.svg"></a>
                             <a href="/casino"><img src="./images/cards.svg"></a>
                             <a href="/premium"><img src="./images/prem.svg"></a>
-                            <a href="/betsq"><img src="./images/q.svg"></a>
+                            <a href="/betsq"><img src="./images/q.svg" style="border-bottom: 1px solid white"></a>
                         </div>
-                        <h2>Pick which crypto will rise the most (from 9:30am to 4pm New York Time) and make a 300% return!<br>Updated every week!</h2><br>
-                        <h2>Place your command between the hours of <span class="datestock">{{time1}}</span> to <span class="datestock">{{time2}}</span> in your local time.</h2>
-                        <div style="display: flex;padding: 0.2em;margin-top:40px">
-                            
-                            <div style="width: 90%;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Crypto</h2>
+                        <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Random Event</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Return</h2>
                             </div>
                             <div style="margin-left:20px;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Symbol</h2>
+                                <h2 style="font-weight: bold">Code</h2>
                             </div>
                         </div>
 
-
-
+                        {{#if outcomes}}
                         {{#each outcomes}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
-                            <div style="width:90%">
+                            <div style="width:85%">
                                 <div style="padding: 0.6em;">
-                                    <h2>{{this.Crypto}}</h2>
+                                    <h2>{{this.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.timeStart}}</h2>
                                 </div>
                             </div>
+                            {{#each this.option1}} 
                             <div>
                                 <div style="padding: 0.6em;">
-                                    <h2>{{this.symbol}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
                                 </div>
                             </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
                         </div>
                         {{/each}}
+                        {{else}}
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Matches</h2>
+                                </div>
+                                </div>
+                            </div>
+                            {{/if}}
 
+
+                        
+                        
+                         
                     </div>
                 </div>
 			</section>
