@@ -359,7 +359,7 @@ app.get('/success', requiresAuth(), async (req, res) => {
       "transactions": [{
           "amount": {
               "currency": "USD",
-              "total": "1.99"
+              "total": "2.99"
           }
       }]
     };
