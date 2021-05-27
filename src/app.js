@@ -24,16 +24,18 @@ const config = {
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
     baseURL: 'http://meow-web.herokuapp.com',
-   //baseURL: 'http://localhost:3000',
-    clientID: 'w2CVpyrckqpgONLHBJydkIJOEc6W7GSS',
+    clientID: 'wwH72gzRvTZB6mgXqB60tnc9lgppWShC',
     issuerBaseURL: 'https://meowbot.us.auth0.com'
   };
 
 
 paypal.configure({
-    'mode': 'sandbox', //sandbox or live
-    'client_id': 'AYGEOzs1ivvoOXqHhdoWWZc0KGLUdcZ-YehnqROBBBzzfGeUecNQOcHzbo7CCHnqEw_PNpovgmqhj_d_',
-    'client_secret': 'EAvzD2BzwmUqlTKHTMjDONvk_1CHqFQunsbk8TICaeq21jXBqFB0bkBVBvmwea7zR6uMtfUV6jwNQGlH'
+    'mode': 'live', //sandbox or live
+    //'client_id': 'AYGEOzs1ivvoOXqHhdoWWZc0KGLUdcZ-YehnqROBBBzzfGeUecNQOcHzbo7CCHnqEw_PNpovgmqhj_d_',
+    //'client_secret': 'EAvzD2BzwmUqlTKHTMjDONvk_1CHqFQunsbk8TICaeq21jXBqFB0bkBVBvmwea7zR6uMtfUV6jwNQGlH'
+    'client_id':'AXNiXr4W1Na95IWXtOtd6HBTBXmT4hq8GG-t9DhdeTYFOtRoveoVDWUylWhK4GQg_7YfenJ5t4Ki2StI',
+    'client_secret':'EIt7FQhJhPjvStUB-tp-C8hrbxeerJuLjKEI9Tz_EJwMYDMDiULtq473bnn0HYjTzP_IdzeJwnMlSkOi',
+    
   });
 
 
