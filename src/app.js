@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
     res.render('index');
 })
 
-app.post('/callback', requiresAuth(), async (req, res) => {
+app.get('/callback', requiresAuth(), async (req, res) => {
     res.redirect('account')
 })
 
