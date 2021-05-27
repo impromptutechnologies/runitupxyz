@@ -294,7 +294,7 @@ app.get('/betsq', async (req, res) => {
     }
 })
 
-app.get('/premium', async (req, res) => {
+/*app.get('/premium', async (req, res) => {
     const premCommands = await Prem.find();
     console.log(premCommands)
     try{
@@ -302,7 +302,7 @@ app.get('/premium', async (req, res) => {
     } catch(err){
         console.log(err);
     }
-})
+})*/
 
 
 app.post('/pay', (req, res) => {
