@@ -38,8 +38,9 @@
 					<nav id="nav">
 						<a href="/">Home</a>
 						<a href="bets">Commands</a>
-                        <a href="tokens">Get Tokens (free!)</a>
+                        <a href="tokens">Lootbox</a>
                         <a href="about">About</a>
+                        <a href="/arena">Arena<sub style="font-size: 10px;">soon!</sub></a>
                         <a href="account">Account</a>
                         
 					</nav>
@@ -79,11 +80,85 @@
                             <a href="/premium"><img src="./images/prem.svg"></a>
                             <a href="/betsq"><img src="./images/q.svg"></a>
                         </div>
+
+                        {{#if outcomese}}
+                            <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Euros</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                            {{#each outcomese}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team1}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.docs.team2}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2>Draw</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 class="date">{{this.docs.timeStart}}</h2>
+                                </div>
+                            </div>
+                            {{#each this.docs.option1}} 
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds2}}x</h2>
+                                </div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.odds3}}x</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code2}}</h2>
+                                </div>
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">{{this.Code3}}</h2>
+                                </div>
+                            </div>
+                            {{/each}} 
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="display: flex;padding: 0.2em;">
+                            <div style="width: 81%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Euros</h2>
+                            </div>
+                            <div style="padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Euros Matches</h2>
+                                </div>
+                                </div>
+                        {{/if}}
+
                         
 
 
                         {{#if outcomes}}
-                            <div style="display: flex;padding: 0.2em;">
+                            <div style="display: flex;padding: 0.2em;margin-top:50px">
                             <div style="width: 81%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Premier League</h2>
                             </div>
@@ -138,7 +213,7 @@
                         {{/each}}
                         {{else}}
                         
-                            <div style="display: flex;padding: 0.2em;">
+                            <div style="display: flex;padding: 0.2em;margin-top:50px">
                             <div style="width: 81%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Premier League</h2>
                             </div>
@@ -230,9 +305,9 @@
                             </div>
                         </div>
                         <div style="width:85%">
-                                <div style="padding: 0.6em;">
+                            <div style="padding: 0.6em;">
                                     <h2>No Big Matches</h2>
-                                </div>
+                            </div>
                                 </div>
                         {{/if}}
 
@@ -340,7 +415,7 @@
 				<div class="inner">
 					<div class="flex">
 						<div class="copyright">
-                            &copy; Meow.gg <span style="margin-left: 20px">Terms and Conditions</span><span style="margin-left: 20px">Support@meow.gg</span>
+                            &copy; MEOW <span style="margin-left: 20px">Terms and Conditions</span><span style="margin-left: 20px">Support@meow.gg</span>
 						</div>
 
 						<ul class="icons">

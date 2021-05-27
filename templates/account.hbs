@@ -9,6 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
         <link rel="icon" href="./favicon.png">
+		
 	</head>
 	<body>
 
@@ -19,8 +20,9 @@
 					<nav id="nav">
 						<a href="/">Home</a>
 						<a href="/bets">Commands</a>
-                        <a href="/tokens">Get Tokens (free!)</a>
+                        <a href="/tokens">Lootbox</a>
 						<a href="/about">About</a>
+						<a href="/arena">Arena<sub style="font-size: 10px;">soon!</sub></a>
                         <a href="/account">Account</a>
 					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
@@ -40,18 +42,114 @@
 		<!-- One -->
 			<section id="one" style="padding-bottom: 5em;padding: 3em;
     padding-top: 0em;">
-                <div>
-                    <div class="desc">
-                        <h1 style="font-size: 50px;">{{coins}}</h1>
-                    </div>
-                    <div class="desc">
-                        <h1>Withdraw</h1>
-                    </div>
 
-                    <div class="desc">
+
+
+                <div style="display: flex;max-width:75em;margin:auto">
+                    <div class="desc" style="margin:initial;width:350px;" id="openbets">
+                        <h1 style="font-size: 50px;"><img src='./images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{coins}} <img src='./images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+						<div style="display: flex;padding: 0.2em;">
+                            <div style="width: 61%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+							<div style="margin-left:10px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Amount</h2>
+                            </div>
+                        </div>
+						{{#if userBets}}
+                        {{#each userBets}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="display:flex;width: 100%;">
+                                <div style="padding: 0.6em;width:80%">
+                                    <h2>{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;margin-left:30px;">
+                                    <h2>{{this.betOdds}}</h2>
+                                </div>
+								<div style="padding: 0.6em;margin-left:20px;">
+                                    <h2>{{this.betAmount}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Bets</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+							<div class="desc" style="margin-top:70px">
                         <a href="/logout"><button>Log Out</button></a>
                     </div>
+					</div>
+
+
+					
+
+
+					<div class="desc" style="width:350px;margin:initial;display:none" id="wthdraw">
+                        <h1 style="font-size: 50px;"><img src='./images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{coins}} <img src='./images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+						
+						
+						{{#if userWithdraws}}
+						<div style="display: flex;padding: 0.2em;">
+                            <div style="width: 55%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Tokens</h2>
+                            </div>
+                            <div style="margin-left:5px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Crypto</h2>
+                            </div>
+							<div style="margin-left:10px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Address</h2>
+                            </div>
+                        </div>
+                        {{#each userWithdraws}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="display:flex;width: 92%;white-space: nowrap; overflow:hidden;text-overflow: ellipsis;">
+                                <div style="padding: 0.6em;width:80%">
+                                    <h2>{{this.tokens}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;margin-left:40%;">
+                                    <h2>{{this.crypto}}</h2>
+                                </div>
+								<div style="padding: 0.6em;margin-left:10px;">
+                                    <h2>{{substring this.address}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+						<h1>Withdraw</h1>
+						<p style="margin-top:5px">It will automatically detect the right crypto</p>
+                        <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="display:flex;width: 100%;">
+                                <form action="/auth/withdraw" method="POST">
+									<input type="number" min="10000" max="{{coins}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px" placeholder="Tokens" name="tokens">
+									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" placeholder="Address" name="address">
+									
+									<button style="margin-top:40px" type="submit">Withdraw</button>
+								</form>
+                            </div>
+                        </div>
+                            
+                            {{/if}}
+                        
+					</div>
+
+
+
+						
+                    </div>
+                    
+
+                   
                 </div>
+				 
 			</section>
 		
 
@@ -60,7 +158,7 @@
 				<div class="inner">
 					<div class="flex">
 						<div class="copyright">
-                            &copy; Meow.gg <span style="margin-left: 20px">Terms and Conditions</span><span style="margin-left: 20px">Support@meow.gg</span>
+                            &copy; MEOW <span style="margin-left: 20px">Terms and Conditions</span><span style="margin-left: 20px">Contact@meow.gg</span>
 						</div>
 
 						<ul class="icons">
@@ -77,6 +175,7 @@
 			<script src="./js/util.js"></script>
 			<script src="./js/main.js"></script>
             <script src="./js/addCoins.js"></script>
+			
 
 	</body>
 </html>

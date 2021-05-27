@@ -30,7 +30,7 @@
 	ol, ul {
 		list-style: none;
 	}
-
+	
 	blockquote, q {
 		quotes: none;
 	}
@@ -1623,10 +1623,33 @@
 			}
 
 		}
+		
 		.desc img{
 			height: 49px;
 			margin-bottom: 20px;
 		}
+		.options{
+			list-style-type: none;padding-left:0px
+		}
+		.options li{
+			color:white;
+			font-size: 14px;
+			font-weight: 400;
+			margin-top:18px;
+			padding-left: 0px;
+		}
+		.options img{
+			height:22px;
+			margin-bottom:0;
+			margin-top:17px;
+			padding-right: 10px;
+		}
+		.benefit{
+			display: flex;
+		}
+		
+	
+	
 		.tabs img{
 			height: 45px;
 			margin-left: 30px;
@@ -2013,7 +2036,7 @@
 .calculator form{display: flex}
 .calculator form input{margin-left: 15px;height:auto;width:40%;border-radius:5px;padding:5px;padding-left: 20px;color:white;border:1px solid #e6e6e6;font-size: 1em;background: rgb(26, 33, 42)}
 .calculator form button{margin-left: 15px;border-radius: 5px;height:auto}
-.content{display: flex;margin: auto}
+.content{display: flex;margin: auto;padding: 5px;}
 .tabs{
     display: flex;
     margin-bottom: 70px;
@@ -2062,13 +2085,15 @@
     font-size: 1.1250em
 }
 .desc h3{
-    font-weight: 300;
-    font-size: 0.8em;
+    font-weight: bold;
+    font-size: 1.3em;
     cursor: pointer
 }
 .desc p{
-    color: white;
-    margin-bottom: 0
+    color: #9a9a9a;
+    margin-bottom: 0;
+	font-size: 0.8em;
+	
     
 }
 
@@ -2095,6 +2120,20 @@
 		font-size: 0.9em;
 		font-weight: 600;
 		margin: 0 0 1em 0;
+	}
+
+	.withform{
+		margin-top:25px
+	}
+
+	.withinput{
+		border: 1px solid white;
+    	background: none;
+		height:50px;
+		padding-left:10px;
+		width:250px;
+		color:20px;
+		margin-top:20px
 	}
 
 	input[type="text"],
@@ -2820,8 +2859,11 @@
 			button,
 			.button {
 				padding: 0;
-				width: 180px;
+				width: 110px;
                 
+			}
+			#invbut{
+				width:140px
 			}
             #banner p{
                 width: 97%
@@ -2976,7 +3018,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		background: #5385c1;
+		background:black;
 		color: #d4e0ef;
 		height: 100%;
 		max-width: 80%;
@@ -3061,12 +3103,11 @@
 		background-attachment: fixed;
 		background-repeat: no-repeat;
 		text-align: center;
-		border-top: 0.5em solid #5385c1;
         background-color:rgb(26, 33, 42)
 	}
 
 		#banner h1 {
-			font-size: 3.5em;
+			font-size: 3em;
 			font-weight: 700;
 			color: #fff;
 			line-height: 1em;
