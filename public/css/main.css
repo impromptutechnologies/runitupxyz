@@ -2927,7 +2927,7 @@
 			padding: 0 0.75em;
 			color: inherit;
 			text-decoration: none;
-			font-size: 0.8em;
+			font-size: 0.9em;
 		}
 
 			#header a:hover {
@@ -3117,7 +3117,7 @@
 		}
 
 		#banner p {
-			font-size: 1.2em;
+			font-size: 1.1em;
 			color: rgba(255, 255, 255, 0.55);
 			margin-bottom: 1.75em;
             font-family: 'Quicksand';
