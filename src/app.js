@@ -4,6 +4,8 @@ const hbs = require('hbs')
 const Profile = require('./models/profileSchema')
 const Outcome = require('./models/outcomeSchema')
 const Bet = require('./models/betSchema')
+const Invest = require('./models/investSchema')
+
 const Casino = require('./models/casinoSchema')
 const Stock = require('./models/stockSchema.js')
 const Prem = require('./models/premSchema.js')
@@ -74,12 +76,18 @@ app.get('/', (req, res) => {
 app.get('/callback', requiresAuth(), async (req, res) => {
     res.redirect('account')
 })
-
+//requiresAuth(), 
 app.get('/account', requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
     const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
+    const userInvests = await Invest.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
     const userWithdraws = await Withdraw.find({userID:(req.oidc.user.sub).substring(15, 34)});
-    res.render('account', {userWithdraws:userWithdraws, userBets: userBets, id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: Math.round(userProfile.coins, 2)});
+    /*const userProfile = await Profile.findOne({userID:'834304396673679411'});
+    const userBets = await Bet.find({creatorID:'834304396673679411'});
+    const userInvests = await Invest.find({creatorID:'834304396673679411'});
+    const userWithdraws = await Withdraw.find({userID:'834304396673679411'});
+    res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID});*/
+    res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: Math.round(userProfile.coins, 2)});
 })
 
 app.post('/auth/withdraw', requiresAuth(), async (req, res) => {

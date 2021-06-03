@@ -48,7 +48,9 @@
                 <div style="display: flex;max-width:75em;margin:auto">
                     <div class="desc" style="margin:initial;width:350px;" id="openbets">
                         <h1 style="font-size: 50px;"><img src='./images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{coins}} <img src='./images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+                        <h1>Bets</h1>
 						<div style="display: flex;padding: 0.2em;">
+                            
                             <div style="width: 61%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Code</h2>
                             </div>
@@ -79,6 +81,45 @@
                         <div style="width:85%">
                                 <div style="padding: 0.6em;">
                                     <h2>No Bets</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+                        
+                        <h1>Invests</h1>
+
+						<div style="display: flex;padding: 0.2em;">
+                            
+                            <div style="width: 61%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Odds</h2>
+                            </div>
+							<div style="margin-left:10px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Amount</h2>
+                            </div>
+                        </div>
+						{{#if userInvests}}
+                        {{#each userInvests}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="display:flex;width: 100%;">
+                                <div style="padding: 0.6em;width:80%">
+                                    <h2>{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;margin-left:30px;">
+                                    <h2>3</h2>
+                                </div>
+								<div style="padding: 0.6em;margin-left:20px;">
+                                    <h2>{{this.investAmount}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Invests</h2>
                                 </div>
                                 </div>
                             
@@ -138,6 +179,8 @@
                         </div>
                             
                             {{/if}}
+                            <br>
+                            
                         
 					</div>
 
