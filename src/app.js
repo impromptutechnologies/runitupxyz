@@ -380,7 +380,7 @@ app.get('/success', requiresAuth(), async (req, res) => {
           } else{
             console.log(userProfile.payments);
             userProfile.payments.push(payment.id);
-            userProfile.coins = coins + 50000;
+            userProfile.coins = coins + 17645;
             userProfile.save();
             console.log(JSON.stringify(payment));
             return res.redirect('/tokens');
@@ -392,9 +392,9 @@ app.get('/success', requiresAuth(), async (req, res) => {
 });
 //http://localhost:3000/success?paymentId=PAYID-MCTGALA8RU97999DG733233M&token=EC-2S019337SL9149211&PayerID=SVRZHYJRDPUJ8
 /*requiresAuth(),*/
-app.get('/tokens', async (req, res) => {
+app.get('/tokens',requiresAuth(), async (req, res) => {
     //const userProfile = await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {});
-    //await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {coins: userProfile.coins + 10000});
+    //await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {coins: userProfile.coins + 17337});
     try{
         res.render('tokens');
     } catch(err){
