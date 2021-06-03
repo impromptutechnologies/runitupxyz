@@ -392,7 +392,7 @@ app.get('/success', requiresAuth(), async (req, res) => {
 });
 //http://localhost:3000/success?paymentId=PAYID-MCTGALA8RU97999DG733233M&token=EC-2S019337SL9149211&PayerID=SVRZHYJRDPUJ8
 /*requiresAuth(),*/
-app.get('/tokens',requiresAuth(), async (req, res) => {
+app.get('/tokens', async (req, res) => {
     //const userProfile = await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {});
     //await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {coins: userProfile.coins + 10000});
     try{
