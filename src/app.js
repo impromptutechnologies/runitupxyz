@@ -109,23 +109,56 @@ app.post('/auth/withdraw', requiresAuth(), async (req, res) => {
         {userID: (req.oidc.user.sub).substring(15, 34), crypto: "bitcoin" , tokens: req.body.tokens, address: req.body.address}
         );
     }
-
-    
-    //const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
-    //const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
     res.redirect('/account');
 })
+
+app.post('/auth/addodd', async (req, res) => {
+    console.log(req.body.outcomeID, req.body.odd1, req.body.odd2);
+    const update = await Outcome.findOneAndUpdate({outcomeID: req.body.outcomeID}, {'option1.0.odds':req.body.odd1, 'option1.0.odds2':req.body.odd2});
+    console.log(update);
+    res.redirect('/adminpanel');
+})
+
+
+app.post('/auth/timestart', async (req, res) => {
+    const update = await Outcome.findOneAndUpdate({outcomeID: req.body.outcomeID}, {timeStart: req.body.timeStart});
+    console.log(update);
+    res.redirect('/adminpanel');
+})
+
+
+app.get('/adminpanel', async (req, res) => {
+    //(req.oidc.user.sub).substring(15, 34)
+    //requiresAuth(),
+    var date = moment.utc().format("MM-DD HH:mm");
+    if(2*2 == 4){
+        console.log('hello');
+        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
+        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
+        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
+        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
+        const basketball = await Outcome.find({category:"basketball", timeStart:{$regex : ".*20:30.*"}});
+        res.render('adminpanel', {outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol, basketball:basketball})
+    }
+    else{
+        console.log('no can do')
+        res.redirect('/')
+    }
+    
+})
+
 
 app.get('', (req, res) => {
     res.render('index')
 })
 
-app.get('/about', (req, res) => {
-    res.render('about')
-})
 
 app.get('/testing', (req, res) => {
     res.send('testing')
+})  
+
+app.get('/about', (req, res) => {
+    res.render('about')
 })  
 
 app.get('/arena', (req, res) => {
@@ -398,21 +431,15 @@ app.get('/success', requiresAuth(), async (req, res) => {
     });
 
 });
-//http://localhost:3000/success?paymentId=PAYID-MCTGALA8RU97999DG733233M&token=EC-2S019337SL9149211&PayerID=SVRZHYJRDPUJ8
-/*requiresAuth(),*/
+
 app.get('/tokens',requiresAuth(), async (req, res) => {
-    //const userProfile = await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {});
-    //await Profile.findOneAndUpdate({userID:(req.oidc.user.sub).substring(15, 34)}, {coins: userProfile.coins + 17337});
     try{
         res.render('tokens');
     } catch(err){
         console.log(err);
     }
 })
-/*
-app.get('/tokens', (req, res) => {
-    res.render('tokens')
-})
+
 
 app.get('*', (req, res) => {
     res.render('404', {
@@ -420,7 +447,7 @@ app.get('*', (req, res) => {
         message: 'HOPELESSLY LOST'
     })
 })
-*/
+
 
 app.listen(port, () => {
     console.log('server running port' + port)

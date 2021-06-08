@@ -1,0 +1,195 @@
+<style>
+    h1{
+        font-size:20px;
+    }
+    h2{
+        font-size: 17px;
+    }
+    h3{
+        font-size: 13px;
+    }
+</style>
+<h1>To fill in odds manually</h1>
+<a href="https://oddspedia.com/call-of-duty/world/cdl" target="_blank"><p>go here for Cod Games</p></a>
+<a href="https://oddspedia.com/league-of-legends" target="_blank"><p>go here for LOL Games</p></a>
+<a href="https://oddspedia.com/dota-2" target="_blank"><p>go here for Dota Games</p></a>
+<a href="https://oddspedia.com/counter-strike-global-offensive" target="_blank"><p>go here for CSGO Games</p></a>
+
+<form action="/auth/addodd" method="POST">
+  <input placeholder="outcomeID" name="outcomeID"/>
+  <input placeholder="odd1" name="odd1"/>
+  <input placeholder="odd2" name="odd2"/>
+  <button type="submit">Enter</button>
+</form>
+<h1 style="margin-top:100px">Cod Games</h1>
+{{#if outcomes}}
+<hr>
+
+  {{#each outcomes}}
+
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display:flex">
+        <div style="padding: 0.6em;">
+          <h3>{{this.outcomeID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team1}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team2}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.timeStart}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Big Cod</h2>
+    </div>
+  </div>
+{{/if}}
+
+<h1 style="margin-top:100px">Lol Games</h1>
+{{#if outcomeslol}}
+
+  {{#each outcomeslol}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.outcomeID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team1}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team2}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.timeStart}}</h3>
+        </div>
+      </div>
+    </div>
+        <hr>
+
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Big League of Legends Matches</h2>
+    </div>
+  </div>
+{{/if}}
+
+<h1 style="margin-top:100px">CSGO Games</h1>
+{{#if outcomesgo}}
+
+  {{#each outcomesgo}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.outcomeID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team1}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team2}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.timeStart}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No CSGO Matches</h2>
+    </div>
+  </div>
+{{/if}}
+
+<h1 style="margin-top:100px">Dota Games</h1>
+{{#if outcomesd}}
+
+  {{#each outcomesd}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.outcomeID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team1}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team2}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.timeStart}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Big Dota Matches</h2>
+    </div>
+  </div>
+{{/if}}
+<br />
+
+
+
+<h1 style="margin-top:100px">Sus Basketball Games</h1>
+<p>If the time is 20:00 most likely the API guys fucked up.</p>
+
+<form action="/auth/timestart" method="POST">
+  <input placeholder="outcomeID" name="outcomeID"/>
+  <input placeholder="timestart" name="timeStart"/>
+  <button type="submit">Enter</button>
+</form>
+{{#if basketball}}
+
+  {{#each basketball}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.outcomeID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team1}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.team2}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.timeStart}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Basketball Matches</h2>
+    </div>
+  </div>
+{{/if}}
