@@ -25,7 +25,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'https://getmeow.gg',
+    baseURL: 'https://getmeow.gg/',
     clientID: 'wwH72gzRvTZB6mgXqB60tnc9lgppWShC',
     issuerBaseURL: 'https://meowbot.us.auth0.com'
   };
@@ -121,6 +121,7 @@ app.post('/auth/addodd', async (req, res) => {
 
 
 app.post('/auth/timestart', async (req, res) => {
+    console.log(req.body.outcomeID, req.body.odd1, req.body.odd2);
     const update = await Outcome.findOneAndUpdate({outcomeID: req.body.outcomeID}, {timeStart: req.body.timeStart});
     console.log(update);
     res.redirect('/adminpanel');
@@ -359,8 +360,8 @@ app.post('/pay', (req, res) => {
           "payment_method": "paypal"
       },
       "redirect_urls": {
-          "return_url": "https://meow-web.herokuapp.com/success",
-          "cancel_url": "https://meow-web.herokuapp.com/cancel"
+          "return_url": "https://getmeow.gg/success",
+          "cancel_url": "https://getmeow.gg/cancel"
       },
       "transactions": [{
           "item_list": {
