@@ -156,12 +156,14 @@
 <h1 style="margin-top:100px">Sus Basketball Games</h1>
 <p>If the time is 20:00 most likely the API guys fucked up.</p>
 
+
+{{#if basketball}}
 <form action="/auth/timestart" method="POST">
   <input placeholder="outcomeID" name="outcomeID"/>
   <input placeholder="timestart" name="timeStart"/>
+   <input placeholder="timeend" name="timeEnd"/>
   <button type="submit">Enter</button>
 </form>
-{{#if basketball}}
 
   {{#each basketball}}
     <div
@@ -188,6 +190,118 @@
   <div style="width:85%">
     <div style="padding: 0.6em;">
       <h2>No Basketball Matches</h2>
+    </div>
+  </div>
+{{/if}}
+
+
+
+
+<h1 style="margin-top:100px">Bitcoin Withdrawals</h1>
+
+
+{{#if withdrawals}}
+<form action="/auth/withdrawdelete" method="POST">
+  <input placeholder="userID" name="userID"/>
+  <button type="submit">Enter</button>
+</form>
+
+  {{#each withdrawals}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.userID}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.crypto}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.tokens}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3 class="date">{{this.address}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Withdrawals</h2>
+    </div>
+  </div>
+{{/if}}
+
+
+
+
+<h1 style="margin-top:100px">Change Crypto and Bitcoin</h1>
+
+
+{{#if stocks}}
+<form action="/auth/changestock" method="POST">
+  <input placeholder="Original" name="tickerorg"/>
+  <input placeholder="New" name="tickernew"/>
+  <input placeholder="Company" name="company"/>
+  <button type="submit">Enter</button>
+</form>
+
+  {{#each stocks}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.ticker}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.company}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Stocks</h2>
+    </div>
+  </div>
+{{/if}}
+
+
+
+{{#if cryptos}}
+
+<form action="/auth/changecrypto" method="POST" style="margin-top:50px">
+  <input placeholder="Original" name="symbolorg"/>
+  <input placeholder="New" name="symbolnew"/>
+  <input placeholder="Crypto" name="crypto"/>
+  <button type="submit">Enter</button>
+</form>
+
+  {{#each cryptos}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.symbol}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.Crypto}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Cryptos</h2>
     </div>
   </div>
 {{/if}}

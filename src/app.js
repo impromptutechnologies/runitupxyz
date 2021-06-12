@@ -119,10 +119,28 @@ app.post('/auth/addodd', async (req, res) => {
     res.redirect('/adminpanel');
 })
 
+app.post('/auth/withdrawdelete', async (req, res) => {
+    console.log(req.body.userID);
+    const update = await Withdraw.deleteOne({userID: req.body.userID});
+    console.log(update);
+    res.redirect('/adminpanel');
+})
+
 
 app.post('/auth/timestart', async (req, res) => {
-    console.log(req.body.outcomeID, req.body.odd1, req.body.odd2);
-    const update = await Outcome.findOneAndUpdate({outcomeID: req.body.outcomeID}, {timeStart: req.body.timeStart});
+    const update = await Outcome.findOneAndUpdate({outcomeID: req.body.outcomeID}, {timeStart: req.body.timeStart, timeEnd: req.body.timeEnd});
+    console.log(update);
+    res.redirect('/adminpanel');
+})
+
+app.post('/auth/changestock', async (req, res) => {
+    const update = await Stock.findOneAndUpdate({ticker: req.body.tickerorg}, {ticker: req.body.tickernew, company: req.body.company});
+    console.log(update);
+    res.redirect('/adminpanel');
+})
+
+app.post('/auth/changecrypto', async (req, res) => {
+    const update = await Crypto.findOneAndUpdate({symbol: req.body.symbolorg}, {symbol: req.body.symbolnew, Crypto: req.body.crypto});
     console.log(update);
     res.redirect('/adminpanel');
 })
@@ -138,8 +156,11 @@ app.get('/adminpanel', async (req, res) => {
         const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
         const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
         const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
-        const basketball = await Outcome.find({category:"basketball", timeStart:{$regex : ".*20:30.*"}});
-        res.render('adminpanel', {outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol, basketball:basketball})
+        const basketball = await Outcome.find({category:"basketball", timeStart:{$regex : ".*20:00.*"}});
+        const userWithdraws = await Withdraw.find({});
+        const stocks = await Stock.find({});
+        const cryptos = await Crypto.find({});
+        res.render('adminpanel', {stocks:stocks, cryptos:cryptos, outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol, basketball:basketball, withdrawals: userWithdraws})
     }
     else{
         console.log('no can do')
@@ -443,10 +464,7 @@ app.get('/tokens',requiresAuth(), async (req, res) => {
 
 
 app.get('*', (req, res) => {
-    res.render('404', {
-        title: 'NO WORDS....',
-        message: 'HOPELESSLY LOST'
-    })
+    res.render('404')
 })
 
 
