@@ -5,7 +5,6 @@ const Profile = require('./models/profileSchema')
 const Outcome = require('./models/outcomeSchema')
 const Bet = require('./models/betSchema')
 const Invest = require('./models/investSchema')
-
 const Casino = require('./models/casinoSchema')
 const Stock = require('./models/stockSchema.js')
 const Prem = require('./models/premSchema.js')
@@ -69,8 +68,11 @@ hbs.registerHelper('substring', function (aString) {
 
 
 app.get('/', (req, res) => {
-    //res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
     res.render('index');
+})
+
+app.get('/loaderio-f5eb4b9349534dcaf4b4faa8680b82be', (req, res) => {
+    res.send('loaderio-f5eb4b9349534dcaf4b4faa8680b82be');
 })
 
 app.get('/callback', requiresAuth(), async (req, res) => {
@@ -78,18 +80,15 @@ app.get('/callback', requiresAuth(), async (req, res) => {
 })
 //requiresAuth(), 
 app.get('/account', requiresAuth(), async (req, res) => {
-    console.log((req.oidc.user.sub).substring(15, 34))
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
-    console.log(userProfile);
-    const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
-    const userInvests = await Invest.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
-    const userWithdraws = await Withdraw.find({userID:(req.oidc.user.sub).substring(15, 34)});
-    /*const userProfile = await Profile.findOne({userID:'834304396673679411'});
-    const userBets = await Bet.find({creatorID:'834304396673679411'});
-    const userInvests = await Invest.find({creatorID:'834304396673679411'});
-    const userWithdraws = await Withdraw.find({userID:'834304396673679411'});
-    res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID});*/
-    res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: Math.round(userProfile.coins, 2)});
+    if (userProfile == null){
+        res.render('makeaccount', {profileImage: req.oidc.user.picture, username: req.oidc.user.name});
+    }else{
+        const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
+        const userInvests = await Invest.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
+        const userWithdraws = await Withdraw.find({userID:(req.oidc.user.sub).substring(15, 34)});
+        res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID, profileImage: req.oidc.user.picture, username: req.oidc.user.name, coins: Math.round(userProfile.coins, 2)});
+    }
 })
 
 app.post('/auth/withdraw', requiresAuth(), async (req, res) => {
