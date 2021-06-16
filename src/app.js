@@ -78,6 +78,7 @@ app.get('/callback', requiresAuth(), async (req, res) => {
 })
 //requiresAuth(), 
 app.get('/account', requiresAuth(), async (req, res) => {
+    console.log((req.oidc.user.sub).substring(15, 34))
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
     console.log(userProfile);
     const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
