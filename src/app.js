@@ -79,6 +79,7 @@ app.get('/callback', requiresAuth(), async (req, res) => {
 //requiresAuth(), 
 app.get('/account', requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({userID:(req.oidc.user.sub).substring(15, 34)});
+    console.log(userProfile);
     const userBets = await Bet.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
     const userInvests = await Invest.find({creatorID:(req.oidc.user.sub).substring(15, 34)});
     const userWithdraws = await Withdraw.find({userID:(req.oidc.user.sub).substring(15, 34)});
@@ -146,11 +147,9 @@ app.post('/auth/changecrypto', async (req, res) => {
 })
 
 
-app.get('/adminpanel', async (req, res) => {
-    //(req.oidc.user.sub).substring(15, 34)
-    //requiresAuth(),
+app.get('/adminpanel', requiresAuth(), async (req, res) => {
     var date = moment.utc().format("MM-DD HH:mm");
-    if(2*2 == 4){
+    if((req.oidc.user.sub).substring(15, 34) == '450122601314910208' || (req.oidc.user.sub).substring(15, 34) == '834304396673679411'){
         console.log('hello');
         const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
         const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
