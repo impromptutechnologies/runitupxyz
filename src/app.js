@@ -151,14 +151,14 @@ app.get('/adminpanel', requiresAuth(), async (req, res) => {
     var date = moment.utc().format("MM-DD HH:mm");
     if((req.oidc.user.sub).substring(15, 34) == '450122601314910208' || (req.oidc.user.sub).substring(15, 34) == '834304396673679411'){
         console.log('hello');
-        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
-        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
-        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
-        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1});
-        const basketball = await Outcome.find({category:"basketball", timeStart:{$regex : ".*20:00.*"}});
-        const userWithdraws = await Withdraw.find({});
-        const stocks = await Stock.find({});
-        const cryptos = await Crypto.find({});
+        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1}).lean();
+        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1}).lean();
+        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1}).lean();
+        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':0}).sort({timeStart:1}).lean();
+        const basketball = await Outcome.find({category:"basketball", timeStart:{$regex : ".*20:00.*"}}).lean();
+        const userWithdraws = await Withdraw.find({}).lean();
+        const stocks = await Stock.find({}).lean();
+        const cryptos = await Crypto.find({}).lean();
         res.render('adminpanel', {stocks:stocks, cryptos:cryptos, outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol, basketball:basketball, withdrawals: userWithdraws})
     }
     else{
@@ -194,107 +194,10 @@ app.get('/privacyterm', (req, res) => {
 app.get('/bets', async (req, res) => {
     try{
         var date = moment.utc().format("MM-DD HH:mm");
-        const outcomesp = await Outcome.aggregate([
-            {
-                $match: {
-                    'category': 'soccer',
-                    'league': 'prem',
-                    'timeStart': { $gt: date },
-                    'option1.0.odds':{ $gt: 0 }
-                }
-            },{
-                $group: {
-                    _id: '$outcomeID',
-                    "docs": {
-                        $first: {
-                            "team1": "$team1",
-                            "team2": "$team2",
-                            "timeStart": "$timeStart",
-                            "timeEnd": "$timeEnd",
-                            "option1": "$option1",
-                        },
-                        
-                    },
-                },
-            },
-            { "$sort": { "docs.timeStart": 1 } },
-        ])
-        const outcomesi = await Outcome.aggregate([
-            {
-                $match: {
-                    'category': 'soccer',
-                    'league': 'rest',
-                    'timeStart': { $gt: date },
-                    'option1.0.odds':{ $gt: 0 }
-                }
-            },{
-                $group: {
-                    _id: '$outcomeID',
-                    "docs": {
-                        $first: {
-                            "team1": "$team1",
-                            "team2": "$team2",
-                            "timeStart": "$timeStart",
-                            "timeEnd": "$timeEnd",
-                            "option1": "$option1",
-                        },
-                        
-                    },
-                },
-            },
-            { "$sort": { "docs.timeStart": 1 } },
-        ])
-        const outcomesc = await Outcome.aggregate([
-            {
-                $match: {
-                    'category': 'soccer',
-                    'league': 'champ',
-                    'timeStart': { $gt: date },
-                    'option1.0.odds':{ $gt: 0 }
-                }
-            },{
-                $group: {
-                    _id: '$outcomeID',
-                    "docs": {
-                        $first: {
-                            "team1": "$team1",
-                            "team2": "$team2",
-                            "timeStart": "$timeStart",
-                            "timeEnd": "$timeEnd",
-                            "option1": "$option1",
-                        },
-                        
-                    },
-                },
-            },
-            { "$sort": { "docs.timeStart": 1 } },
-        ])
-
-        const outcomese = await Outcome.aggregate([
-            {
-                $match: {
-                    'category': 'soccer',
-                    'league': 'euros',
-                    'timeStart': { $gt: date },
-                    'option1.0.odds':{ $gt: 0 }
-                }
-            },{
-                $group: {
-                    _id: '$outcomeID',
-                    "docs": {
-                        $first: {
-                            "team1": "$team1",
-                            "team2": "$team2",
-                            "timeStart": "$timeStart",
-                            "timeEnd": "$timeEnd",
-                            "option1": "$option1",
-                        },
-                        
-                    },
-                },
-            },
-            { "$sort": { "docs.timeStart": 1 } },
-        ])
+        const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
         res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
     } catch(err){
         console.log(err);
@@ -304,7 +207,7 @@ app.get('/bets', async (req, res) => {
 app.get('/betsbb', async (req, res) => {
     var date = moment.utc().format("MM-DD HH:mm");
     try{
-        const outcomes = await Outcome.find({category:"basketball", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1});
+        const outcomes = await Outcome.find({category:"basketball", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean();
         res.render('betbasketball', {outcomes:outcomes});
     } catch(err){
         console.log(err);
@@ -314,10 +217,10 @@ app.get('/betsbb', async (req, res) => {
 app.get('/betsg', async (req, res) => {
     var date = moment.utc().format("MM-DD HH:mm");
     try{
-        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1});
-        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1});
-        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1});
-        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1});
+        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
+        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
+        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
+        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
         res.render('betgame', {outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol});
     } catch(err){
         console.log(err);
@@ -326,7 +229,7 @@ app.get('/betsg', async (req, res) => {
 
 app.get('/betscr', async (req, res) => {
     try{
-        const outcomes = await Crypto.find({});
+        const outcomes = await Crypto.find({}).lean();
         res.render('betcrypto', {outcomes:outcomes, time2:'13:30', time1:'20:00'});
     } catch(err){
         console.log(err);
@@ -336,7 +239,7 @@ app.get('/betscr', async (req, res) => {
 
 app.get('/betsst', async (req, res) => {
     try{
-        const outcomes = await Stock.find({});
+        const outcomes = await Stock.find({}).lean();
         res.render('betstock', {outcomes:outcomes, time2:'13:30', time1:'20:00'});
     } catch(err){
         console.log(err);
@@ -345,7 +248,7 @@ app.get('/betsst', async (req, res) => {
 
 app.get('/casino', async (req, res) => {
     try{
-        const casinoCommands = await Casino.find();
+        const casinoCommands = await Casino.find({}).lean();
         res.render('betcasino', {outcomes:casinoCommands});
     } catch(err){
         console.log(err);
@@ -355,8 +258,8 @@ app.get('/casino', async (req, res) => {
 app.get('/betsq', async (req, res) => {
     try{
         var date = moment.utc().format("MM-DD HH:mm");
-        const outcomes = await Outcome.find({category:"random", timeStart: { $gt: date }}).sort({timeStart:1});
-        res.render('betrandom');
+        const outcomes = await Outcome.find({category:"random", timeStart: { $gt: date }}).sort({timeStart:1}).lean();
+        res.render('betrandom',{outcomes:outcomes} );
     } catch(err){
         console.log(err);
     }
