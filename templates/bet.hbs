@@ -5,35 +5,15 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="./css/main.css" />
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
         <link rel="icon" href="./favicon.png">
-        <script type="text/javascript">
-      
-            function changeTimezone() {
-                    
-                var values = document.getElementsByClassName("date");
-                
-                Object.keys(values).forEach((element) => {
-                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
-                    console.log(stillUtc)
-                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
-                    values[element].innerHTML = time2;
-
-                })
-          
-                    
-            }
-        </script>
+        
         
 	</head>
 	<body onload=changeTimezone()>
-
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="/" class="logo"><img src="./logo.png"></a>
+					<a href="/" class="logo"><img src="./logo.webp"></a>
 					<nav id="nav">
 						<a href="/">Home</a>
 						<a href="bets">Commands</a>
@@ -424,11 +404,31 @@
 				</div>
 			</footer>
 
-		
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+
 			<script src="./js/jquery.min.js"></script>
 			<script src="./js/skel.min.js"></script>
 			<script src="./js/util.js"></script>
-			<script src="./js/main.js"></script>
+            <script src="./js/main.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+            <script type="text/javascript">
+      
+            function changeTimezone() {
+                    
+                var values = document.getElementsByClassName("date");
+                
+                Object.keys(values).forEach((element) => {
+                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
+                    console.log(stillUtc)
+                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
+                    values[element].innerHTML = time2;
+
+                })
+          
+                    
+            }
+        </script>        
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
             
            
 	</body>

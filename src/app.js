@@ -10,6 +10,7 @@ const Stock = require('./models/stockSchema.js')
 const Prem = require('./models/premSchema.js')
 const Withdraw = require('./models/withdrawSchema.js')
 const WAValidator = require("wallet-address-validator")
+var compression = require('compression')
 
 const Crypto = require('./models/cryptoSchema.js')
 const { auth } = require('express-openid-connect');
@@ -61,6 +62,8 @@ app.use(auth(config));
 app.use(express.urlencoded({
     extended: true
   }))
+  app.use(compression())
+
 hbs.registerHelper('substring', function (aString) {
     var theString = (aString.substring(0,5) + "...");
     return new hbs.SafeString(theString)
