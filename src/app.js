@@ -51,6 +51,7 @@ const moment = require('moment-timezone')
 const publicdirectory = path.join(dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates')
 const partialsPath = path.join(__dirname, '../templates/partials')
+const date = moment.utc().format("MM-DD HH:mm");
 
 //handle and views location
 app.set('view engine', 'hbs')
@@ -196,12 +197,35 @@ app.get('/privacyterm', (req, res) => {
 
 app.get('/bets', async (req, res) => {
     try{
-        var date = moment.utc().format("MM-DD HH:mm");
         const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
         const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
         const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
         const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
         res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
+    } catch(err){
+        console.log(err);
+    }
+})
+
+app.get('/betsone', async (req, res) => {
+    try{
+        const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+         /*const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)*/
+        res.render('bet', {outcomese:outcomese});
+    } catch(err){
+        console.log(err);
+    }
+})
+
+app.get('/betsfast', async (req, res) => {
+    try{
+        /*const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
+        const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)*/
+        res.render('bet');
     } catch(err){
         console.log(err);
     }
