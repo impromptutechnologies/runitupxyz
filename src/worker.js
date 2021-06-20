@@ -10,7 +10,7 @@ const newMatchesEsports = require("./utils/newmatchese");
 const schedule = require('node-schedule')
 const setOddsB = require("./utils/setOddsB");
 const setOdds = require("./utils/setOdds");
-
+require('./db/mongoose')
 
   const newMatches = async () => {
     newMatchesEsports();
