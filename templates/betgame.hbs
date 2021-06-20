@@ -6,29 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="./css/main.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
         <link rel="icon" href="./favicon.png">
-	<script type="text/javascript">
-      
-            function changeTimezone() {
-                    
-                var values = document.getElementsByClassName("date");
-                
-                Object.keys(values).forEach((element) => {
-                    //var date1 = moment(values[element].innerHTML, '').format('MM-DD hh:mm');
-                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
-                    console.log(stillUtc)
-                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
-                    values[element].innerHTML = time2;
-
-                })
-          
-                    
-            }
-
-        </script>
+       
         
 	</head>
 	<body onload=changeTimezone()>
@@ -395,6 +375,26 @@
 					</div>
 				</div>
 			</footer>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script type="text/javascript">
+      
+            function changeTimezone() {
+                    
+                var values = document.getElementsByClassName("date");
+                
+                Object.keys(values).forEach((element) => {
+                    //var date1 = moment(values[element].innerHTML, '').format('MM-DD hh:mm');
+                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
+                    console.log(stillUtc)
+                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
+                    values[element].innerHTML = time2;
+
+                })
+          
+                    
+            }
+
+        </script>
 
 		
 			<script src="./js/jquery.min.js"></script>

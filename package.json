@@ -20,6 +20,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "mongoose": "^5.12.5",
+    "node-schedule": "^2.0.0",
     "paypal-rest-sdk": "^1.8.1",
     "request": "^2.88.0",
     "wallet-address-validator": "^0.2.4"
