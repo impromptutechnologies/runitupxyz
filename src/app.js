@@ -343,7 +343,6 @@ if (cluster.isMaster) {
         const outcomesgo1 = await GET_ASYNC('outcomesgo');
         const outcomeslol1 = await GET_ASYNC('outcomeslol');
         if(outcomesc1 || outcomesd1 || outcomesgo1 || outcomeslol1){
-            console.log(reply)
             res.render("betgame", {
                 outcomes: JSON.parse(outcomesc1),
                 outcomesd: JSON.parse(outcomesd1),
