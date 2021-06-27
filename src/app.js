@@ -4,7 +4,7 @@ const { promisify } = require("util");
 if (cluster.isMaster) {
   const n_cpus = os.cpus().length;
   console.log(`${n_cpus} are being forked.`);
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < n_cpus; i++) {
     cluster.fork();
   }
 } else {
