@@ -4,7 +4,7 @@ const { promisify } = require("util");
 if (cluster.isMaster) {
   const n_cpus = os.cpus().length;
   console.log(`${n_cpus} are being forked.`);
-  for (let i = 0; i < n_cpus; i++) {
+  for (let i = 0; i < 1; i++) {
     cluster.fork();
   }
 } else {
@@ -207,7 +207,6 @@ if (cluster.isMaster) {
   });
 
   app.get("/adminpanel", requiresAuth(), async (req, res) => {
-    var date = moment.utc().format("MM-DD HH:mm");
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"
@@ -286,29 +285,7 @@ if (cluster.isMaster) {
 
   app.get("/bets", async (req, res) => {
     try {
-      const outcomes = await Outcome.find({
-        category: "soccer",
-        timeStart: { $gt: date },
-        "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
-        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
-        .lean()
-        .limit(10);
-      res.render("bet", { outcomes: outcomes });
-      //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
-  app.get("/betstest", async (req, res) => {
-    try {
-        const reply = await GET_ASYNC('betstest');
+        const reply = await GET_ASYNC('bets');
         if(reply){
             console.log(reply)
             res.render("bet", { outcomes: JSON.parse(reply)});
@@ -323,7 +300,7 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .lean()
         .limit(10);
-        const saveResult = await SET_ASYNC('betstest', JSON.stringify(outcomes), 'EX', 240)
+        const saveResult = await SET_ASYNC('bets', JSON.stringify(outcomes), 'EX', 3600)
       res.render("bet", { outcomes: outcomes });
       //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
       //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
@@ -335,9 +312,15 @@ if (cluster.isMaster) {
     }
   });
 
+
   app.get("/betsbb", async (req, res) => {
-    var date = moment.utc().format("MM-DD HH:mm");
     try {
+        const reply = await GET_ASYNC('betsbb');
+        if(reply){
+            console.log(reply)
+            res.render("betbasketball", { outcomes: JSON.parse(reply)});
+            return;
+        }
       const outcomes = await Outcome.find({
         category: "basketball",
         timeStart: { $gt: date },
@@ -346,6 +329,7 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('betsbb', JSON.stringify(outcomes), 'EX', 3600)
       res.render("betbasketball", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -353,8 +337,21 @@ if (cluster.isMaster) {
   });
 
   app.get("/betsg", async (req, res) => {
-    var date = moment.utc().format("MM-DD HH:mm");
     try {
+        const outcomesc1 = await GET_ASYNC('outcomesc');
+        const outcomesd1 = await GET_ASYNC('outcomesd');
+        const outcomesgo1 = await GET_ASYNC('outcomesgo');
+        const outcomeslol1 = await GET_ASYNC('outcomeslol');
+        if(outcomesc1 || outcomesd1 || outcomesgo1 || outcomeslol1){
+            console.log(reply)
+            res.render("betgame", {
+                outcomes: JSON.parse(outcomesc1),
+                outcomesd: JSON.parse(outcomesd1),
+                outcomesgo: JSON.parse(outcomesgo1),
+                outcomeslol: JSON.parse(outcomeslol1),
+              });
+            return;
+        }
       const outcomesc = await Outcome.find({
         category: "esportscod",
         timeStart: { $gt: date },
@@ -362,6 +359,7 @@ if (cluster.isMaster) {
       })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('outcomesc', JSON.stringify(outcomesc), 'EX', 3600)
       const outcomesd = await Outcome.find({
         category: "esportsdota",
         timeStart: { $gt: date },
@@ -369,6 +367,7 @@ if (cluster.isMaster) {
       })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult1 = await SET_ASYNC('outcomesd', JSON.stringify(outcomesd), 'EX', 3600)
       const outcomesgo = await Outcome.find({
         category: "esportscsgo",
         timeStart: { $gt: date },
@@ -376,6 +375,7 @@ if (cluster.isMaster) {
       })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult2 = await SET_ASYNC('outcomesgo', JSON.stringify(outcomesgo), 'EX', 3600)
       const outcomeslol = await Outcome.find({
         category: "esportslol",
         timeStart: { $gt: date },
@@ -383,6 +383,7 @@ if (cluster.isMaster) {
       })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult3 = await SET_ASYNC('outcomeslol', JSON.stringify(outcomeslol), 'EX', 3600)
       res.render("betgame", {
         outcomes: outcomesc,
         outcomesd: outcomesd,
@@ -396,9 +397,20 @@ if (cluster.isMaster) {
 
   app.get("/betscr", async (req, res) => {
     try {
+        const reply = await GET_ASYNC('betscr');
+        if(reply){
+            console.log(reply)
+            res.render("betcrypto", {
+                outcomes: JSON.parse(reply),
+                time2: "13:30",
+                time1: "20:00",
+              });
+            return;
+        }
       const outcomes = await Crypto.find({})
         .select({ Crypto: 1, symbol: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('betscr', JSON.stringify(outcomes), 'EX', 10000)
       res.render("betcrypto", {
         outcomes: outcomes,
         time2: "13:30",
@@ -411,9 +423,21 @@ if (cluster.isMaster) {
 
   app.get("/betsst", async (req, res) => {
     try {
+        
+        const reply = await GET_ASYNC('betsst');
+        if(reply){
+            console.log(reply)
+            res.render("betstock", {
+                outcomes: JSON.parse(reply),
+                time2: "13:30",
+                time1: "20:00",
+              });
+            return;
+        }
       const outcomes = await Stock.find({})
         .select({ company: 1, ticker: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('betsst', JSON.stringify(outcomes), 'EX', 10000)
       res.render("betstock", {
         outcomes: outcomes,
         time2: "13:30",
@@ -426,9 +450,16 @@ if (cluster.isMaster) {
 
   app.get("/casino", async (req, res) => {
     try {
+        const reply = await GET_ASYNC('casino');
+        if(reply){
+            console.log(reply)
+            res.render("betcasino", { outcomes: JSON.parse(reply) });
+            return;
+        }
       const casinoCommands = await Casino.find({})
         .select({ description: 1, command: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('casino', JSON.stringify(casinoCommands), 'EX', 10000)
       res.render("betcasino", { outcomes: casinoCommands });
     } catch (err) {
       console.log(err);
@@ -437,13 +468,19 @@ if (cluster.isMaster) {
 
   app.get("/betsq", async (req, res) => {
     try {
-      var date = moment.utc().format("MM-DD HH:mm");
+        const reply = await GET_ASYNC('betsq');
+        if(reply){
+            console.log(reply)
+            res.render("betrandom", { outcomes: JSON.parse(reply) });
+            return;
+        }
       const outcomes = await Outcome.find({
         category: "random",
         timeStart: { $gt: date },
       })
         .sort({ timeStart: 1 })
         .lean();
+        const saveResult = await SET_ASYNC('betsq', JSON.stringify(outcomes), 'EX', 10000)
       res.render("betrandom", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
