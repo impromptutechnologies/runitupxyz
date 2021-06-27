@@ -163,19 +163,15 @@ if (cluster.isMaster) {
   });
 
   app.post("/auth/addodd", async (req, res) => {
-    console.log(req.body.outcomeID, req.body.odd1, req.body.odd2);
     const update = await Outcome.findOneAndUpdate(
       { outcomeID: req.body.outcomeID },
       { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2 }
     );
-    console.log(update);
     res.redirect("/adminpanel");
   });
 
   app.post("/auth/withdrawdelete", async (req, res) => {
-    console.log(req.body.userID);
     const update = await Withdraw.deleteOne({ userID: req.body.userID });
-    console.log(update);
     res.redirect("/adminpanel");
   });
 
@@ -184,7 +180,6 @@ if (cluster.isMaster) {
       { outcomeID: req.body.outcomeID },
       { timeStart: req.body.timeStart, timeEnd: req.body.timeEnd }
     );
-    console.log(update);
     res.redirect("/adminpanel");
   });
 
@@ -193,7 +188,6 @@ if (cluster.isMaster) {
       { ticker: req.body.tickerorg },
       { ticker: req.body.tickernew, company: req.body.company }
     );
-    console.log(update);
     res.redirect("/adminpanel");
   });
 
@@ -202,7 +196,6 @@ if (cluster.isMaster) {
       { symbol: req.body.symbolorg },
       { symbol: req.body.symbolnew, Crypto: req.body.crypto }
     );
-    console.log(update);
     res.redirect("/adminpanel");
   });
 
@@ -211,7 +204,6 @@ if (cluster.isMaster) {
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"
     ) {
-      console.log("hello");
       const outcomesc = await Outcome.find({
         category: "esportscod",
         timeStart: { $gt: date },
@@ -258,7 +250,6 @@ if (cluster.isMaster) {
         withdrawals: userWithdraws,
       });
     } else {
-      console.log("no can do");
       res.redirect("/");
     }
   });
@@ -287,7 +278,6 @@ if (cluster.isMaster) {
     try {
         const reply = await GET_ASYNC('bets');
         if(reply){
-            console.log(reply)
             res.render("bet", { outcomes: JSON.parse(reply)});
             return;
         }
@@ -317,7 +307,6 @@ if (cluster.isMaster) {
     try {
         const reply = await GET_ASYNC('betsbb');
         if(reply){
-            console.log(reply)
             res.render("betbasketball", { outcomes: JSON.parse(reply)});
             return;
         }
@@ -398,7 +387,6 @@ if (cluster.isMaster) {
     try {
         const reply = await GET_ASYNC('betscr');
         if(reply){
-            console.log(reply)
             res.render("betcrypto", {
                 outcomes: JSON.parse(reply),
                 time2: "13:30",
@@ -425,7 +413,6 @@ if (cluster.isMaster) {
         
         const reply = await GET_ASYNC('betsst');
         if(reply){
-            console.log(reply)
             res.render("betstock", {
                 outcomes: JSON.parse(reply),
                 time2: "13:30",
@@ -451,7 +438,6 @@ if (cluster.isMaster) {
     try {
         const reply = await GET_ASYNC('casino');
         if(reply){
-            console.log(reply)
             res.render("betcasino", { outcomes: JSON.parse(reply) });
             return;
         }
@@ -469,7 +455,6 @@ if (cluster.isMaster) {
     try {
         const reply = await GET_ASYNC('betsq');
         if(reply){
-            console.log(reply)
             res.render("betrandom", { outcomes: JSON.parse(reply) });
             return;
         }
