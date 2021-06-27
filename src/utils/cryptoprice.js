@@ -5,7 +5,6 @@ const rp = require('request-promise');
 const cryptoPrice = () => {
     Crypto.find({}, (error, cryptos) => {
       cryptos.forEach((crypto) => {
-          console.log(crypto.symbol)
           const CoinMarketCap = require('coinmarketcap-api')
           const apiKey = '992b34d4-f844-4fe2-85f0-3979f7a206af'
           const client = new CoinMarketCap(apiKey)

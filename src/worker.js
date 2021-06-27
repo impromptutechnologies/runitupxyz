@@ -17,7 +17,7 @@ require('./db/mongoose')
     newMatchesBasketball("1");
     newMatchesBasketball("2");
     newMatchesBasketball("3");
-    //newMatchesSoccer("euros");
+    newMatchesSoccer("euros");
     //setTimeout(newMatchesSoccer.bind(null, 'prem'), 60000)
     //setTimeout(newMatchesSoccer.bind(null, 'champ'), 120000)
     //setTimeout(newMatchesSoccer.bind(null, 'seriea'), 180000)
@@ -35,7 +35,6 @@ const checkOdds = async () => {
       option1: { $exists: true, $eq: [] },
     },
     (err, res) => {
-      console.log(res);
       res.forEach((element) => {
         setOdds(element.league, element.outcomeID);
       });
@@ -47,7 +46,6 @@ Outcome.find(
       option1: { $exists: true, $eq: [] },
     },
     (err, res) => {
-      console.log(res);
       res.forEach((element) => {
         setOddsB(element.outcomeID);
       });
@@ -72,8 +70,6 @@ schedule.scheduleJob('55 */1 * * *', ()=>{
     var date = moment.utc().format("MM-DD HH:mm");
     const investmentstock = await Invest.find({ category: "stocks" });
     const investmentcrypto = await Invest.find({ category: "crypto" });
-    console.log("stock invests total:", investmentstock.length);
-    console.log("crypto invests total:", investmentcrypto.length);
     if (
       date == moment.utc().format(`${month}-${day} 13:28`) &&
       investmentcrypto.length !== 0

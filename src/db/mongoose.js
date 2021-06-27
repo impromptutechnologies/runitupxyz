@@ -11,4 +11,3 @@ const db = mongoose.connection
 db.once('open', () => console.log('open'));
 
 
-
