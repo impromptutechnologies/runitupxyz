@@ -323,7 +323,7 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .lean()
         .limit(10);
-        const saveResult = await SET_ASYNC('betstest', JSON.stringify(outcomes), 'EX', 60)
+        const saveResult = await SET_ASYNC('betstest', JSON.stringify(outcomes), 'EX', 240)
       res.render("bet", { outcomes: outcomes });
       //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
       //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
