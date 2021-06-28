@@ -35,6 +35,7 @@ const checkOdds = async () => {
       option1: { $exists: true, $eq: [] },
     },
     (err, res) => {
+      console.log(res);
       res.forEach((element) => {
         setOdds(element.league, element.outcomeID);
       });
@@ -46,6 +47,7 @@ Outcome.find(
       option1: { $exists: true, $eq: [] },
     },
     (err, res) => {
+      console.log(res);
       res.forEach((element) => {
         setOddsB(element.outcomeID);
       });
