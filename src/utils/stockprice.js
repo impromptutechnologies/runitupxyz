@@ -10,7 +10,7 @@ const stockPrice = (callback) => {
         console.log(date);
         stocks.forEach((stock) => {
             console.log(stock.ticker)
-            const url = `http://api.marketstack.com/v1/eod/${date}?access_key=b43c8007a25da9601cd55d83b6d3a6ad&symbols=${stock.ticker}&limit=1`;
+            const url = `http://api.marketstack.com/v1/eod/${date}?access_key=${process.env.STOCK_API}&symbols=${stock.ticker}&limit=1`;
             console.log(url)
             request ({ url, json: true },(error, { body }) => {
                 console.log(body)

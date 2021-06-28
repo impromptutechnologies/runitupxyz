@@ -20,7 +20,7 @@ const setOddsB = (outcomeID) => {
             qs: { bet: "2", bookmaker: "2", game: outcomeID },
             headers: {
               "x-rapidapi-host": "v1.basketball.api-sports.io",
-              "x-rapidapi-key": "e40fc324e790e08e5f948456fd4d1049",
+              "x-rapidapi-key": process.env.API_SPORTS,
             },
           };
           request(options, function (error, response, body) {

@@ -14,7 +14,7 @@ const newMatchesEsports = (choice) => {
           method: 'GET',
           url: 'https://api.pandascore.co/codmw/matches/upcoming',
           headers: {
-            'Authorization': 'Bearer hCHqW_AKX0xtmdSF5ZACti9M9LcLsWKKa52M70hWWy7aGEaql5M',
+            'Authorization': process.env.PANDASCORE_API,
             'host': 'api.pandascore.co',
             useQueryString: true
           }
@@ -24,7 +24,7 @@ const newMatchesEsports = (choice) => {
           method: 'GET',
           url: 'https://api.pandascore.co/csgo/matches/upcoming?filter[league_id]=4551,4568,4569,4572',
           headers: {
-            'Authorization': 'Bearer hCHqW_AKX0xtmdSF5ZACti9M9LcLsWKKa52M70hWWy7aGEaql5M',
+            'Authorization': process.env.PANDASCORE_API,
             'host': 'api.pandascore.co',
             useQueryString: true
           }
@@ -34,7 +34,7 @@ const newMatchesEsports = (choice) => {
           method: 'GET',
           url: 'https://api.pandascore.co/dota2/matches/upcoming?filter[league_id]=4447,4487,4517',
           headers: {
-            'Authorization': 'Bearer hCHqW_AKX0xtmdSF5ZACti9M9LcLsWKKa52M70hWWy7aGEaql5M',
+            'Authorization': process.env.PANDASCORE_API,
             'host': 'api.pandascore.co',
             useQueryString: true
           }
@@ -44,7 +44,7 @@ const newMatchesEsports = (choice) => {
           method: 'GET',
           url: 'https://api.pandascore.co/lol/matches/upcoming?filter[league_id]=4198,4394,4197,4407,300',
           headers: {
-            'Authorization': 'Bearer hCHqW_AKX0xtmdSF5ZACti9M9LcLsWKKa52M70hWWy7aGEaql5M',
+            'Authorization': process.env.PANDASCORE_API,
             'host': 'api.pandascore.co',
             useQueryString: true
           }

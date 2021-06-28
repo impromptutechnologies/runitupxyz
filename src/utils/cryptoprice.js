@@ -6,7 +6,7 @@ const cryptoPrice = () => {
     Crypto.find({}, (error, cryptos) => {
       cryptos.forEach((crypto) => {
           const CoinMarketCap = require('coinmarketcap-api')
-          const apiKey = '992b34d4-f844-4fe2-85f0-3979f7a206af'
+          const apiKey = process.env.COIN_API
           const client = new CoinMarketCap(apiKey)
           client.getQuotes({symbol: crypto.symbol, convert: 'USD'}).then(response => {
             const yourReturn = (response.data[crypto.symbol].quote.USD.price - crypto.openPrice)/crypto.openPrice
