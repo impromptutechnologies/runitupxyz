@@ -4,6 +4,7 @@ const betSchema = new mongoose.Schema({
   serverID: { type: String, required: false },
   channelID: { type: String, required: false },
   creatorName: { type: String, required: true },
+  status: { type: String, required: true},
   outcomeID: { type: String, required: true },
   betAmount: { type: Number, required: true },
   Code: { type: String, required: true },

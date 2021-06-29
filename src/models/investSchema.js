@@ -5,6 +5,7 @@ const investSchema = new mongoose.Schema({
   channelID: { type: String, required: false },
   category: { type: String, required: true },
   creatorName: { type: String, required: true },
+  status: { type: String, required: true},
   investAmount: { type: Number, required: true },
   Code: { type: String, required: true },
 });
