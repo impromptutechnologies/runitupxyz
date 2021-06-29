@@ -24,6 +24,8 @@ const betResult = (id) => {
         request(options, (error, response, body) => {
           data = JSON.parse(body);
           console.log(data.response[0].fixture.status);
+          console.log(data.response[0].fixture);
+          console.log(data.response[0].teams);
           if (error) throw new Error(error);
 
           if (
@@ -69,7 +71,6 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
-                  return;
                 }
               );
             }
@@ -90,7 +91,6 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
-                  return;
                 }
               );
             } else {
