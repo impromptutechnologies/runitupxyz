@@ -58,7 +58,7 @@ const betResult = (id) => {
               Bet.updateMany({ Code: code1 }, { status: "won" }, (err, res) => {
                 console.log(res)
                 if (err) {
-                  console.log(error);
+                  console.log(err);
                 }
               });
               Bet.deleteMany(
@@ -69,6 +69,7 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
+                  return;
                 }
               );
             }
@@ -77,7 +78,7 @@ const betResult = (id) => {
               Bet.updateMany({ Code: code2 }, { status: "won" }, (err, res) => {
                 console.log(res)
                 if (err) {
-                  console.log(error);
+                  console.log(err);
                 }
               });
               Bet.deleteMany(
@@ -85,9 +86,11 @@ const betResult = (id) => {
                   $or: [{ Code: code1 }, { Code: code3 }],
                 },
                 (error, deleted) => {
+
                   if (error) {
                     console.log(error);
                   }
+                  return;
                 }
               );
             } else {
@@ -95,7 +98,7 @@ const betResult = (id) => {
               Bet.updateMany({ Code: code3 }, { status: "won" }, (err, res) => {
                 console.log(res)
                 if (err) {
-                  console.log(error);
+                  console.log(err);
                 }
               });
               Bet.deleteMany(
@@ -106,6 +109,7 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
+                  return;
                 }
               );
             }
