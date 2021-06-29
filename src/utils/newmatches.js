@@ -156,9 +156,11 @@ const newMatchesSoccer = (choice) => {
       if(choice == 'champ'){
         request(optionsc, (error, response, body) => {
           datai = JSON.parse(body);
+          console.log(datai);
           if (error) throw new Error(error);
           datai.response.forEach((element) => {
               Outcome.findOne({outcomeID: element.fixture.id}, (err, res) => {
+                console.log(res);
                 if(element.fixture.status.long == 'Not Started' && res == null
               ){
                 Outcome.create(

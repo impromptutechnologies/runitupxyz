@@ -53,7 +53,6 @@ const newMatchesEsports = (choice) => {
 
         request(options, (error, response, body) => {
           data = JSON.parse(body);
-          console.log(data)
           if (error) throw new Error(error);
           data.forEach((element) => {
             console.log(element.begin_at)
@@ -103,7 +102,6 @@ const newMatchesEsports = (choice) => {
       
         request(optionscsgo, (error, response, body) => {
           data = JSON.parse(body);
-          console.log(data)
           if (error) throw new Error(error);
           data.forEach((element) => {
             console.log(element.begin_at)
@@ -151,7 +149,6 @@ const newMatchesEsports = (choice) => {
         
       request(optionsdota, (error, response, body) => {
         data = JSON.parse(body);
-        console.log(data)
         if (error) throw new Error(error);
         data.forEach((element) => {
           console.log(element.begin_at)
@@ -201,7 +198,6 @@ const newMatchesEsports = (choice) => {
 
       request(optionsleague, (error, response, body) => {
         data = JSON.parse(body);
-        console.log(data)
         if (error) throw new Error(error);
         data.forEach((element) => {
           console.log(element.begin_at)

@@ -3,7 +3,6 @@ const Outcome = require("../models/outcomeSchema");
 const setOdds = (league, outcomeID) => {
   var request = require("request");
   console.log(league, outcomeID);
-  //find the outcomes by the date
   Outcome.findOne(
     {
       category: "soccer",
