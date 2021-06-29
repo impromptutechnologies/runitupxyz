@@ -93,7 +93,7 @@ const betResult = (id) => {
                   }
                 }
               );
-            } else {
+            } if (data.response[0].teams.away.winner !== true && data.response[0].teams.home.winner !== true) {
               console.log(code3);
               Bet.updateMany({ Code: code3 }, { status: "won" }, (err, res) => {
                 console.log(res)
