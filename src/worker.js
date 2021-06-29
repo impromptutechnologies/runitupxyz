@@ -132,6 +132,7 @@ const updateMatches = async () => {
   if (outcomes.length == 0) {
     console.log("no finished matches across the board");
   } else {
+    console.log(outcomes);
     outcomes.forEach((element) => {
       if (element.category == "esportscod") {
         betResultEsports(element.outcomeID,{
