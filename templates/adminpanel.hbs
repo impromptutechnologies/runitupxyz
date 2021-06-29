@@ -305,3 +305,49 @@
     </div>
   </div>
 {{/if}}
+
+
+
+
+
+
+
+
+
+
+
+
+<h1 style="margin-top:100px">Change Random</h1>
+
+
+{{#if stocks}}
+<form action="/auth/changestock" method="POST">
+  <input placeholder="Original" name="tickerorg"/>
+  <input placeholder="New" name="tickernew"/>
+  <input placeholder="Company" name="company"/>
+  <button type="submit">Enter</button>
+</form>
+
+  {{#each stocks}}
+    <div
+      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+    >
+      <div style="width:85%;display: flex;">
+        <div style="padding: 0.6em;">
+          <h3>{{this.ticker}}</h3>
+        </div>
+        <div style="padding: 0.6em;">
+          <h3>{{this.company}}</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+  {{/each}}
+{{else}}
+  <div style="width:85%">
+    <div style="padding: 0.6em;">
+      <h2>No Stocks</h2>
+    </div>
+  </div>
+{{/if}}
+

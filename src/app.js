@@ -160,7 +160,7 @@ if (cluster.isMaster) {
     res.redirect("/account");
   });
 
-  app.post("/auth/addodd", async (req, res) => {
+  app.post("/auth/addodd", requiresAuth(), async (req, res) => {
     const update = await Outcome.findOneAndUpdate(
       { outcomeID: req.body.outcomeID },
       { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2 }
@@ -168,12 +168,12 @@ if (cluster.isMaster) {
     res.redirect("/adminpanel");
   });
 
-  app.post("/auth/withdrawdelete", async (req, res) => {
+  app.post("/auth/withdrawdelete", requiresAuth(), async (req, res) => {
     const update = await Withdraw.deleteOne({ userID: req.body.userID });
     res.redirect("/adminpanel");
   });
 
-  app.post("/auth/timestart", async (req, res) => {
+  app.post("/auth/timestart", requiresAuth(), async (req, res) => {
     const update = await Outcome.findOneAndUpdate(
       { outcomeID: req.body.outcomeID },
       { timeStart: req.body.timeStart, timeEnd: req.body.timeEnd }
@@ -181,7 +181,7 @@ if (cluster.isMaster) {
     res.redirect("/adminpanel");
   });
 
-  app.post("/auth/changestock", async (req, res) => {
+  app.post("/auth/changestock", requiresAuth(), async (req, res) => {
     const update = await Stock.findOneAndUpdate(
       { ticker: req.body.tickerorg },
       { ticker: req.body.tickernew, company: req.body.company }
@@ -189,14 +189,38 @@ if (cluster.isMaster) {
     res.redirect("/adminpanel");
   });
 
-  app.post("/auth/changecrypto", async (req, res) => {
-    const update = await Crypto.findOneAndUpdate(
-      { symbol: req.body.symbolorg },
-      { symbol: req.body.symbolnew, Crypto: req.body.crypto }
-    );
-    res.redirect("/adminpanel");
+  app.post("/auth/changecrypto", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      const update = await Crypto.findOneAndUpdate(
+        { symbol: req.body.symbolorg },
+        { symbol: req.body.symbolnew, Crypto: req.body.crypto }
+      );
+      res.redirect("/adminpanel");
+    }else{
+      res.redirect("/adminpanel");
+    }
   });
 
+  app.post("/auth/newRandom", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      const update = await Outcome.create(
+        { symbol: req.body.symbolorg },
+        { symbol: req.body.symbolnew, Crypto: req.body.crypto }
+      );
+      res.redirect("/adminpanel");
+    } else{
+      res.redirect("/adminpanel");
+    }
+  });
+
+
+  
   app.get("/adminpanel", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -237,6 +261,11 @@ if (cluster.isMaster) {
       const userWithdraws = await Withdraw.find({}).lean();
       const stocks = await Stock.find({}).lean();
       const cryptos = await Crypto.find({}).lean();
+      const randoms = await Outcome.find({
+        category: "random",
+      })
+        .sort({ timeStart: 1 })
+        .lean();
       res.render("adminpanel", {
         stocks: stocks,
         cryptos: cryptos,
@@ -245,12 +274,16 @@ if (cluster.isMaster) {
         outcomesgo: outcomesgo,
         outcomeslol: outcomeslol,
         basketball: basketball,
+        randoms: randoms,
         withdrawals: userWithdraws,
       });
     } else {
       res.redirect("/");
     }
   });
+
+
+
 
   app.get("", (req, res) => {
     res.render("index");

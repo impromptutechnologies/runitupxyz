@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const outcomeSchema = new mongoose.Schema({
   outcomeID: { type: String, required: true,  unique:false},
   category: { type: String, required: true },
+  league:{ type: String, required: false },
+  spec:{type: String, required: false},
   team1: { type: String, required: true},
   team2: { type: String, required: true },
   timeStart: { type: String, required: true },
