@@ -44,8 +44,8 @@ if (cluster.isMaster) {
     mode: "live", //sandbox or live
     //'client_id': 'AYGEOzs1ivvoOXqHhdoWWZc0KGLUdcZ-YehnqROBBBzzfGeUecNQOcHzbo7CCHnqEw_PNpovgmqhj_d_',
     //'client_secret': 'EAvzD2BzwmUqlTKHTMjDONvk_1CHqFQunsbk8TICaeq21jXBqFB0bkBVBvmwea7zR6uMtfUV6jwNQGlH'
-    client_id:  process.env.CLIENT_IDPYPL,
-    client_secret:  process.env.CLIENT_SECRET,
+    client_id: process.env.CLIENT_IDPYPL,
+    client_secret: process.env.CLIENT_SECRET,
   });
 
   const redis = require("redis");
@@ -161,32 +161,63 @@ if (cluster.isMaster) {
   });
 
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
-    const update = await Outcome.findOneAndUpdate(
-      { outcomeID: req.body.outcomeID },
-      { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2 }
-    );
-    res.redirect("/adminpanel");
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ){
+      const update = await Outcome.findOneAndUpdate(
+        { outcomeID: req.body.outcomeID },
+        { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2 }
+      );
+      res.redirect("/adminpanel");
+    }
+    else{
+      res.redirect("/adminpanel");
+    }
   });
 
   app.post("/auth/withdrawdelete", requiresAuth(), async (req, res) => {
-    const update = await Withdraw.deleteOne({ userID: req.body.userID });
-    res.redirect("/adminpanel");
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ){
+      const update = await Withdraw.deleteOne({ userID: req.body.userID });
+      res.redirect("/adminpanel");
+    }
+    else{
+      res.redirect("/adminpanel");
+    }
   });
 
   app.post("/auth/timestart", requiresAuth(), async (req, res) => {
-    const update = await Outcome.findOneAndUpdate(
-      { outcomeID: req.body.outcomeID },
-      { timeStart: req.body.timeStart, timeEnd: req.body.timeEnd }
-    );
-    res.redirect("/adminpanel");
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ){
+      const update = await Outcome.findOneAndUpdate(
+        { outcomeID: req.body.outcomeID },
+        { timeStart: req.body.timeStart, timeEnd: req.body.timeEnd }
+      );
+      res.redirect("/adminpanel");
+    }
+    else{
+      res.redirect("/adminpanel");
+    }
   });
 
   app.post("/auth/changestock", requiresAuth(), async (req, res) => {
-    const update = await Stock.findOneAndUpdate(
-      { ticker: req.body.tickerorg },
-      { ticker: req.body.tickernew, company: req.body.company }
-    );
-    res.redirect("/adminpanel");
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      const update = await Stock.findOneAndUpdate(
+        { ticker: req.body.tickerorg },
+        { ticker: req.body.tickernew, company: req.body.company }
+      );
+      res.redirect("/adminpanel");
+    } else {
+      res.redirect("/adminpanel");
+    }
   });
 
   app.post("/auth/changecrypto", requiresAuth(), async (req, res) => {
@@ -199,7 +230,63 @@ if (cluster.isMaster) {
         { symbol: req.body.symbolnew, Crypto: req.body.crypto }
       );
       res.redirect("/adminpanel");
-    }else{
+    } else {
+      res.redirect("/adminpanel");
+    }
+  });
+
+
+  
+  app.post("/auth/randomResult", requiresAuth(), async (req, resp) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      Outcome.findOneAndDelete({category:'random', $or: [{ "option1.0.Code": req.body.winner },
+      { "option1.0.Code2": req.body.winner  }]}, (err, res) => {
+        if(err){
+          console.log(err)
+        }
+      const Code1 = res.option1[0].Code
+      const Code2 = res.option1[0].Code2
+      if(req.body.winner == Code1){
+        Bet.updateMany({ Code: req.body.winner }, { status: "won" }, (err, res) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        Bet.deleteMany(
+          {
+            Code: Code2,
+          },
+          (error, deleted) => {
+            if (error) {
+              console.log(error);
+            }
+          }
+        );
+        resp.redirect("/adminpanel");
+      } 
+      if(req.body.winner == Code2){
+        Bet.updateMany({ Code: req.body.winner }, { status: "won" }, (err, res) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+        Bet.deleteMany(
+          {
+            Code: Code1,
+          },
+          (error, deleted) => {
+            if (error) {
+              console.log(error);
+            }
+          }
+        );
+        resp.redirect("/adminpanel");
+      }
+      });
+    } else {
       res.redirect("/adminpanel");
     }
   });
@@ -209,23 +296,79 @@ if (cluster.isMaster) {
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"
     ) {
-      const update = await Outcome.create(
-        { symbol: req.body.symbolorg },
-        { symbol: req.body.symbolnew, Crypto: req.body.crypto }
+      Outcome.create(
+        {
+          outcomeID: 000001,
+          category: "random",
+          desc: req.body.desc,
+          team1: req.body.choiceOne,
+          team2: req.body.choiceTwo,
+          timeStart: req.body.timeStart,
+          timeEnd: req.body.timeEnd,
+        },
+        (err, res) => {
+          console.log(res);
+          if (err) {
+            console.log(err);
+          }
+          const Code = req.body.Code;
+          const odds = req.body.odds;
+          const Code2 = req.body.Code2;
+          const odds2 = req.body.odds2;
+          res.addOptions([
+            Code,
+            odds,
+            Code2,
+            odds2,
+          ]);
+          res.save();
+        }
       );
       res.redirect("/adminpanel");
-    } else{
+    } else {
       res.redirect("/adminpanel");
     }
   });
 
 
-  //requiresAuth(), 
-  app.get("/adminpanel", async (req, res) => {
+  app.post("/auth/addBB", requiresAuth(), async (req, res) => {
     if (
-      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
-      2 == 2
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      Outcome.findOne(
+        {
+          outcomeID: req.body.outcomeID,
+        },
+        (err, res) => {
+          console.log(res);
+          if (err) {
+            console.log(err);
+          }
+          const Code = req.body.Code;
+          const odds = req.body.odds;
+          const Code2 = req.body.Code2;
+          const odds2 = req.body.odds2;
+          res.addOptions([
+            Code,
+            odds,
+            Code2,
+            odds2,
+          ]);
+          res.save();
+        }
+      );
+      res.redirect("/adminpanel");
+    } else {
+      res.redirect("/adminpanel");
+    }
+  });
+
+  
+  app.get("/adminpanel", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
     ) {
       const outcomesc = await Outcome.find({
         category: "esportscod",
@@ -257,16 +400,20 @@ if (cluster.isMaster) {
         .lean();
       const basketball = await Outcome.find({
         category: "basketball",
-        timeStart: { $regex: ".*20:00.*" },
+        $or: [{ timeStart: { $regex: ".*20:00.*" } }, { option1: [] }]
       }).lean();
       const userWithdraws = await Withdraw.find({}).lean();
+
       const stocks = await Stock.find({}).lean();
+
       const cryptos = await Crypto.find({}).lean();
+
       const randoms = await Outcome.find({
         category: "random",
       })
         .sort({ timeStart: 1 })
         .lean();
+
       res.render("adminpanel", {
         stocks: stocks,
         cryptos: cryptos,
@@ -282,9 +429,6 @@ if (cluster.isMaster) {
       res.redirect("/");
     }
   });
-
-
-
 
   app.get("", (req, res) => {
     res.render("index");

@@ -1,353 +1,391 @@
 <style>
-    h1{
-        font-size:20px;
-    }
-    h2{
-        font-size: 17px;
-    }
-    h3{
-        font-size: 13px;
-    }
+  h1{ font-size:20px; } h2{ font-size: 17px; } h3{ font-size: 13px; }
 </style>
-<h1>To fill in odds manually</h1>
-<a href="https://oddspedia.com/call-of-duty/world/cdl" target="_blank"><p>go here for Cod Games</p></a>
-<a href="https://oddspedia.com/league-of-legends" target="_blank"><p>go here for LOL Games</p></a>
-<a href="https://oddspedia.com/dota-2" target="_blank"><p>go here for Dota Games</p></a>
-<a href="https://oddspedia.com/counter-strike-global-offensive" target="_blank"><p>go here for CSGO Games</p></a>
 
-<form action="/auth/addodd" method="POST">
-  <input placeholder="outcomeID" name="outcomeID"/>
-  <input placeholder="odd1" name="odd1"/>
-  <input placeholder="odd2" name="odd2"/>
-  <button type="submit">Enter</button>
-</form>
-<h1 style="margin-top:100px">Cod Games</h1>
-{{#if outcomes}}
-<hr>
-  {{#each outcomes}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display:flex">
-        <div style="padding: 0.6em;">
-          <h3>{{this.outcomeID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team1}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team2}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.timeStart}}</h3>
-        </div>
-      </div>
-    </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Big Cod</h2>
-    </div>
-  </div>
-{{/if}}
+<div id="navsys">
+  <a href="#gameodds">Game Odds</a><br>
+  <a href="#basketball">Sus Basketball</a><br>
+  <a href="#changecrypto">Change Crypto/Stocks</a><br>
+  <a href="#withdrawals">Withdrawals</a><br>
+  <a href="#randoms">Random Events</a><br>
+</div>
 
-<h1 style="margin-top:100px">Lol Games</h1>
-{{#if outcomeslol}}
+<div id="gameodds" style="margin-top:50px">
 
-  {{#each outcomeslol}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.outcomeID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team1}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team2}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.timeStart}}</h3>
+  <h1>To fill in odds manually</h1>
+  <a href="https://oddspedia.com/call-of-duty/world/cdl" target="_blank"><p>go
+      here for Cod Games</p></a>
+  <a href="https://oddspedia.com/league-of-legends" target="_blank"><p>go here
+      for LOL Games</p></a>
+  <a href="https://oddspedia.com/dota-2" target="_blank"><p>go here for Dota
+      Games</p></a>
+  <a
+    href="https://oddspedia.com/counter-strike-global-offensive"
+    target="_blank"
+  ><p>go here for CSGO Games</p></a>
+
+  <form action="/auth/addodd" method="POST">
+    <input placeholder="outcomeID" name="outcomeID" />
+    <input placeholder="odd1" name="odd1" />
+    <input placeholder="odd2" name="odd2" />
+    <button type="submit">Enter</button>
+  </form>
+  <h1 style="margin-top:100px">Cod Games</h1>
+  {{#if outcomes}}
+    <hr />
+    {{#each outcomes}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display:flex">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.timeStart}}</h3>
+          </div>
         </div>
       </div>
-    </div>
-        <hr>
-
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Big League of Legends Matches</h2>
-    </div>
-  </div>
-{{/if}}
-
-<h1 style="margin-top:100px">CSGO Games</h1>
-{{#if outcomesgo}}
-
-  {{#each outcomesgo}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.outcomeID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team1}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team2}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.timeStart}}</h3>
-        </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Big Cod</h2>
       </div>
     </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No CSGO Matches</h2>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
 
-<h1 style="margin-top:100px">Dota Games</h1>
-{{#if outcomesd}}
+  <h1 style="margin-top:100px">Lol Games</h1>
+  {{#if outcomeslol}}
 
-  {{#each outcomesd}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.outcomeID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team1}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team2}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.timeStart}}</h3>
+    {{#each outcomeslol}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.timeStart}}</h3>
+          </div>
         </div>
       </div>
-    </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Big Dota Matches</h2>
-    </div>
-  </div>
-{{/if}}
-<br />
+      <hr />
 
-
-
-<h1 style="margin-top:100px">Sus Basketball Games</h1>
-<p>If the time is 20:00 most likely the API guys fucked up.</p>
-
-
-{{#if basketball}}
-<form action="/auth/timestart" method="POST">
-  <input placeholder="outcomeID" name="outcomeID"/>
-  <input placeholder="timestart" name="timeStart"/>
-   <input placeholder="timeend" name="timeEnd"/>
-  <button type="submit">Enter</button>
-</form>
-
-  {{#each basketball}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.outcomeID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team1}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.team2}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.timeStart}}</h3>
-        </div>
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Big League of Legends Matches</h2>
       </div>
     </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Basketball Matches</h2>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
 
+  <h1 style="margin-top:100px">CSGO Games</h1>
+  {{#if outcomesgo}}
 
-
-
-<h1 style="margin-top:100px">Bitcoin Withdrawals</h1>
-
-
-{{#if withdrawals}}
-<form action="/auth/withdrawdelete" method="POST">
-  <input placeholder="userID" name="userID"/>
-  <button type="submit">Enter</button>
-</form>
-
-  {{#each withdrawals}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.userID}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.crypto}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.tokens}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3 class="date">{{this.address}}</h3>
+    {{#each outcomesgo}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.timeStart}}</h3>
+          </div>
         </div>
       </div>
-    </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Withdrawals</h2>
-    </div>
-  </div>
-{{/if}}
-
-
-
-
-<h1 style="margin-top:100px">Change Crypto and Bitcoin</h1>
-
-
-{{#if stocks}}
-<form action="/auth/changestock" method="POST">
-  <input placeholder="Original" name="tickerorg"/>
-  <input placeholder="New" name="tickernew"/>
-  <input placeholder="Company" name="company"/>
-  <button type="submit">Enter</button>
-</form>
-
-  {{#each stocks}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.ticker}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.company}}</h3>
-        </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No CSGO Matches</h2>
       </div>
     </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Stocks</h2>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
 
+  <h1 style="margin-top:100px">Dota Games</h1>
+  {{#if outcomesd}}
 
-
-{{#if cryptos}}
-
-<form action="/auth/changecrypto" method="POST" style="margin-top:50px">
-  <input placeholder="Original" name="symbolorg"/>
-  <input placeholder="New" name="symbolnew"/>
-  <input placeholder="Crypto" name="crypto"/>
-  <button type="submit">Enter</button>
-</form>
-
-  {{#each cryptos}}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.symbol}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.Crypto}}</h3>
+    {{#each outcomesd}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.timeStart}}</h3>
+          </div>
         </div>
       </div>
-    </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Cryptos</h2>
-    </div>
-  </div>
-{{/if}}
-
-
-
-
-
-
-
-
-
-
-
-
-<h1 style="margin-top:100px">Change Random</h1>
-
-
-{{#if randoms }}
-<form action="/auth/newRandom" method="POST">
-  <input placeholder="Original" name="tickerorg"/>
-  <input placeholder="New" name="tickernew"/>
-  <input placeholder="Company" name="company"/>
-  <button type="submit">Enter</button>
-</form>
-
-  {{#each randoms }}
-    <div
-      style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-    >
-      <div style="width:85%;display: flex;">
-        <div style="padding: 0.6em;">
-          <h3>{{this.ticker}}</h3>
-        </div>
-        <div style="padding: 0.6em;">
-          <h3>{{this.company}}</h3>
-        </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Big Dota Matches</h2>
       </div>
     </div>
-    <hr>
-  {{/each}}
-{{else}}
-  <div style="width:85%">
-    <div style="padding: 0.6em;">
-      <h2>No Stocks</h2>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
+  <br />
 
+</div>
+
+<div id="basketball">
+  <h1 style="margin-top:100px">Sus Basketball Games</h1>
+  <p>If the time is 20:00 most likely the API guys fucked up.</p>
+  
+
+  {{#if basketball}}
+  <h3>Add Odds</h3>
+  <form action="/auth/addBB" method="POST">
+    <input placeholder="outcomeID" name="outcomeID" />
+    <input placeholder="Code" name="Code" />
+    <input placeholder="odds" name="odds" type="number" step="0.01"/>
+    <input placeholder="Code2" name="Code2" />
+    <input placeholder="odds2" name="odds2" type="number" step="0.01"/>
+    <button type="submit">Enter</button>
+  </form>
+  <br>
+  <h3>Change Times</h3>
+    <form action="/auth/timestart" method="POST">
+      <input placeholder="outcomeID" name="outcomeID" />
+      <input placeholder="timestart" name="timeStart" />
+      <input placeholder="timeend" name="timeEnd" />
+      <button type="submit">Enter</button>
+    </form>
+
+    {{#each basketball}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.timeStart}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Basketball Matches</h2>
+      </div>
+    </div>
+  {{/if}}
+
+</div>
+
+<div id="changecrypto">
+  <h1 style="margin-top:100px">Change Crypto and Bitcoin</h1>
+
+  {{#if stocks}}
+    <form action="/auth/changestock" method="POST">
+      <input placeholder="Original" name="tickerorg" />
+      <input placeholder="New" name="tickernew" />
+      <input placeholder="Company" name="company" />
+      <button type="submit">Enter</button>
+    </form>
+
+    {{#each stocks}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.ticker}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.company}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Stocks</h2>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if cryptos}}
+
+    <form action="/auth/changecrypto" method="POST" style="margin-top:50px">
+      <input placeholder="Original" name="symbolorg" />
+      <input placeholder="New" name="symbolnew" />
+      <input placeholder="Crypto" name="crypto" />
+      <button type="submit">Enter</button>
+    </form>
+
+    {{#each cryptos}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.symbol}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.Crypto}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Cryptos</h2>
+      </div>
+    </div>
+  {{/if}}
+</div>
+
+
+
+<div id="withdrawals">
+  <h1 style="margin-top:100px">Bitcoin Withdrawals</h1>
+
+  {{#if withdrawals}}
+    <form action="/auth/withdrawdelete" method="POST">
+      <input placeholder="userID" name="userID" />
+      <button type="submit">Enter</button>
+    </form>
+
+    {{#each withdrawals}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.userID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.crypto}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.tokens}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3 class="date">{{this.address}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Withdrawals</h2>
+      </div>
+    </div>
+  {{/if}}
+
+</div>
+
+<div id="randoms">
+  <h1 style="margin-top:100px">Random</h1>
+
+  <form action="/auth/newRandom" method="POST">
+    <input placeholder="choiceOne" name="choiceOne" />
+    <input placeholder="choiceTwo" name="choiceTwo" /><br />
+    <input
+      placeholder="desc"
+      name="desc"
+      style="width:200px;height:100px;margin-top:30px"
+    />
+    <input placeholder="timeStart" name="timeStart" />
+    <input placeholder="timeEnd" name="timeEnd" /><br>
+    <input placeholder="Code" name="Code" />
+    <input placeholder="odds" name="odds" step="0.01" type="number"/>
+    <input placeholder="Code2" name="Code2" />
+    <input placeholder="odds2" name="odds2" step="0.01" type="number"/>
+    <button type="submit">Enter</button>
+  </form>
+  {{#if randoms}}
+
+    {{#each randoms}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+      {{#each this.option1}} 
+      <form action="/auth/randomResult" method="POST">
+            <input hidden name="winner" value={{this.Code}} />
+            <button type="submit">{{this.Code}}</button>
+        </form>
+        <form action="/auth/randomResult" method="POST">
+            <input hidden name="winner" value={{this.Code2}} />
+            <button type="submit">{{this.Code2}}</button>
+        </form>
+
+       {{/each}}
+
+
+      
+
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.timeStart}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Randoms</h2>
+      </div>
+    </div>
+  {{/if}}
+
+</div>

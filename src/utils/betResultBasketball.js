@@ -37,7 +37,7 @@ const betResultBasketball = (id) => {
               .substring(0, 3)
               .replace(/\s+/g, "")
               .toUpperCase()}1`;
-            const code3 = `${team1
+            const code2 = `${team1
               .substring(0, 3)
               .replace(/\s+/g, "")
               .toUpperCase()}${team2
@@ -55,7 +55,7 @@ const betResultBasketball = (id) => {
               });
               Bet.deleteMany(
                 {
-                  $or: [{ Code: code3 }],
+                  Code: code2,
                 },
                 (error, deleted) => {
                   if (error) {
@@ -64,14 +64,14 @@ const betResultBasketball = (id) => {
                 }
               );
             } else {
-              Bet.updateMany({ Code: code3 }, { status: "won" }, (err, res) => {
+              Bet.updateMany({ Code: code2 }, { status: "won" }, (err, res) => {
                 if (error) {
                   console.log(error);
                 }
               });
               Bet.deleteMany(
                 {
-                  $or: [{ Code: code1 }],
+                  Code: code1,
                 },
                 (error, deleted) => {
                   if (error) {

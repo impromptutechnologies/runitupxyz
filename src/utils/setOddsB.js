@@ -36,7 +36,7 @@ const setOddsB = (outcomeID) => {
                 .substring(0, 3)
                 .replace(/\s+/g, "")
                 .toUpperCase()}1`;
-              const code3 = `${res.team1
+              const code2 = `${res.team1
                 .substring(0, 3)
                 .replace(/\s+/g, "")
                 .toUpperCase()}${res.team2
@@ -48,7 +48,7 @@ const setOddsB = (outcomeID) => {
                 data.response[0].bookmakers[0].bets[0].values[0].odd,
                 /*code2,
                 parseFloat(data.response[0].bookmakers[0].bets[0].values[2].odd),*/
-                code3,
+                code2,
                 data.response[0].bookmakers[0].bets[0].values[1].odd
               ]);
               res.save();
