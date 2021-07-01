@@ -7,7 +7,7 @@ const setOdds = (league, outcomeID) => {
     {
       category: "soccer",
       league: league,
-      outcomeID:outcomeID
+      outcomeID: outcomeID
     },
     (err, res) => {
       if (err) {

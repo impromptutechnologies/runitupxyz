@@ -30,7 +30,8 @@ const betResult = (id) => {
 
           if (
             data.response[0].fixture.status.short == "FT" ||
-            data.response[0].fixture.status.short == "ET"
+            data.response[0].fixture.status.short == "ET" ||
+            data.response[0].fixture.status.short == "AET"
           ) {
             const team1 = data.response[0].teams.home.name;
             const team2 = data.response[0].teams.away.name;

@@ -320,15 +320,15 @@
 <h1 style="margin-top:100px">Change Random</h1>
 
 
-{{#if stocks}}
-<form action="/auth/changestock" method="POST">
+{{#if randoms }}
+<form action="/auth/newRandom" method="POST">
   <input placeholder="Original" name="tickerorg"/>
   <input placeholder="New" name="tickernew"/>
   <input placeholder="Company" name="company"/>
   <button type="submit">Enter</button>
 </form>
 
-  {{#each stocks}}
+  {{#each randoms }}
     <div
       style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
     >
