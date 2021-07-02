@@ -96,10 +96,11 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
   //requiresAuth(),
-  app.get("/account", requiresAuth(), async (req, res) => {
+  //req.oidc.user.sub.substring(15, 34),
+  app.get("/account", async (req, res) => {
     const userProfile = await Profile.findOne({
-      userID: req.oidc.user.sub.substring(15, 34),
-    });
+      userID: '834304396673679411',
+    }).sort({userID:1}).lean();
     if (userProfile == null) {
       res.render("makeaccount", {
         profileImage: req.oidc.user.picture,
@@ -107,23 +108,41 @@ if (cluster.isMaster) {
       });
     } else {
       const userBets = await Bet.find({
-        creatorID: req.oidc.user.sub.substring(15, 34),
+        creatorID: '834304396673679411',
       }).lean();
       const userInvests = await Invest.find({
-        creatorID: req.oidc.user.sub.substring(15, 34),
+        creatorID: '834304396673679411',
       }).lean();
       const userWithdraws = await Withdraw.find({
-        userID: req.oidc.user.sub.substring(15, 34),
+        userID: '834304396673679411',
       }).lean();
-      res.render("account", {
-        userWithdraws: userWithdraws,
-        userBets: userBets,
-        userInvests: userInvests,
-        id: userProfile.userID,
-        profileImage: req.oidc.user.picture,
-        username: req.oidc.user.name,
-        coins: Math.round(userProfile.coins, 2),
-      });
+      const userReturn = ((userProfile.returntokens - userProfile.bettokens)/userProfile.bettokens)*100;
+      if(userReturn < 0){
+        res.render("account", {
+          userWithdraws: userWithdraws,
+          userBets: userBets,
+          userInvests: userInvests,
+          id: userProfile.userID,
+          //profileImage: req.oidc.user.picture,
+          username: userProfile.username,
+          return: Math.round(userReturn, 2),
+          coins: Math.round(userProfile.coins, 2),
+          color: 'red'
+        });
+      } else{
+          res.render("account", {
+            userWithdraws: userWithdraws,
+            userBets: userBets,
+            userInvests: userInvests,
+            id: userProfile.userID,
+            //profileImage: req.oidc.user.picture,
+            username: userProfile.username,
+            return: Math.round(userReturn, 2),
+            coins: Math.round(userProfile.coins, 2),
+            color: 'rgb(12, 212, 99)'
+          });
+      }
+      
     }
   });
 

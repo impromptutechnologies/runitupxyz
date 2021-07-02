@@ -2,6 +2,7 @@ const Outcome = require("./models/outcomeSchema");
 const Invest = require("./models/investSchema");
 const Crypto = require("./models/cryptoSchema");
 const Stock = require("./models/stockSchema");
+const Profile = require("./models/profileSchema");
 const moment = require("moment-timezone");
 const betResult = require("./utils/betresult");
 const betResultBasketball = require("./utils/betResultBasketball");
@@ -33,6 +34,8 @@ schedule.scheduleJob("0 */6 * * *", () => {
   newMatches();
 });
 
+
+
 const checkOdds = async () => {
   Outcome.find(
     {
@@ -63,6 +66,24 @@ schedule.scheduleJob("55 */1 * * *", () => {
   checkOdds();
 });
 
+
+
+
+const setTokens = async () => {
+  Profile.updateMany(
+    {
+      coins: { $exists: true, $gt: 0 },
+    },[
+      {"$set": {"returntokens": '$coins' }}
+  ],
+    (err, res) => {
+      console.log(res);
+    }
+  );
+};
+schedule.scheduleJob("0 0 * * 0", () => {
+  setTokens();
+});
 
 
 
