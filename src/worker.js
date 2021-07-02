@@ -112,6 +112,7 @@ const checkReturn = async () => {
   ) {
     const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
     const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
+    console.log(higheststock.ticker, highestcrypto.ticker)
     betResultInv(higheststock.ticker, "stocks");
     betResultInv(highestcrypto.symbol, "crypto");
   };
