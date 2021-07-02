@@ -95,11 +95,10 @@ if (cluster.isMaster) {
   app.get("/callback", requiresAuth(), async (req, res) => {
     res.redirect("account");
   });
-  //requiresAuth(),
-  //req.oidc.user.sub.substring(15, 34),
-  app.get("/account", async (req, res) => {
+
+  app.get("/account", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
-      userID: '834304396673679411',
+      userID: req.oidc.user.sub.substring(15, 34),
     }).sort({userID:1}).lean();
     if (userProfile == null) {
       res.render("makeaccount", {
@@ -108,13 +107,13 @@ if (cluster.isMaster) {
       });
     } else {
       const userBets = await Bet.find({
-        creatorID: '834304396673679411',
+        creatorID: req.oidc.user.sub.substring(15, 34),
       }).lean();
       const userInvests = await Invest.find({
-        creatorID: '834304396673679411',
+        creatorID: req.oidc.user.sub.substring(15, 34),
       }).lean();
       const userWithdraws = await Withdraw.find({
-        userID: '834304396673679411',
+        userID: req.oidc.user.sub.substring(15, 34),
       }).lean();
       const userReturn = ((userProfile.returntokens - userProfile.bettokens)/userProfile.bettokens)*100;
       if(userReturn < 0){
