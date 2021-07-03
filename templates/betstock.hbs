@@ -123,7 +123,6 @@
                 
                 Object.keys(values).forEach((element) => {
                     var stillUtc = moment.utc(values[element].innerHTML, 'hh:mm A').toDate();
-                    console.log(stillUtc)
                     var time2 = moment(stillUtc).local().format('hh:mm A');
                     values[element].innerHTML = time2;
 

@@ -23,9 +23,6 @@ const betResult = (id) => {
         };
         request(options, (error, response, body) => {
           data = JSON.parse(body);
-          console.log(data.response[0].fixture.status);
-          console.log(data.response[0].fixture);
-          console.log(data.response[0].teams);
           if (error) throw new Error(error);
 
           if (
@@ -57,9 +54,7 @@ const betResult = (id) => {
               .replace(/\s+/g, "")
               .toUpperCase()}3`;
             if (data.response[0].teams.home.winner == true) {
-              console.log(code1);
               Bet.updateMany({ Code: code1 }, { status: "won" }, (err, res) => {
-                console.log(res)
                 if (err) {
                   console.log(err);
                 }
@@ -76,9 +71,7 @@ const betResult = (id) => {
               );
             }
             if (data.response[0].teams.away.winner == true) {
-              console.log(code2);
               Bet.updateMany({ Code: code2 }, { status: "won" }, (err, res) => {
-                console.log(res)
                 if (err) {
                   console.log(err);
                 }
@@ -95,9 +88,7 @@ const betResult = (id) => {
                 }
               );
             } if (data.response[0].teams.away.winner !== true && data.response[0].teams.home.winner !== true) {
-              console.log(code3);
               Bet.updateMany({ Code: code3 }, { status: "won" }, (err, res) => {
-                console.log(res)
                 if (err) {
                   console.log(err);
                 }

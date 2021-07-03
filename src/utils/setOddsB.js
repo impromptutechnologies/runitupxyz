@@ -13,7 +13,6 @@ const setOddsB = (outcomeID) => {
         console.log(err);
       }
         if (res.option1.length == 0) {
-          console.log(res);
           var options = {
             method: "GET",
             url: "https://v1.basketball.api-sports.io/odds",
@@ -26,7 +25,6 @@ const setOddsB = (outcomeID) => {
           request(options, function (error, response, body) {
             if (error) throw new Error(error);
             data = JSON.parse(body);
-            console.log(data);
 
             if (data.response[0] !== undefined) {
               const code1 = `${res.team1

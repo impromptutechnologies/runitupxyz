@@ -30,10 +30,6 @@ const newMatches = async () => {
   //setTimeout(newMatchesSoccer.bind(null, 'seriea'), 180000)
   //setTimeout(newMatchesSoccer.bind(null, 'euros'), 180000)
 };
-schedule.scheduleJob("0 */6 * * *", () => {
-  newMatches();
-});
-
 
 
 const checkOdds = async () => {
@@ -72,9 +68,9 @@ schedule.scheduleJob("55 */1 * * *", () => {
 const setTokens = async () => {
   Profile.updateMany(
     {
-      coins: { $exists: true, $gt: 0 },
+      tokens: { $exists: true, $gt: 0 },
     },[
-      {"$set": {"returntokens": '$coins' }}
+      {"$set": {"returntokens": '$tokens' }}
   ],
     (err, res) => {
       console.log(res);

@@ -55,7 +55,6 @@ const newMatchesEsports = (choice) => {
           data = JSON.parse(body);
           if (error) throw new Error(error);
           data.forEach((element) => {
-            console.log(element.begin_at)
             Outcome.findOne({outcomeID: element.id}, (err, res) => {
               if(!(element.opponents.length < 2) && res == null){
                 if((element.status == 'not_started') && ((moment
@@ -104,7 +103,6 @@ const newMatchesEsports = (choice) => {
           data = JSON.parse(body);
           if (error) throw new Error(error);
           data.forEach((element) => {
-            console.log(element.begin_at)
             Outcome.findOne({outcomeID: element.id}, (err, res) => {
               if(!(element.opponents.length < 2) && res == null){
                 if((element.status == 'not_started') && ((moment
@@ -151,7 +149,6 @@ const newMatchesEsports = (choice) => {
         data = JSON.parse(body);
         if (error) throw new Error(error);
         data.forEach((element) => {
-          console.log(element.begin_at)
           Outcome.findOne({outcomeID: element.id}, (err, res) => {
             if(!(element.opponents.length < 2) && res == null){
               if((element.status == 'not_started') && ((moment
@@ -200,7 +197,6 @@ const newMatchesEsports = (choice) => {
         data = JSON.parse(body);
         if (error) throw new Error(error);
         data.forEach((element) => {
-          console.log(element.begin_at)
           Outcome.findOne({outcomeID: element.id}, (err, res) => {
             if(!(element.opponents.length < 2) && res == null){
               if((element.status == 'not_started') && ((moment

@@ -7,13 +7,9 @@ const stockPrice = (callback) => {
 
     Stock.find({}, (error, stocks) => {
         const date = moment.utc().format("YYYY-MM-DD");
-        console.log(date);
         stocks.forEach((stock) => {
-            console.log(stock.ticker)
             const url = `http://api.marketstack.com/v1/eod/${date}?access_key=${process.env.STOCK_API}&symbols=${stock.ticker}&limit=1`;
-            console.log(url)
             request ({ url, json: true },(error, { body }) => {
-                console.log(body)
                 if (error) {
                   console.log("Unable to connect", undefined);
                 } else if (body.length === 0) {
@@ -30,12 +26,6 @@ const stockPrice = (callback) => {
           }) 
 
     });
-    /*Stock.find({}, (error, highest) => {
-        callback(highest)
-    }).sort({return:-1}).limit(1);*/
-    
-      
-
 };
 
 module.exports = stockPrice;

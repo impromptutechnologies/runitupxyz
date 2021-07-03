@@ -2,7 +2,6 @@ const Outcome = require("../models/outcomeSchema");
 
 const setOdds = (league, outcomeID) => {
   var request = require("request");
-  console.log(league, outcomeID);
   Outcome.findOne(
     {
       category: "soccer",
@@ -13,7 +12,6 @@ const setOdds = (league, outcomeID) => {
       if (err) {
         console.log(err);
       }
-      console.log(res)
         if (res.option1.length == 0) {
           var options = {
             method: "GET",
@@ -27,7 +25,6 @@ const setOdds = (league, outcomeID) => {
           request(options, function (error, response, body) {
             if (error) throw new Error(error);
             data = JSON.parse(body);
-            console.log(data);
             if(data.response[0] !== undefined){
               const code1 = `${res.team1
                 .substring(0, 3)
@@ -67,39 +64,3 @@ const setOdds = (league, outcomeID) => {
 };
 
 module.exports = setOdds;
-
-
-/*
-else{
-              const code1 = `${res.team1
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}${res.team2
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}1`;
-              const code2 = `${res.team1
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}${res.team2
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}2`;
-              const code3 = `${res.team1
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}${res.team2
-                .substring(0, 3)
-                .replace(/\s+/g, "")
-                .toUpperCase()}3`;
-              res.addOptions([
-                code1,
-                0.0,
-                code2,
-                0.0,
-                code3,
-                0.0,
-              ]);
-              res.save();
-
-            }*/

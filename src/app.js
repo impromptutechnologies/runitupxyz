@@ -96,6 +96,11 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
 
+
+
+
+
+  //ACCOUNT
   app.get("/account", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
@@ -108,13 +113,22 @@ if (cluster.isMaster) {
     } else {
       const userBets = await Bet.find({
         creatorID: req.oidc.user.sub.substring(15, 34),
-      }).lean();
+      }).sort({ creatorID: 1 })
+      .select({ Code: 1, betOdds: 1, betAmount: 1})
+      .lean()
+      .limit(5);
       const userInvests = await Invest.find({
         creatorID: req.oidc.user.sub.substring(15, 34),
-      }).lean();
+      }).sort({ creatorID: 1 })
+      .select({ Code: 1, investAmount: 1})
+      .lean()
+      .limit(5);
       const userWithdraws = await Withdraw.find({
         userID: req.oidc.user.sub.substring(15, 34),
-      }).lean();
+      }).sort({ userID: 1 })
+      .select({ tokens: 1, crypto: 1, address: 1})
+      .lean()
+      .limit(5);
       const userReturn = ((userProfile.returntokens - userProfile.bettokens)/userProfile.bettokens)*100;
       if(userReturn < 0){
         res.render("account", {
@@ -122,10 +136,10 @@ if (cluster.isMaster) {
           userBets: userBets,
           userInvests: userInvests,
           id: userProfile.userID,
-          //profileImage: req.oidc.user.picture,
+          profileImage: req.oidc.user.picture,
           username: userProfile.username,
           return: Math.round(userReturn, 2),
-          coins: Math.round(userProfile.coins, 2),
+          tokens: Math.round(userProfile.tokens, 2),
           color: 'red'
         });
       } else{
@@ -134,10 +148,10 @@ if (cluster.isMaster) {
             userBets: userBets,
             userInvests: userInvests,
             id: userProfile.userID,
-            //profileImage: req.oidc.user.picture,
+            profileImage: req.oidc.user.picture,
             username: userProfile.username,
             return: Math.round(userReturn, 2),
-            coins: Math.round(userProfile.coins, 2),
+            tokens: Math.round(userProfile.tokens, 2),
             color: 'rgb(12, 212, 99)'
           });
       }
@@ -145,16 +159,18 @@ if (cluster.isMaster) {
     }
   });
 
+
+
+
+
   app.post("/auth/withdraw", requiresAuth(), async (req, res) => {
-    const coins = await Profile.findOne({
+    const tokens = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     }).lean();
-    const validbtc = WAValidator.validate(req.body.address, "BTC");
-    const valideth = WAValidator.validate(req.body.address, "ETH");
-    if (valideth == true) {
+    if (WAValidator.validate(req.body.address, "ETH") == true) {
       const coinUpdate = await Profile.findOneAndUpdate(
         { userID: req.oidc.user.sub.substring(15, 34) },
-        { coins: parseInt(coins.coins - req.body.tokens) }
+        { tokens: parseInt(tokens.tokens - req.body.tokens) }
       );
       const withdraw = await Withdraw.create({
         userID: req.oidc.user.sub.substring(15, 34),
@@ -163,10 +179,10 @@ if (cluster.isMaster) {
         address: req.body.address,
       });
     }
-    if (validbtc == true) {
+    if (WAValidator.validate(req.body.address, "BTC")  == true) {
       const coinUpdate = await Profile.findOneAndUpdate(
         { userID: req.oidc.user.sub.substring(15, 34) },
-        { coins: parseInt(coins.coins - req.body.tokens) }
+        { tokens: parseInt(tokens.tokens - req.body.tokens) }
       );
       const withdraw = await Withdraw.create({
         userID: req.oidc.user.sub.substring(15, 34),
@@ -178,6 +194,33 @@ if (cluster.isMaster) {
     res.redirect("/account");
   });
 
+  //ACCOUNT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //ADMIN PANEL
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -448,6 +491,30 @@ if (cluster.isMaster) {
     }
   });
 
+
+
+
+//ADMIN PANEL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //MISC
+
   app.get("", (req, res) => {
     res.render("index");
   });
@@ -467,6 +534,22 @@ if (cluster.isMaster) {
   app.get("/privacyterm", (req, res) => {
     res.render("privacyterms");
   });
+  
+  //MISC
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //BETS
 
   app.get("/bets", async (req, res) => {
     try {
@@ -491,11 +574,6 @@ if (cluster.isMaster) {
         3600
       );
       res.render("bet", { outcomes: outcomes });
-      //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
     } catch (err) {
       console.log(err);
     }
@@ -713,6 +791,23 @@ if (cluster.isMaster) {
     }
   });
 
+  //BETS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //PAY
+
   app.post("/pay", (req, res) => {
     const create_payment_json = {
       intent: "sale",
@@ -761,8 +856,8 @@ if (cluster.isMaster) {
   app.get("/success", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
-    });
-    const coins = userProfile.coins;
+    }).sort({userID:1})
+    const tokens = userProfile.tokens;
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
     const execute_payment_json = {
@@ -787,7 +882,7 @@ if (cluster.isMaster) {
             return res.redirect("/tokens");
           } else {
             userProfile.payments.push(payment.id);
-            userProfile.coins = coins + 17645;
+            userProfile.tokens = tokens + 17645;
             userProfile.save();
             return res.redirect("/tokens");
           }
@@ -799,7 +894,7 @@ if (cluster.isMaster) {
   app.get("/tokens", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
-    });
+    }).sort({userID:1}).lean();
     if (userProfile == null) {
       res.redirect("account");
     } else {
@@ -815,96 +910,3 @@ if (cluster.isMaster) {
     console.log("server running port" + port);
   });
 }
-
-/*
-  //TEST ROUTES
-  
-app.get('/acctest', async (req, res) => {
-    console.time('started1')
-    const userProfile = await Profile.findOne({userID:'834304396673679411'});
-    if (userProfile == null){
-        res.render('makeaccount');
-        
-    }else{
-        
-        const userBets = await Bet.find({creatorID:'834304396673679411'}).select({ Code : 1 , betOdds : 1 , betAmount : 1}).sort({outcomeID:1}).lean().limit(10);
-        const userInvests = await Invest.find({creatorID:'834304396673679411'}).select({ Code : 1 , investAmount : 1}).lean().sort({outcomeID:1}).limit(10);
-        const userWithdraws = await Withdraw.find({userID:'834304396673679411'}).select({ tokens : 1 , crypto : 1 , address : 1}).sort({outcomeID:1}).lean().limit(1);
-       
-       
-        res.render('account', {userWithdraws:userWithdraws, userBets: userBets, userInvests: userInvests, id: userProfile.userID, coins: Math.round(userProfile.coins, 2)});
-    }
-    console.timeEnd('started1')
-})
-
-app.get("/betstest2", async (req, res) => {
-    try {
-    console.time('started1')
-      const outcomes = await Outcome.find({
-        category: "soccer",
-        timeStart: { $gt: date },
-        "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
-        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
-        .lean()
-        .limit(10);
-    console.timeEnd('started1')
-      res.render("bet", { outcomes: outcomes });
-      //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
-app.get('/betstest', async (req, res) => {
-    console.time('started')
-    var date = moment.utc().format("MM-DD HH:mm");
-    try{
-        const outcomesc = await Outcome.find({category:"esportscod", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
-        const outcomesd = await Outcome.find({category:"esportsdota", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
-        const outcomesgo = await Outcome.find({category:"esportscsgo", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
-        const outcomeslol = await Outcome.find({category:"esportslol", timeStart: { $gt: date }, 'option1.0.odds':{ $gt: 0 }}).sort({timeStart:1}).lean();
-        res.render('betgame', {outcomes:outcomesc, outcomesd:outcomesd, outcomesgo:outcomesgo, outcomeslol:outcomeslol});
-    } catch(err){
-        console.log(err);
-    }
-    console.timeEnd('started')
-})
-
-//USING CACHING
-app.get("/betstest", async (req, res) => {
-    try {
-        const reply = await GET_ASYNC('betstest');
-        if(reply){
-            console.log(reply)
-            res.render("bet", { outcomes: JSON.parse(reply)});
-            return;
-        }
-        console.timeEnd('fast')
-      const outcomes = await Outcome.find({
-        category: "soccer",
-        timeStart: { $gt: date },
-        "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
-        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
-        .lean()
-        .limit(10);
-        const saveResult = await SET_ASYNC('betstest', JSON.stringify(outcomes), 'EX', 60)
-        console.log('newdata', saveResult)
-      res.render("bet", { outcomes: outcomes });
-      //const outcomese = await Outcome.find({league: 'euros', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesp = await Outcome.find({league: 'prem', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesi = await Outcome.find({league: 'rest', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //const outcomesc = await Outcome.find({league: 'champ', timeStart: { $gt: date }}, { team1 : 1 , team2 : 1 , timeStart : 1 , option1 : 1}).sort({timeStart:1}).lean().limit(10)
-      //res.render('bet', {outcomes:outcomesp, outcomesi:outcomesi, outcomesc:outcomesc, outcomese:outcomese});
-    } catch (err) {
-      console.log(err);
-    }
-  });
-*/

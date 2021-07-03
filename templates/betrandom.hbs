@@ -150,7 +150,6 @@
                 
                 Object.keys(values).forEach((element) => {
                     var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
-                    console.log(stillUtc)
                     var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
                     values[element].innerHTML = time2;
 
