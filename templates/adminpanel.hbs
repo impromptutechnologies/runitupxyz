@@ -10,6 +10,53 @@
   <a href="#randoms">Random Events</a><br>
 </div>
 
+
+<div>
+  <h1>Stats</h1>
+  <p>Number of Users: {{ usercount }}</p>
+  <p>Bets outstanding: {{ betcount }}</p>
+  <p>Invests outstanding: {{ investcount }}</p>
+  <p>Paid Users: {{ paidusers }}</p>
+  <p>Revenue: {{ revenues }}</p>
+</div>
+
+<div id="ongoing">
+  <h1 style="margin-top:100px">Ongoing matches right now</h1>
+
+  {{#if ongoing}}
+    <form action="/auth/withdrawdelete" method="POST">
+      <input placeholder="userID" name="userID" />
+      <button type="submit">Enter</button>
+    </form>
+
+    {{#each ongoing}}
+      <div
+        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
+      >
+        <div style="width:85%;display: flex;">
+          <div style="padding: 0.6em;">
+            <h3>{{this.outcomeID}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team1}}</h3>
+          </div>
+          <div style="padding: 0.6em;">
+            <h3>{{this.team2}}</h3>
+          </div>
+        </div>
+      </div>
+      <hr />
+    {{/each}}
+  {{else}}
+    <div style="width:85%">
+      <div style="padding: 0.6em;">
+        <h2>No Ongoing</h2>
+      </div>
+    </div>
+  {{/if}}
+
+</div>
+
 <div id="gameodds" style="margin-top:50px">
 
   <h1>To fill in odds manually</h1>

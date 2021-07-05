@@ -130,6 +130,7 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
       const userReturn = ((userProfile.returntokens - userProfile.bettokens)/userProfile.bettokens)*100;
+      const userR = userReturn || 0
       if(userReturn < 0){
         res.render("account", {
           userWithdraws: userWithdraws,
@@ -138,7 +139,7 @@ if (cluster.isMaster) {
           id: userProfile.userID,
           profileImage: req.oidc.user.picture,
           username: userProfile.username,
-          return: Math.round(userReturn, 2),
+          return: Math.round(userR, 2),
           tokens: Math.round(userProfile.tokens, 2),
           color: 'red'
         });
@@ -150,7 +151,7 @@ if (cluster.isMaster) {
             id: userProfile.userID,
             profileImage: req.oidc.user.picture,
             username: userProfile.username,
-            return: Math.round(userReturn, 2),
+            return: Math.round(userR, 2),
             tokens: Math.round(userProfile.tokens, 2),
             color: 'rgb(12, 212, 99)'
           });
@@ -159,14 +160,10 @@ if (cluster.isMaster) {
     }
   });
 
-
-
-
-
   app.post("/auth/withdraw", requiresAuth(), async (req, res) => {
     const tokens = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
-    }).lean();
+    }).sort({userID:1}).lean();
     if (WAValidator.validate(req.body.address, "ETH") == true) {
       const coinUpdate = await Profile.findOneAndUpdate(
         { userID: req.oidc.user.sub.substring(15, 34) },
@@ -195,6 +192,11 @@ if (cluster.isMaster) {
   });
 
   //ACCOUNT
+
+
+
+
+
 
 
 
@@ -463,16 +465,20 @@ if (cluster.isMaster) {
         category: "basketball",
         $or: [{ timeStart: { $regex: ".*20:00.*" } }, { option1: [] }]
       }).lean();
-      const userWithdraws = await Withdraw.find({}).lean();
-
-      const stocks = await Stock.find({}).lean();
-
-      const cryptos = await Crypto.find({}).lean();
-
+      const userWithdraws = await Withdraw.find({}).select({ crypto: 1, tokens: 1, address: 1 }).lean();
+      const ongoing = await Outcome.find({timeStart: { $lt: date }}).select({ outcomeID: 1, team1: 1, team2: 1 }).lean();
+      const stocks = await Stock.find({}).select({ ticker: 1, company: 1 }).lean();
+      const cryptos = await Crypto.find({}).select({ symbol: 1, Crypto: 1 }).lean();
+      const usercount = await Profile.count({}).lean();
+      const paidusers = await Profile.count({payments: {$ne:[]}}).lean();
+      const revenuesmin = paidusers * 2.5;
+      const betcount = await Bet.count({}).lean();
+      const investcount = await Invest.count({}).lean();
       const randoms = await Outcome.find({
         category: "random",
       })
         .sort({ timeStart: 1 })
+        .select({ Code: 1, Code2: 1 })
         .lean();
 
       res.render("adminpanel", {
@@ -480,19 +486,22 @@ if (cluster.isMaster) {
         cryptos: cryptos,
         outcomes: outcomesc,
         outcomesd: outcomesd,
+        usercount: usercount,
+        paidusers: paidusers,
+        revenues: revenuesmin,
+        betcount: betcount,
+        investcount: investcount,
         outcomesgo: outcomesgo,
         outcomeslol: outcomeslol,
         basketball: basketball,
         randoms: randoms,
+        ongoing: ongoing,
         withdrawals: userWithdraws,
       });
     } else {
       res.redirect("/");
     }
   });
-
-
-
 
 //ADMIN PANEL
 
@@ -549,6 +558,21 @@ if (cluster.isMaster) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //BETS
 
   app.get("/bets", async (req, res) => {
@@ -578,7 +602,7 @@ if (cluster.isMaster) {
       console.log(err);
     }
   });
-
+  
   app.get("/betsbb", async (req, res) => {
     try {
       const reply = await GET_ASYNC("betsbb");
@@ -625,8 +649,8 @@ if (cluster.isMaster) {
         category: "esportscod",
         timeStart: { $gt: date },
         "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
+      }).sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, odds: 1, odds2: 1, Code: 1, Code2: 1 })
         .lean();
       const saveResult = await SET_ASYNC(
         "outcomesc",
@@ -638,8 +662,8 @@ if (cluster.isMaster) {
         category: "esportsdota",
         timeStart: { $gt: date },
         "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
+      }).sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, odds: 1, odds2: 1, Code: 1, Code2: 1 })
         .lean();
       const saveResult1 = await SET_ASYNC(
         "outcomesd",
@@ -653,6 +677,7 @@ if (cluster.isMaster) {
         "option1.0.odds": { $gt: 0 },
       })
         .sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, odds: 1, odds2: 1, Code: 1, Code2: 1 })
         .lean();
       const saveResult2 = await SET_ASYNC(
         "outcomesgo",
@@ -666,6 +691,7 @@ if (cluster.isMaster) {
         "option1.0.odds": { $gt: 0 },
       })
         .sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, odds: 1, odds2: 1, Code: 1, Code2: 1 })
         .lean();
       const saveResult3 = await SET_ASYNC(
         "outcomeslol",
@@ -778,6 +804,7 @@ if (cluster.isMaster) {
         timeStart: { $gt: date },
       })
         .sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, odds: 1, odds2: 1, Code: 1, Code2: 1, desc: 1 })
         .lean();
       const saveResult = await SET_ASYNC(
         "betsq",
@@ -792,6 +819,12 @@ if (cluster.isMaster) {
   });
 
   //BETS
+
+
+
+
+
+
 
 
 
