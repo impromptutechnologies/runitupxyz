@@ -16,7 +16,7 @@ const cryptoPriceOpen = () => {
             })
           });
         }) 
-  });
+  }).lean();
   };
 
   module.exports = cryptoPriceOpen;

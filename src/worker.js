@@ -30,6 +30,9 @@ const newMatches = async () => {
   //setTimeout(newMatchesSoccer.bind(null, 'seriea'), 180000)
   //setTimeout(newMatchesSoccer.bind(null, 'euros'), 180000)
 };
+schedule.scheduleJob("0 */6 * * *", () => {
+  newMatches();
+});
 
 
 const checkOdds = async () => {
