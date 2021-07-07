@@ -88,8 +88,8 @@ if (cluster.isMaster) {
     res.render("index");
   });
 
-  app.get("/loaderio-f5eb4b9349534dcaf4b4faa8680b82be", (req, res) => {
-    res.send("loaderio-f5eb4b9349534dcaf4b4faa8680b82be");
+  app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
+    res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
   });
 
   app.get("/callback", requiresAuth(), async (req, res) => {
