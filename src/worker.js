@@ -107,7 +107,7 @@ const checkReturn = async () => {
   }
 
   if (
-    date == moment.utc().format(`${month}-${day} 21:30`) &&
+    date == moment.utc().format(`${month}-${day} 22:00`) &&
     investmentstock.length !== 0
   ) {
     stockPrice((error, highest) => {
@@ -117,7 +117,7 @@ const checkReturn = async () => {
     });
   }
   if (
-    date == moment.utc().format(`${month}-${day} 21:30`) &&
+    date == moment.utc().format(`${month}-${day} 22:00`) &&
     investmentcrypto.length !== 0
   ) {
     cryptoPrice((error, highest) => {
@@ -128,7 +128,7 @@ const checkReturn = async () => {
   }
 
   if (
-    date == moment.utc().format(`${month}-${day} 21:33`) &&
+    date == moment.utc().format(`${month}-${day} 22:03`) &&
     (investmentcrypto.length !== 0 || investmentstock.length !== 0)
   ) {
     const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
