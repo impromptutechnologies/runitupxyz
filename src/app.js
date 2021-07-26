@@ -52,7 +52,7 @@ if (cluster.isMaster) {
   });
 
   const redis = require("redis");
-  const client = redis.createClient('redis://:p57b755e1f83220d051ec07bff246ab01c73c242df01d95e9b6ba3897494e2524@ec2-54-85-18-220.compute-1.amazonaws.com:32659');
+  const client = redis.createClient(process.env.REDIS_URL);
   
   client.on("error", function (err) {
     console.log("Error " + err);
