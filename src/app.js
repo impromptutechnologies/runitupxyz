@@ -23,6 +23,9 @@ if (cluster.isMaster) {
   const Prem = require("./models/premSchema.js");
   const Withdraw = require("./models/withdrawSchema.js");
   const WAValidator = require("wallet-address-validator");
+  const newMatchesSoccer = require("./utils/newmatches");
+  const newMatchesBasketball = require("./utils/newmatchesb");
+  const newMatchesEsports = require("./utils/newmatchese");
 
   const Crypto = require("./models/cryptoSchema.js");
   var compression = require("compression");
@@ -49,7 +52,11 @@ if (cluster.isMaster) {
   });
 
   const redis = require("redis");
-  const client = redis.createClient(process.env.REDIS_URL);
+  const client = redis.createClient('redis://:p57b755e1f83220d051ec07bff246ab01c73c242df01d95e9b6ba3897494e2524@ec2-54-85-18-220.compute-1.amazonaws.com:32659');
+  
+  client.on("error", function (err) {
+    console.log("Error " + err);
+});
   const GET_ASYNC = promisify(client.get).bind(client);
   const SET_ASYNC = promisify(client.set).bind(client);
 
@@ -96,8 +103,20 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
 
-
-
+  app.get("/addmatches", (req, res) => {
+    console.log('heelo')
+    newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    console.log('heelo1')
+    newMatchesSoccer('prem')
+    newMatchesSoccer('champ')
+    newMatchesSoccer('seriea')
+    newMatchesSoccer('bundes')
+    newMatchesSoccer('laliga')
+    console.log('heelo2')
+    res.redirect("/");
+  });
 
 
   //ACCOUNT

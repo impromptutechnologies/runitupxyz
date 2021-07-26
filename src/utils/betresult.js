@@ -28,7 +28,8 @@ const betResult = (id) => {
           if (
             data.response[0].fixture.status.short == "FT" ||
             data.response[0].fixture.status.short == "ET" ||
-            data.response[0].fixture.status.short == "AET"
+            data.response[0].fixture.status.short == "AET" ||
+            data.response[0].fixture.status.short == "PEN"
           ) {
             const team1 = data.response[0].teams.home.name;
             const team2 = data.response[0].teams.away.name;
@@ -106,6 +107,7 @@ const betResult = (id) => {
               );
             }
           } else {
+            console.log(data.response[0].fixture.status.short)
             console.log("game still in progress");
           }
         });

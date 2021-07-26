@@ -16,7 +16,7 @@ const newMatchesBasketball = (daye) => {
         url: "https://v1.basketball.api-sports.io/games",
         qs: {
           league: 12,
-          season: "2020-2021",
+          season: "2021-2022",
           date: date,
         },
         headers: {
@@ -29,7 +29,7 @@ const newMatchesBasketball = (daye) => {
         url: "https://v1.basketball.api-sports.io/games",
         qs: {
           league: 12,
-          season: "2020-2021",
+          season: "2021-2022",
           date: date2,
         },
         headers: {
@@ -42,7 +42,7 @@ const newMatchesBasketball = (daye) => {
         url: "https://v1.basketball.api-sports.io/games",
         qs: {
           league: 12,
-          season: "2020-2021",
+          season: "2021-2022",
           date: date3,
         },
         headers: {
@@ -53,7 +53,8 @@ const newMatchesBasketball = (daye) => {
 
       if(daye=='1'){
         request(options, (error, response, body) => {
-          data = JSON.parse(body);
+          const data = JSON.parse(body);
+          console.log(data);
           if (error) throw new Error(error);
           data.response.forEach((element)=>{
             Outcome.findOne({category: "basketball", outcomeID: element.id}, (err, res) => {
@@ -89,7 +90,8 @@ const newMatchesBasketball = (daye) => {
       }
       if(daye=='2'){
         request(options1, (error, response, body) => {
-          data = JSON.parse(body);
+          const data = JSON.parse(body);
+          console.log(data);
           if (error) throw new Error(error);
           data.response.forEach((element)=>{
             Outcome.findOne({category: "basketball", outcomeID: element.id}, (err, res) => {
@@ -125,7 +127,7 @@ const newMatchesBasketball = (daye) => {
       }
       if(daye=='3'){
         request(options2, (error, response, body) => {
-          data = JSON.parse(body);
+          const data = JSON.parse(body);
           console.log(data);
           if (error) throw new Error(error);
           data.response.forEach((element)=>{

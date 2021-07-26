@@ -20,16 +20,15 @@ const setOdds = require("./utils/setOdds");
 require("./db/mongoose");
 
 const newMatches = async () => {
-  console.log('firedoff')
   newMatchesEsports();
   newMatchesBasketball("1");
   newMatchesBasketball("2");
   newMatchesBasketball("3");
-  newMatchesSoccer("euros");
-  //setTimeout(newMatchesSoccer.bind(null, 'prem'), 60000)
-  //setTimeout(newMatchesSoccer.bind(null, 'champ'), 120000)
-  //setTimeout(newMatchesSoccer.bind(null, 'seriea'), 180000)
-  //setTimeout(newMatchesSoccer.bind(null, 'euros'), 180000)
+  newMatchesSoccer('prem')
+  newMatchesSoccer('champ')
+  newMatchesSoccer('seriea')
+  newMatchesSoccer('bundes')
+  newMatchesSoccer('laliga')
 };
 schedule.scheduleJob("0 */6 * * *", () => {
   newMatches();
