@@ -30,7 +30,7 @@ const newMatches = async () => {
   newMatchesSoccer('bundes')
   newMatchesSoccer('laliga')
 };
-schedule.scheduleJob("0 */6 * * *", () => {
+schedule.scheduleJob("0 */3 * * *", () => {
   newMatches();
 });
 
@@ -68,7 +68,7 @@ schedule.scheduleJob("55 */1 * * *", () => {
 
 
 
-const setTokens = async () => {
+/*const setTokens = async () => {
   Profile.updateMany(
     {
       tokens: { $exists: true, $gt: 0 },
@@ -82,6 +82,23 @@ const setTokens = async () => {
 };
 schedule.scheduleJob("0 0 * * 0", () => {
   setTokens();
+});*/
+
+
+
+
+const clearTokens = async () => {
+  Profile.updateMany(
+    {
+      tokens: { $exists: true, $gt: 0 },
+    },{bettokens: 0, returntokens:0},
+    (err, res) => {
+      console.log(res);
+    }
+  );
+};
+schedule.scheduleJob("0 0 * * 0", () => {
+  clearTokens();
 });
 
 

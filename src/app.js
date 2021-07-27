@@ -83,6 +83,8 @@ if (cluster.isMaster) {
   app.use(setCache);
   const port = process.env.PORT || 3000;
   const date = moment.utc().format("MM-DD HH:mm");
+  const date2 = moment.utc().add(2, "days").format("MM-DD HH:mm");
+
   app.set("view engine", "hbs");
   app.set("views", viewsPath);
 
@@ -603,7 +605,7 @@ if (cluster.isMaster) {
       }
       const outcomes = await Outcome.find({
         category: "soccer",
-        timeStart: { $gt: date },
+        timeStart: { $gt: date, $lt: date2  },
         "option1.0.odds": { $gt: 0 },
       })
         .sort({ timeStart: 1 })
