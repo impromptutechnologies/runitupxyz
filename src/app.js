@@ -178,7 +178,7 @@ if (cluster.isMaster) {
           color: 'grey'
         });
       } */
-      if(userReturn > 0){
+      else{
           res.render("account", {
             userWithdraws: userWithdraws,
             userBets: userBets,
