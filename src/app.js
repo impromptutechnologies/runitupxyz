@@ -165,19 +165,7 @@ if (cluster.isMaster) {
           color: 'red'
         });
       } 
-      if(userReturn == 0){
-        res.render("account", {
-          userWithdraws: userWithdraws,
-          userBets: userBets,
-          userInvests: userInvests,
-          id: userProfile.userID,
-          profileImage: req.oidc.user.picture,
-          username: userProfile.username,
-          return: 0,
-          tokens: Math.round(userProfile.tokens, 2),
-          color: 'grey'
-        });
-      } else{
+      else{
           res.render("account", {
             userWithdraws: userWithdraws,
             userBets: userBets,
