@@ -893,7 +893,7 @@ if (cluster.isMaster) {
               {
                 name: "Lootbox",
                 sku: "001",
-                price: "2.99",
+                price: "3.99",
                 currency: "USD",
                 quantity: 1,
               },
@@ -901,7 +901,7 @@ if (cluster.isMaster) {
           },
           amount: {
             currency: "USD",
-            total: "2.99",
+            total: "3.99",
           },
           description: "Lootbox!",
         },
@@ -934,7 +934,7 @@ if (cluster.isMaster) {
         {
           amount: {
             currency: "USD",
-            total: "2.99",
+            total: "3.99",
           },
         },
       ],
