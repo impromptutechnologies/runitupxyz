@@ -165,7 +165,7 @@ if (cluster.isMaster) {
           color: 'red'
         });
       } 
-      if(userReturn == 0){
+      /*if(userReturn == 0){
         res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
@@ -177,7 +177,7 @@ if (cluster.isMaster) {
           tokens: Math.round(userProfile.tokens, 2),
           color: 'grey'
         });
-      } 
+      } */
       if(userReturn > 0){
           res.render("account", {
             userWithdraws: userWithdraws,
