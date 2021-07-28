@@ -12,13 +12,7 @@ paypal.configure({
   });
 
 // 1. Initiating the Queue
-const paymentQueue = new Queue('pay', {
-  redis: {
-    host: process.env.HOST,
-    port: process.env.POST,
-    password: process.env.PASSWORD
-  }
-});
+const paymentQueue = new Queue('pay', process.env.REDIS_URL);
 
 const completePayment = (prof, tokens, id, value) => {
     const data = {
