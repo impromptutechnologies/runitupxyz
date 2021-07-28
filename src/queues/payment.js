@@ -32,8 +32,7 @@ paymentQueue.process(async job => {
     return pay(job.data.profile, job.data.tokens, job.data.paymentId, job.data.json); 
 });
 
-
-function pay(prof, tokens, paymentId, json) {
+const pay = async (prof, tokens, paymentId, json) => {
     console.log(prof)
     const userProfile = await Profile.findOne({
         userID: prof,
@@ -59,6 +58,34 @@ function pay(prof, tokens, paymentId, json) {
         }
       );
 }
+
+/*
+function pay(prof, tokens, paymentId, json) {
+    console.log(prof)
+    const userProfile = await Profile.findOne({
+        userID: prof,
+      }).sort({ userID: 1 });
+    paypal.payment.execute(
+        paymentId,
+        json,
+        function (error, payment) {
+          if (error) {
+            throw error;
+          } else {
+            if (userProfile.payments.includes(payment.id)) {
+              //return res.redirect("/tokens");
+              return true;
+            } else {
+              userProfile.payments.push(payment.id);
+              userProfile.tokens = tokens + 17645;
+              userProfile.save();
+              return true;
+              //return res.redirect("/tokens");
+            }
+          }
+        }
+      ); */
+
 
 
 module.exports = completePayment
