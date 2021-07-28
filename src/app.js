@@ -884,25 +884,6 @@ if (cluster.isMaster) {
         },
       ],
     };
-
-    /*paypal.payment.execute(
-      paymentId,
-      execute_payment_json,
-      function (error, payment) {
-        if (error) {
-          throw error;
-        } else {
-          if (userProfile.payments.includes(payment.id)) {
-            return res.redirect("/tokens");
-          } else {
-            userProfile.payments.push(payment.id);
-            userProfile.tokens = tokens + 17645;
-            userProfile.save();
-            return res.redirect("/tokens");
-          }
-        }
-      }
-    );*/
     completePayment(req.oidc.user.sub.substring(15, 34), tokens, paymentId, execute_payment_json);
     return res.redirect("/account");
   });
@@ -944,7 +925,30 @@ if (cluster.isMaster) {
 
 
 
-  /*app.get("/jeez", async (req, res) => {
+  /*
+  
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function (error, payment) {
+        if (error) {
+          throw error;
+        } else {
+          if (userProfile.payments.includes(payment.id)) {
+            return res.redirect("/tokens");
+          } else {
+            userProfile.payments.push(payment.id);
+            userProfile.tokens = tokens + 17645;
+            userProfile.save();
+            return res.redirect("/tokens");
+          }
+        }
+      }
+    );
+
+
+
+  app.get("/jeez", async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: '834304396673679411',
     }).sort({ userID: 1 });
