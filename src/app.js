@@ -43,11 +43,11 @@ if (cluster.isMaster) {
   };
 
   paypal.configure({
-    mode: "sandbox", //sandbox or live
-    client_id: 'AYGEOzs1ivvoOXqHhdoWWZc0KGLUdcZ-YehnqROBBBzzfGeUecNQOcHzbo7CCHnqEw_PNpovgmqhj_d_',
-    client_secret: 'EAvzD2BzwmUqlTKHTMjDONvk_1CHqFQunsbk8TICaeq21jXBqFB0bkBVBvmwea7zR6uMtfUV6jwNQGlH'
-    //client_id: process.env.CLIENT_IDPYPL,
-    //client_secret: process.env.CLIENT_SECRET,
+    mode: "live", //sandbox or live
+    //client_id: 'AYGEOzs1ivvoOXqHhdoWWZc0KGLUdcZ-YehnqROBBBzzfGeUecNQOcHzbo7CCHnqEw_PNpovgmqhj_d_',
+    //client_secret: 'EAvzD2BzwmUqlTKHTMjDONvk_1CHqFQunsbk8TICaeq21jXBqFB0bkBVBvmwea7zR6uMtfUV6jwNQGlH'
+    client_id: process.env.CLIENT_IDPYPL,
+    client_secret: process.env.CLIENT_SECRET,
   });
 
   const redis = require("redis");
