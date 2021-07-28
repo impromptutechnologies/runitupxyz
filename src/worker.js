@@ -30,7 +30,7 @@ const newMatches = async () => {
   newMatchesSoccer('bundes')
   newMatchesSoccer('laliga')
 };
-schedule.scheduleJob("0 */1 * * *", () => {
+schedule.scheduleJob("0 */3 * * *", () => {
   newMatches();
 });
 
