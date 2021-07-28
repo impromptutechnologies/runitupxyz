@@ -903,7 +903,7 @@ if (cluster.isMaster) {
         }
       }
     );*/
-    completePayment(userProfile, tokens, paymentId, execute_payment_json);
+    completePayment(req.oidc.user.sub.substring(15, 34), tokens, paymentId, execute_payment_json);
     return res.redirect("/account");
   });
 

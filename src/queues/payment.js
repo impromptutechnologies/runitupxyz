@@ -2,6 +2,7 @@ const Queue = require('bull');
 const paypal = require("paypal-rest-sdk");
 require("../db/mongoose");
 require("dotenv").config();
+const Profile = require("../models/profileSchema");
 
 paypal.configure({
     mode: "sandbox", //sandbox or live
@@ -33,6 +34,10 @@ paymentQueue.process(async job => {
 
 
 function pay(prof, tokens, paymentId, json) {
+    console.log(prof)
+    const userProfile = await Profile.findOne({
+        userID: prof,
+      }).sort({ userID: 1 });
     paypal.payment.execute(
         paymentId,
         json,
@@ -40,13 +45,13 @@ function pay(prof, tokens, paymentId, json) {
           if (error) {
             throw error;
           } else {
-            if (prof.payments.includes(payment.id)) {
+            if (userProfile.payments.includes(payment.id)) {
               //return res.redirect("/tokens");
               return true;
             } else {
-              prof.payments.push(payment.id);
-              prof.tokens = tokens + 17645;
-              prof.save();
+              userProfile.payments.push(payment.id);
+              userProfile.tokens = tokens + 17645;
+              userProfile.save();
               return true;
               //return res.redirect("/tokens");
             }
