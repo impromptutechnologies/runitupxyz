@@ -7,7 +7,8 @@ const profileSchema = new mongoose.Schema({
     tokens: {type: Number, default:0, required:true},
     returntokens: {type: Number, default:0},
     bettokens: {type: Number, default:0},
-    payments:[]
+    payments:[],
+    invites: {type: Number, default:0},
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
