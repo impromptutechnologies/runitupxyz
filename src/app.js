@@ -891,11 +891,7 @@ if (cluster.isMaster) {
 
 
 
-  app.get("/tokens", async (req, res) => {
-    /*
-    requiresAuth(),
-    
-    
+  app.get("/tokens",requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     })
@@ -905,9 +901,7 @@ if (cluster.isMaster) {
       res.redirect("account");
     } else {
       res.render("tokens");
-    }*/
-
-    res.render("tokens");
+    }
   });
 
   app.get("*", (req, res) => {
