@@ -52,7 +52,7 @@ const newMatchesEsports = (choice) => {
 
 
         request(options, (error, response, body) => {
-          data = JSON.parse(body);
+          const data = JSON.parse(body);
           if (error) throw new Error(error);
           data.forEach((element) => {
             Outcome.findOne({outcomeID: element.id}, (err, res) => {
@@ -100,7 +100,7 @@ const newMatchesEsports = (choice) => {
 
       
         request(optionscsgo, (error, response, body) => {
-          data = JSON.parse(body);
+          const data = JSON.parse(body);
           if (error) throw new Error(error);
           data.forEach((element) => {
             Outcome.findOne({outcomeID: element.id}, (err, res) => {
@@ -146,7 +146,7 @@ const newMatchesEsports = (choice) => {
         });
         
       request(optionsdota, (error, response, body) => {
-        data = JSON.parse(body);
+        const data = JSON.parse(body);
         if (error) throw new Error(error);
         data.forEach((element) => {
           Outcome.findOne({outcomeID: element.id}, (err, res) => {
@@ -194,7 +194,7 @@ const newMatchesEsports = (choice) => {
       
 
       request(optionsleague, (error, response, body) => {
-        data = JSON.parse(body);
+        const data = JSON.parse(body);
         if (error) throw new Error(error);
         data.forEach((element) => {
           Outcome.findOne({outcomeID: element.id}, (err, res) => {

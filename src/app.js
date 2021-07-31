@@ -613,6 +613,7 @@ if (cluster.isMaster) {
           team1: 1,
           team2: 1,
           timeStart: 1,
+          option1: 1,
           odds: 1,
           odds2: 1,
           Code: 1,
@@ -635,6 +636,7 @@ if (cluster.isMaster) {
           team1: 1,
           team2: 1,
           timeStart: 1,
+          option1: 1,
           odds: 1,
           odds2: 1,
           Code: 1,
@@ -657,6 +659,7 @@ if (cluster.isMaster) {
           team1: 1,
           team2: 1,
           timeStart: 1,
+          option1: 1,
           odds: 1,
           odds2: 1,
           Code: 1,
@@ -669,6 +672,8 @@ if (cluster.isMaster) {
         "EX",
         3600
       );
+
+
       const outcomeslol = await Outcome.find({
         category: "esportslol",
         timeStart: { $gt: date },
@@ -679,12 +684,15 @@ if (cluster.isMaster) {
           team1: 1,
           team2: 1,
           timeStart: 1,
+          option1: 1,
           odds: 1,
           odds2: 1,
           Code: 1,
           Code2: 1,
         })
         .lean();
+
+
       const saveResult3 = await SET_ASYNC(
         "outcomeslol",
         JSON.stringify(outcomeslol),
