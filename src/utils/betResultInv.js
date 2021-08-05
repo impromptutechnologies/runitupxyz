@@ -8,7 +8,7 @@ const betResultInv = (highest, category) => {
       console.log(err);
     }
     console.log(res)
-    /*Invest.deleteMany(
+    Invest.deleteMany(
       {
         Code: { $ne: highest },
       },
@@ -18,7 +18,7 @@ const betResultInv = (highest, category) => {
           console.log(error);
         }
       }
-    );*/
+    );
   });
 };
 
