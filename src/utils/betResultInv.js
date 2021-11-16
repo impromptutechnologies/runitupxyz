@@ -13,7 +13,7 @@ const betResultInv = (highest, category) => {
         Code: { $ne: highest },
       },
       (error, deleted) => {
-
+      
         if (error) {
           console.log(error);
         }
