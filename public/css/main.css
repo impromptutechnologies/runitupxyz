@@ -2,23 +2,19 @@
 @import url('font-awesome.min.css');
 @font-face {
 	font-family: 'Syne';
-	src: url('../fonts/Syne-Regular.woff') format('woff');
+	src: url('../fonts/Syne-Medium.ttf') format('woff');
 	font-weight: normal;/* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
   }  
 	
   @font-face {
 	font-family: 'Syne';
 	src: url('../fonts/Syne-Bold.ttf') format('truetype');/* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-	font-weight: 700;
-  }  
-  @font-face {
-	font-family: 'Syne';
-	src: url('../fonts/Syne-VariableFont_wght.ttf') format('truetype');/* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+	font-weight: 900;
   }  
 	  @font-face {
 	font-family: 'Syne';
-	src: url('../fonts/Syne-Light.ttf') format('truetype');/* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-	font-weight: 300;
+	src: url('../fonts/Syne-Regular.ttf') format('truetype');/* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+	font-weight: 400;
   }  
 
 	
@@ -1601,9 +1597,9 @@
 
 	body, input, select, textarea {
 		color: #9a9a9a;
-		font-family: "Raleway", Arial, Helvetica, sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 		font-size: 13pt;
-		font-weight: 300;
+		font-weight: 400;
 		line-height: 1.65;
 	}
 
@@ -1709,13 +1705,13 @@
 	p {
 		margin: 0 0 2em 0;
         font-size: 0.9em;
-		font-family: 'Syne';
-		font-weight: 300;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-weight: 100;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
 		color: white;
-		font-weight: 300;
+		font-weight: 400;
 		line-height: 1.5;
 		margin: 0 0 1em 0;
         font-family: 'Syne'
@@ -1740,7 +1736,7 @@
 
 	h3 {
 		font-size:1em;
-        font-weight: 700
+        font-weight: 00
 	}
 
 	h4 {
@@ -2109,13 +2105,13 @@
 .desc p{
     color: #9a9a9a;
     margin-bottom: 0;
-	font-size: 0.8em;
+	font-size: 1em;
 	width: 310px;
 }
 
 .outcome h3{
     font-family: 'Syne';
-    font-weight: 300;
+    font-weight: 400;
     margin-bottom: 0
     
     
@@ -2262,7 +2258,7 @@
 			cursor: pointer;
 			display: inline-block;
 			font-size: 1em;
-			font-weight: 300;
+			font-weight: 400;
 			padding-left: 2.4em;
 			padding-right: 0.75em;
 			position: relative;
@@ -2945,7 +2941,7 @@
 			text-decoration: none;
 			font-size: 0.9em;
 			font-family: 'Syne';
-    font-weight: 300;
+    font-weight: 400;
 		}
 
 			#header a:hover {
@@ -3061,7 +3057,7 @@
 			display: block;
 			padding: 0.75em 0;
 			text-decoration: none;
-			font-weight: 300;
+			font-weight: 400;
 			font-family: 'Syne';
 		}
 
@@ -3126,7 +3122,7 @@
 
 		#banner h1 {
 			font-size: 3em;
-			font-weight: 700;
+			font-weight: 800;
 			color: #fff;
 			line-height: 1em;
 			margin: 0 0 0.5em 0;
@@ -3135,10 +3131,9 @@
 		}
 
 		#banner p {
-			font-size: 1.1em;
-			color: rgba(255, 255, 255, 0.55);
+			font-size: 16px;
+			color: rgba(242, 235, 235, 0.842);
 			margin-bottom: 1.75em;
-            font-family: 'Syne';
             text-align: left;
             margin-top: 20px;
             width: 50%;
