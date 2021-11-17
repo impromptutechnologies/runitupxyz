@@ -372,15 +372,15 @@ if (cluster.isMaster) {
     }
   });
 
-  app.post("/auth/newRandom", requiresAuth(), async (req, res) => {
+  app.post("/auth/newOther", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"
     ) {
       Outcome.create(
         {
-          outcomeID: 000001,
-          category: "random",
+          outcomeID: req.body.outcomeID,
+          category: req.body.category,
           desc: req.body.desc,
           team1: req.body.choiceOne,
           team2: req.body.choiceTwo,
@@ -528,6 +528,7 @@ if (cluster.isMaster) {
       Outcome.create(
         {
           outcomeID: req.body.outcomeID,
+          league: req.body.league,
           category: req.body.category,
           desc: req.body.desc,
           team1: req.body.choiceOne,
@@ -545,8 +546,8 @@ if (cluster.isMaster) {
           const Code2 = req.body.Code2;
           const odds2 = req.body.odds2;
           const Code3 = req.body.Code3;
-          const odds4 = req.body.odds4;
-          res.addOptions([Code, odds, Code2, odds2]);
+          const odds3 = req.body.odds4;
+          res.addOptions([Code, odds, Code2, odds2, Code3, odds3]);
           res.save();
         }
       );

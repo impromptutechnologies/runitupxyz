@@ -374,9 +374,12 @@
 </div>
 -->
 <div id="randoms">
-  <h1 style="margin-top:100px">Random</h1>
+  <h1 style="margin-top:100px">Add Random or Basketball</h1>
 
-  <form action="/auth/newRandom" method="POST">
+  <form action="/auth/newOther" method="POST">
+         <input placeholder="category" name="category" />
+          <input placeholder="outcomeID" name="outcomeID" />
+
     <input placeholder="choiceOne" name="choiceOne" />
     <input placeholder="choiceTwo" name="choiceTwo" /><br />
     <input
@@ -393,8 +396,10 @@
     <button type="submit">Enter</button>
   </form>
 
+<br>
+  <h1 style="margin-top:100px">Add Soccer</h1>
 
-   <form action="/auth/newMatch" method="POST">
+   <form action="/auth/newMatch" method="POST" style="margin-top:150px">
           <input placeholder="outcomeID" name="outcomeID" />
 
        <input placeholder="category" name="category" />
@@ -405,6 +410,7 @@
       name="desc"
       style="width:200px;height:100px;margin-top:30px"
     />
+        <input placeholder="league" name="league" />
     <input placeholder="timeStart" name="timeStart" />
     <input placeholder="timeEnd" name="timeEnd" /><br>
     <input placeholder="Code" name="Code" />
