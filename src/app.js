@@ -50,14 +50,14 @@ if (cluster.isMaster) {
     client_secret: process.env.CLIENT_SECRET,
   });
 
-  /*const redis = require("redis");
+  const redis = require("redis");
   const client = redis.createClient(process.env.REDIS_URL);
 
   client.on("error", function (err) {
     console.log("Error " + err);
   });
   const GET_ASYNC = promisify(client.get).bind(client);
-  const SET_ASYNC = promisify(client.set).bind(client);*/
+  const SET_ASYNC = promisify(client.set).bind(client);
 
   const app = express();
   const publicdirectory = path.join(dirname, "../public");
