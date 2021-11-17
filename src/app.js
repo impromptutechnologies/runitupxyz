@@ -50,14 +50,14 @@ if (cluster.isMaster) {
     client_secret: process.env.CLIENT_SECRET,
   });
 
-  const redis = require("redis");
+  /*const redis = require("redis");
   const client = redis.createClient(process.env.REDIS_URL);
 
   client.on("error", function (err) {
     console.log("Error " + err);
   });
   const GET_ASYNC = promisify(client.get).bind(client);
-  const SET_ASYNC = promisify(client.set).bind(client);
+  const SET_ASYNC = promisify(client.set).bind(client);*/
 
   const app = express();
   const publicdirectory = path.join(dirname, "../public");
@@ -222,6 +222,12 @@ if (cluster.isMaster) {
   });
 
   //ACCOUNT
+
+
+
+
+
+
 
   //ADMIN PANEL
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
@@ -512,7 +518,57 @@ if (cluster.isMaster) {
     }
   });
 
+  // requiresAuth()
+  app.post("/auth/newMatch", async (req, res) => {
+    if (
+      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
+      1 == 1
+    ) {
+      Outcome.create(
+        {
+          outcomeID: req.body.outcomeID,
+          category: req.body.category,
+          desc: req.body.desc,
+          team1: req.body.choiceOne,
+          team2: req.body.choiceTwo,
+          timeStart: req.body.timeStart,
+          timeEnd: req.body.timeEnd,
+        },
+        (err, res) => {
+          console.log(res);
+          if (err) {
+            console.log(err);
+          }
+          const Code = req.body.Code;
+          const odds = req.body.odds;
+          const Code2 = req.body.Code2;
+          const odds2 = req.body.odds2;
+          const Code3 = req.body.Code3;
+          const odds4 = req.body.odds4;
+          res.addOptions([Code, odds, Code2, odds2]);
+          res.save();
+        }
+      );
+      res.redirect("/adminpanel");
+    } else {
+      res.redirect("/adminpanel");
+    }
+  });
+
   //ADMIN PANEL
+
+
+
+
+
+
+
+
+
+
+
+
 
   //MISC
   app.get("", (req, res) => {
@@ -543,7 +599,6 @@ if (cluster.isMaster) {
       }
       const outcomes = await Outcome.find({
         category: "soccer",
-        timeStart: { $gt: date, $lt: date2 },
         "option1.0.odds": { $gt: 0 },
       })
         .sort({ timeStart: 1 })

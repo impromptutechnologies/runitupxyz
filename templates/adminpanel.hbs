@@ -57,7 +57,7 @@
 
 </div>
 
-<div id="gameodds" style="margin-top:50px">
+<!--<div id="gameodds" style="margin-top:50px">
 
   <h1>To fill in odds manually</h1>
   <a href="https://oddspedia.com/call-of-duty/world/cdl" target="_blank"><p>go
@@ -207,7 +207,7 @@
   {{/if}}
   <br />
 
-</div>
+</div>-->
 
 <div id="basketball">
   <h1 style="margin-top:100px">Sus Basketball Games</h1>
@@ -333,7 +333,7 @@
 
 
 
-<div id="withdrawals">
+<!--<div id="withdrawals">
   <h1 style="margin-top:100px">Bitcoin Withdrawals</h1>
 
   {{#if withdrawals}}
@@ -372,7 +372,7 @@
   {{/if}}
 
 </div>
-
+-->
 <div id="randoms">
   <h1 style="margin-top:100px">Random</h1>
 
@@ -390,6 +390,29 @@
     <input placeholder="odds" name="odds" step="0.01" type="number"/>
     <input placeholder="Code2" name="Code2" />
     <input placeholder="odds2" name="odds2" step="0.01" type="number"/>
+    <button type="submit">Enter</button>
+  </form>
+
+
+   <form action="/auth/newMatch" method="POST">
+          <input placeholder="outcomeID" name="outcomeID" />
+
+       <input placeholder="category" name="category" />
+    <input placeholder="choiceOne" name="choiceOne" />
+    <input placeholder="choiceTwo" name="choiceTwo" /><br />
+    <input
+      placeholder="desc"
+      name="desc"
+      style="width:200px;height:100px;margin-top:30px"
+    />
+    <input placeholder="timeStart" name="timeStart" />
+    <input placeholder="timeEnd" name="timeEnd" /><br>
+    <input placeholder="Code" name="Code" />
+    <input placeholder="odds" name="odds" step="0.01" type="number"/>
+    <input placeholder="Code2" name="Code2" />
+    <input placeholder="odds2" name="odds2" step="0.01" type="number"/>
+    <input placeholder="Code3" name="Code3" />
+    <input placeholder="odds3" name="odds3" step="0.01" type="number"/>
     <button type="submit">Enter</button>
   </form>
   {{#if randoms}}
