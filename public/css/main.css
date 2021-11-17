@@ -2103,7 +2103,7 @@
     cursor: pointer
 }
 .desc p{
-    color: #9a9a9a;
+    color: rgba(242, 235, 235, 0.842);
     margin-bottom: 0;
 	font-size: 1em;
 	width: 310px;
