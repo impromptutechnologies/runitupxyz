@@ -537,7 +537,6 @@ if (cluster.isMaster) {
     try {
       const reply = await GET_ASYNC("bets");
       if (reply) {
-        console.log('helo')
         res.render("bet", { outcomes: JSON.parse(reply) });
         return;
       }
@@ -556,7 +555,6 @@ if (cluster.isMaster) {
         "EX",
         3600
       );
-      console.log('helloo')
       res.render("bet", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -567,7 +565,6 @@ if (cluster.isMaster) {
     try {
       const reply = await GET_ASYNC("betsbb");
       if (reply) {
-        console.log('helo')
         res.render("betbasketball", { outcomes: JSON.parse(reply) });
         return;
       }
@@ -585,7 +582,6 @@ if (cluster.isMaster) {
         "EX",
         3600
       );
-      console.log('helloo')
       res.render("betbasketball", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
