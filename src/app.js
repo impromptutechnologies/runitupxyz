@@ -477,7 +477,7 @@ if (cluster.isMaster) {
       const userWithdraws = await Withdraw.find({})
         .select({ crypto: 1, tokens: 1, address: 1 })
         .lean();
-      const ongoing = await Outcome.find({ timeStart: { $lt: date } })
+      const ongoing = await Outcome.find({})
         .select({ outcomeID: 1, team1: 1, team2: 1 })
         .lean();
       const stocks = await Stock.find({})
