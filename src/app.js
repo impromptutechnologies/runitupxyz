@@ -629,7 +629,7 @@ if (cluster.isMaster) {
       }
       const outcomes = await Outcome.find({
         category: "basketball",
-        timeStart: { $gt: date },
+        //timeStart: { $gt: date },
         "option1.0.odds": { $gt: 0 },
       })
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
