@@ -22,9 +22,19 @@ if (cluster.isMaster) {
   const Casino = require("./models/casinoSchema");
   const Stock = require("./models/stockSchema.js");
   /*const Prem = require("./models/premSchema.js");*/
+  const newMatchesSoccer = require("./utils/newmatches");
+  const newMatchesBasketball = require("./utils/newmatchesb");
   const Withdraw = require("./models/withdrawSchema.js");
   const WAValidator = require("wallet-address-validator");
   const completePayment = require('./queues/payment');
+  const createWallet = require("./utils/createWallet");
+  const depositAddress = require("./utils/depositAddress");
+  const updateBalance = require("./utils/updateBalance");
+  const updateBalanceERC20 = require("./utils/updateBalanceERC20");
+
+  const deployToken = require("./utils/deployToken");
+
+
 
   const Crypto = require("./models/cryptoSchema.js");
   var compression = require("compression");
@@ -32,6 +42,10 @@ if (cluster.isMaster) {
   const { requiresAuth } = require("express-openid-connect");
   const paypal = require("paypal-rest-sdk");
   const dirname = __dirname;
+
+
+  
+
 
   const config = {
     authRequired: false,
@@ -86,15 +100,18 @@ if (cluster.isMaster) {
 
   app.set("view engine", "hbs");
   app.set("views", viewsPath);
+  
 
   hbs.registerHelper("substring", function (aString) {
     var theString = aString.substring(0, 5) + "...";
     return new hbs.SafeString(theString);
   });
 
-  app.get("/", (req, res) => {
+  app.get("/", async (req, res) => {
     res.render("index");
+
   });
+
 
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
@@ -183,6 +200,122 @@ if (cluster.isMaster) {
       }
     }
   });
+
+  //requiresAuth(),
+  app.get("/accounttest", async (req, res) => {
+    const userProfile = await Profile.findOne({
+      //userID: req.oidc.user.sub.substring(15, 34),
+      userID: '834304396673679411',
+    }).sort({ userID: 1 }).lean();
+    if (userProfile == null) {
+      res.render("makeaccount", {
+        //profileImage: req.oidc.user.picture,
+        username: 'MeowMeowMeow#3479',
+      });
+    } else {
+      const userBets = await Bet.find({
+        creatorID: '834304396673679411',
+      })
+        .sort({ creatorID: 1 })
+        .select({ Code: 1, betOdds: 1, betAmount: 1 })
+        .lean()
+        .limit(5);
+      const userInvests = await Invest.find({
+        creatorID: '834304396673679411',
+      })
+        .sort({ creatorID: 1 })
+        .select({ Code: 1, investAmount: 1 })
+        .lean()
+        .limit(5);
+      const userWithdraws = await Withdraw.find({
+        userID: '834304396673679411',
+      })
+        .sort({ userID: 1 })
+        .select({ tokens: 1, crypto: 1, address: 1 })
+        .lean()
+        .limit(5);
+      const userReturn =
+        ((userProfile.returntokens - userProfile.bettokens) /
+          userProfile.bettokens) *
+        100;
+      const userR = userReturn || 0;
+      if (userReturn < 0) {
+        res.render("account2", {
+          userWithdraws: userWithdraws,
+          userBets: userBets,
+          userInvests: userInvests,
+          id: userProfile.userID,
+          //profileImage: req.oidc.user.picture,
+          username: userProfile.username,
+          return: Math.round(userR, 2),
+          tokens: Math.round(userProfile.tokens, 2),
+          color: "red",
+        });
+      } else {
+      /*if(userReturn == 0){
+        res.render("account", {
+          userWithdraws: userWithdraws,
+          userBets: userBets,
+          userInvests: userInvests,
+          id: userProfile.userID,
+          profileImage: req.oidc.user.picture,
+          username: userProfile.username,
+          return: Math.round(userR, 2),
+          tokens: Math.round(userProfile.tokens, 2),
+          color: 'grey'
+        });
+      }*/
+        res.render("account2", {
+          userWithdraws: userWithdraws,
+          userBets: userBets,
+          userInvests: userInvests,
+          id: userProfile.userID,
+          //profileImage: req.oidc.user.picture,
+          username: userProfile.username,
+          return: Math.round(userR, 2),
+          depositAddress: userProfile.depositAddress,
+          tokens: Math.round(userProfile.tokens, 2),
+          color: "rgb(12, 212, 99)",
+        });
+      }
+    }
+  });
+
+
+  app.post("/auth/refreshBalance", async (req, res) => {
+    const tokens = await Profile.findOne({
+      userID: '834304396673679411',
+    })
+      .sort({ userID: 1 })
+      .lean();
+    updateBalance(req.body.address, tokens.cryptoBalance)
+    res.redirect("/accounttest");
+
+  })
+
+  app.post("/auth/refreshBalance1", async (req, res) => {
+    const tokens = await Profile.findOne({
+      userID: '834304396673679411',
+    })
+      .sort({ userID: 1 })
+      .lean();
+    updateBalanceERC20(req.body.address)
+    res.redirect("/accounttest");
+
+  })
+
+  app.post("/auth/register", async (req, res) => {
+    let profile = await Profile.create({
+      userID: req.body.email,
+      depositAddress: req.body.depositAddress,
+      externalID: '',
+      tokens: 1000,
+    });
+    profile.save();
+    res.redirect("/accounttest");
+  })
+
+
 
   app.post("/auth/withdraw", requiresAuth(), async (req, res) => {
     const tokens = await Profile.findOne({
@@ -302,7 +435,7 @@ if (cluster.isMaster) {
     }
   });
 
-  app.post("/auth/randomResult", requiresAuth(), async (req, resp) => {
+  app.post("/auth/randomResult", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"
@@ -372,6 +505,10 @@ if (cluster.isMaster) {
     }
   });
 
+
+
+
+
   // requiresAuth(),
   app.post("/auth/newOther", async (req, res) => {
     if (
@@ -407,7 +544,6 @@ if (cluster.isMaster) {
       res.redirect("/adminpanel");
     }
   });
-
   app.post("/auth/addBB", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -519,7 +655,6 @@ if (cluster.isMaster) {
       res.redirect("/");
     }
   });
-
   // requiresAuth()
   app.post("/auth/newMatch", async (req, res) => {
     if (
@@ -560,60 +695,106 @@ if (cluster.isMaster) {
   });
 
   //ADMIN PANEL
+  app.get("/newnewnew", async (req, res) => {
+    console.log('eh')
+    newMatchesSoccer('prem')
+    newMatchesSoccer('champ')
+    newMatchesSoccer('seriea')
+    newMatchesSoccer('bundes')
+    newMatchesSoccer('laliga')
+    return res.redirect('/bets')
+    /*
+        newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    */
+  })
 
-
-
-
-
-
-
-
-
-
-
-
+  app.get("/newnewnew1", async (req, res) => {
+    console.log('eh')
+      /*newMatchesSoccer('prem')
+    newMatchesSoccer('champ')
+    newMatchesSoccer('seriea')
+    newMatchesSoccer('bundes')
+    newMatchesSoccer('laliga')
+    return res.redirect('/bets')
+    /**/
+        newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    return res.redirect('/bets2')
+    
+  })
 
   //MISC
   app.get("", (req, res) => {
     res.render("index");
   });
-
   app.get("/about", (req, res) => {
     res.render("about");
   });
 
+
+  app.get('/createERC20', (req, res) => {
+    deployToken();
+    res.redirect('/about')
+  });
+
+  app.get('/tokens', (req, res) => {
+    res.render('tokens')
+  });
+
+  app.get("/createWallet", (req, res) => {
+    createWallet();
+    console.log('hello')
+    res.render("about");
+  });
   app.get("/arena", (req, res) => {
     res.render("arena");
   });
-
   app.get("/privacyterm", (req, res) => {
     res.render("privacyterms");
   });
-
   //MISC
-
   //BETS
   app.get("/bets", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("bets");
-      if (reply) {
+      //const reply = await GET_ASYNC("bets");
+      /*if (reply) {
         res.render("bet", { outcomes: JSON.parse(reply) });
         return;
       }
-      const outcomes = await Outcome.find({
-        category: "soccer",
-        "option1.0.odds": { $gt: 0 },
-      })
-        .sort({ timeStart: 1 })
-        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
-        .lean()
-        .limit(10);
       const saveResult = await SET_ASYNC(
         "bets",
         JSON.stringify(outcomes),
         "EX",
         3600
-      );
+      );*/
+      console.log('hello');
+      const outcomes = await Outcome.find({
+        category: "soccer",
+        "option1.0.odds": { $gt: 0 },
+      }).sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
+        .lean()
+        .limit(10);
+      
+      res.render("bet", { outcomes: outcomes });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.get("/bets2", async (req, res) => {
+    try {
+      console.log('hello');
+      const outcomes = await Outcome.find({
+        category: "soccer",
+        "option1.0.odds": { $gt: 0 },
+      }).sort({ timeStart: 1 })
+        .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
+        .lean()
+        .limit(10);
       res.render("bet", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -622,11 +803,16 @@ if (cluster.isMaster) {
 
   app.get("/betsbb", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("betsbb");
-      if (reply) {
+      //const reply = await GET_ASYNC("betsbb");
+      /*if (reply) {
         res.render("betbasketball", { outcomes: JSON.parse(reply) });
         return;
-      }
+      }const saveResult = await SET_ASYNC(
+        "betsbb",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );*/
       const outcomes = await Outcome.find({
         category: "basketball",
         //timeStart: { $gt: date },
@@ -635,12 +821,7 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .sort({ timeStart: 1 })
         .lean();
-      const saveResult = await SET_ASYNC(
-        "betsbb",
-        JSON.stringify(outcomes),
-        "EX",
-        3600
-      );
+      
       res.render("betbasketball", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -769,26 +950,27 @@ if (cluster.isMaster) {
     }
   });
 
+
   app.get("/betscr", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("betscr");
-      if (reply) {
+      //const reply = await GET_ASYNC("betscr");
+      /*if (reply) {
         res.render("betcrypto", {
           outcomes: JSON.parse(reply),
           time2: "13:30",
           time1: "20:00",
         });
         return;
-      }
-      const outcomes = await Crypto.find({})
-        .select({ Crypto: 1, symbol: 1 })
-        .lean();
-      const saveResult = await SET_ASYNC(
+      }const saveResult = await SET_ASYNC(
         "betscr",
         JSON.stringify(outcomes),
         "EX",
         10000
-      );
+      );*/
+      const outcomes = await Crypto.find({})
+        .select({ Crypto: 1, symbol: 1 })
+        .lean();
+      
       res.render("betcrypto", {
         outcomes: outcomes,
         time2: "13:30",
@@ -801,24 +983,24 @@ if (cluster.isMaster) {
 
   app.get("/betsst", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("betsst");
-      if (reply) {
+      //const reply = await GET_ASYNC("betsst");
+      /*if (reply) {
         res.render("betstock", {
           outcomes: JSON.parse(reply),
           time2: "13:30",
           time1: "20:00",
         });
         return;
-      }
-      const outcomes = await Stock.find({})
-        .select({ company: 1, ticker: 1 })
-        .lean();
-      const saveResult = await SET_ASYNC(
+      }const saveResult = await SET_ASYNC(
         "betsst",
         JSON.stringify(outcomes),
         "EX",
         10000
-      );
+      );*/
+      const outcomes = await Stock.find({})
+        .select({ company: 1, ticker: 1 })
+        .lean();
+      
       res.render("betstock", {
         outcomes: outcomes,
         time2: "13:30",
@@ -829,22 +1011,24 @@ if (cluster.isMaster) {
     }
   });
 
+
+
   app.get("/casino", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("casino");
-      if (reply) {
+      //const reply = await GET_ASYNC("casino");
+      /*if (reply) {
         res.render("betcasino", { outcomes: JSON.parse(reply) });
         return;
-      }
-      const casinoCommands = await Casino.find({})
-        .select({ description: 1, command: 1 })
-        .lean();
-      const saveResult = await SET_ASYNC(
+      }const saveResult = await SET_ASYNC(
         "casino",
         JSON.stringify(casinoCommands),
         "EX",
         10000
-      );
+      );*/
+      const casinoCommands = await Casino.find({})
+        .select({ description: 1, command: 1 })
+        .lean();
+      
       res.render("betcasino", { outcomes: casinoCommands });
     } catch (err) {
       console.log(err);
@@ -853,11 +1037,16 @@ if (cluster.isMaster) {
 
   app.get("/betsq", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("betsq");
-      if (reply) {
+      //const reply = await GET_ASYNC("betsq");
+      /*if (reply) {
         res.render("betrandom", { outcomes: JSON.parse(reply) });
         return;
-      }
+      }const saveResult = await SET_ASYNC(
+        "betsq",
+        JSON.stringify(outcomes),
+        "EX",
+        10000
+      );*/
       const outcomes = await Outcome.find({
         category: "random",
         timeStart: { $gt: date },
@@ -874,12 +1063,7 @@ if (cluster.isMaster) {
           desc: 1,
         })
         .lean();
-      const saveResult = await SET_ASYNC(
-        "betsq",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
+      
       res.render("betrandom", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -931,7 +1115,29 @@ if (cluster.isMaster) {
         }
       }
     });
+
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function (error, payment) {
+        if (error) {
+          throw error;
+        } else {
+          if (userProfile.payments.includes(payment.id)) {
+            return res.redirect("/tokens");
+          } else {
+            userProfile.payments.push(payment.id);
+            userProfile.tokens = tokens + 17645;
+            userProfile.save();
+            return res.redirect("/tokens");
+          }
+        }
+      }
+    );
   });
+
+
+  
 
   app.get("/success", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
@@ -956,9 +1162,7 @@ if (cluster.isMaster) {
   });
 
 
-
-
-  app.get("/tokens",requiresAuth(), async (req, res) => {
+  app.get("x",requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     })
@@ -970,6 +1174,7 @@ if (cluster.isMaster) {
       res.render("tokens");
     }
   });
+
 
   app.get("*", (req, res) => {
     res.render("404");

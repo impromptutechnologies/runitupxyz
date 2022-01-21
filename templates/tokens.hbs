@@ -12,7 +12,7 @@
 			content="Purchase a lootbox for access to 15000-20000 Tokens plus a host of other benefits.">
 			<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
 	</head>
 	<body onload=checkforvid()>
 
@@ -36,11 +36,8 @@
 			<section id="banner" style="padding-bottom: 5em">
                 <div class="landing">
                     <div class="desc">
-                        <h1>Lootbox!</h1>
-                        <p>Trust us, the lootbox is worth it ;) Just one paid tier for now.</p>
-						<div style="border:1px solid rgb(12, 212, 99);width:320px;font-size:12px;padding:5px">
-                            <p style="margin-bottom: 0;color:rgb(12, 212, 99);margin-top:0;margin-left:5px"><span style="font-weight: bold">Upgrade Role:</span> !upgrade</p>
-                    	</div>
+                        <h1 style="font-family:'Inter'">Lootbox!</h1>
+						
                     </div>
 					 
                 </div>
@@ -50,25 +47,24 @@
 			<section id="one" style="padding-bottom: 5em;
     padding-top: 0em;max-width: 75em;
     margin: auto;">
-                <div style="display:flex;max-width: 29em;padding:15px;padding-left: 27px;margin-top:40px;border:1px solid #fafafa">
+                <div style="display:flex;max-width: 29em;padding:15px;padding-left: 27px;margin-top:40px;border:1px solid #fafafa;border-radius:20px">
                     <div class="desc" style="display:flex;margin-top:10px;width: 100%;">
                         <div style="width: 100%;">
-							<h3>Cat Box</h3>
-							<div style="display: flex;margin-top:45px;">
+							<div style="display: flex;margin-top:25px;">
 								<div style="width: 40%;float: left;padding-top: 5px;margin-right:36px">
 									<div style="width:100%">
 										<ul class="options">
-											<div class="benefit"><img src='https://altvaton.sirv.com/Images/coin.png' style="margin-top:0;height:18px;"><li style="margin-top:0;">15000-20000</li></div>
-											<div class="benefit"><img src='https://altvaton.sirv.com/Images/giftbox.svg'><li>Giveaway entry/Special Channels</li></div>
-											<div class="benefit"><img src='https://altvaton.sirv.com/Images/bingo.svg'><li>1000000 lottery entry</li></div>
-											<div class="benefit"><img src='https://altvaton.sirv.com/Images/cards.svg'><li>Casino commands</li></div>
+											<div class="benefit"><img src='https://altvaton.sirv.com/Images/coin.png' style="margin-top:6px;height:18px;"><li style="margin-top:0;font-family:'Avenir light';font-size:20px">15000-20000</li></div>
+											<div class="benefit"><img src='https://altvaton.sirv.com/Images/cards.svg' style="margin-top:8px;height:18px;"><li style="margin-top:0px;font-family:'Avenir light';font-size:20px">Casino</li></div>
 										</ul>
 									</div>
 								</div>
 								<div style="width: 50%;float: left;">
 								<h3>$3.99</h3>
 								<form action="/pay" method="post">
-									<input type="submit" value="Buy">
+									
+						<button type="submit" id="ethbut" style="font-weight: 100;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 187px;"; 
+                        {{buttondis}}>Purchase</button>
 								</form>
 								</div>
 

@@ -6,21 +6,21 @@ const Profile = require("./models/profileSchema");
 const moment = require("moment-timezone");
 const betResult = require("./utils/betresult");
 const betResultBasketball = require("./utils/betResultBasketball");
-const betResultEsports = require("./utils/betResultEsports");
+//const betResultEsports = require("./utils/betResultEsports");
 const betResultInv = require("./utils/betResultInv");
 const stockPrice = require("./utils/stockprice");
 const cryptoPrice = require("./utils/cryptoprice");
 const cryptoPriceOpen = require("./utils/cryptopriceopen");
 const newMatchesSoccer = require("./utils/newmatches");
 const newMatchesBasketball = require("./utils/newmatchesb");
-const newMatchesEsports = require("./utils/newmatchese");
+//const newMatchesEsports = require("./utils/newmatchese");
 const schedule = require("node-schedule");
 const setOddsB = require("./utils/setOddsB");
 const setOdds = require("./utils/setOdds");
 require("./db/mongoose");
 
 const newMatches = async () => {
-  newMatchesEsports();
+  //newMatchesEsports();
   newMatchesBasketball("1");
   newMatchesBasketball("2");
   newMatchesBasketball("3");
@@ -159,11 +159,6 @@ setInterval(checkReturn, 60000);
 
 
 
-
-
-
-
-
 const updateMatches = async () => {
   var date = moment.utc().format("MM-DD HH:mm");
   const outcomes = await Outcome.find({ timeEnd: { $lt: date } });
@@ -172,7 +167,20 @@ const updateMatches = async () => {
   } else {
     console.log(outcomes);
     outcomes.forEach((element) => {
-      if (element.category == "esportscod") {
+      if (element.category == "basketball") {
+        betResultBasketball(element.outcomeID);
+      }
+      if (element.category == "soccer") {
+        betResult(element.outcomeID);
+      }
+    });
+    const deleted = await Outcome.deleteMany({ timeEnd: { $lt: date } });
+  }
+};
+setInterval(updateMatches, 60000);
+
+
+/*if (element.category == "esportscod") {
         betResultEsports(element.outcomeID,{
           method: "GET",
           url: `https://api.pandascore.co/codmw/matches/?filter[id]=${element.outcomeID}`,
@@ -219,15 +227,4 @@ const updateMatches = async () => {
             useQueryString: true,
           },
         });
-      }
-      if (element.category == "basketball") {
-        betResultBasketball(element.outcomeID);
-      }
-      if (element.category == "soccer") {
-        betResult(element.outcomeID);
-      }
-    });
-    const deleted = await Outcome.deleteMany({ timeEnd: { $lt: date } });
-  }
-};
-setInterval(updateMatches, 60000);
+      }*/

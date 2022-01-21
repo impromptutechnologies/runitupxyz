@@ -4,6 +4,7 @@ const moment = require("moment-timezone");
 const setOdds = require("../utils/setOdds");
 
 const newMatchesSoccer = (choice) => {
+  console.log(choice)
 
   var date = moment.utc().format("YYYY-MM-DD");
   var date2 = moment.utc(date).add(3, "weeks").format("YYYY-MM-DD")

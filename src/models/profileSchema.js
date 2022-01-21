@@ -8,6 +8,8 @@ const profileSchema = new mongoose.Schema({
     returntokens: {type: Number, default:0},
     bettokens: {type: Number, default:0},
     payments:[],
+    depositAddress:{type:String, required:false},
+    cryptoBalance:{type:Number, default:0},
     invites: {type: Number, default:0},
 });
 
