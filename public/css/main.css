@@ -28,6 +28,8 @@
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
+		-webkit-font-smoothing: antialiased;
+		font-family: Avenir Light;
 	}
 
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -3120,7 +3122,7 @@
 	}
 
 		#banner h1 {
-			font-size: 3em;
+			font-size: 7em;
 			font-weight: 800;
 			color: #fff;
 			line-height: 1em;
@@ -3129,6 +3131,7 @@
             text-align: left;
 			font-family: 'Inter';
 		}
+
 
 		#banner p {
 			font-size: 16px;
