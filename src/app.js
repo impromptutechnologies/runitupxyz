@@ -974,7 +974,7 @@ if (cluster.isMaster) {
       res.render("betcrypto", {
         outcomes: outcomes,
         time2: "13:30",
-        time1: "20:00",
+        time1: "21:35",
       });
     } catch (err) {
       console.log(err);
@@ -1004,7 +1004,7 @@ if (cluster.isMaster) {
       res.render("betstock", {
         outcomes: outcomes,
         time2: "13:30",
-        time1: "20:00",
+        time1: "21:35",
       });
     } catch (err) {
       console.log(err);
