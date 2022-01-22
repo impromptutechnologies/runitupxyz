@@ -51,7 +51,7 @@ if (cluster.isMaster) {
   const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: "a long, randomly-generated string stored in env",
+    secret: process.env.SECRET,
     baseURL: "https://getmeow.gg/",
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: "https://meowbot.us.auth0.com",
