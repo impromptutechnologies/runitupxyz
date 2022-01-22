@@ -40,8 +40,8 @@
                         <h3>{{username}}</h3>
 
                             <div style="width:350px;font-size:12px;display:flex">
-                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:20px;margin-bottom:0">
-                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px';font-family:'Inter'">0x192u0uda09dua90wdu90aw</p>
+                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:32px;margin-bottom:0">
+                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">0x192u0uda09dua90wdu90aw</p>
                             </div>
                     </div>
                 </div>
@@ -55,11 +55,11 @@
 
                 <div style="display: flex;max-width:75em;margin:auto">
                     <div class="desc" style="margin:initial;width:350px;" id="openbets">
-                        <h1 style="font-size: 50px;margin-bottom:0"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
-                        <div style="margin-bottom:50px">
-                            <h2 style="color:rgba(255, 255, 255, 0.55);font-size: 0.8em;font-weight:400">Weekly Return: <span style="color:{{color}};font-weight:600">{{return}}%</span></h2>
+                        <h1 style="font-size: 50px;margin-bottom:0;font-family:Inter"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+                        <div style="margin-bottom:50px;display:flex">
+                            <h2 style="color:#fff;font-size:20px;font-weight:400">📈 <span style="color:{{color}};font-weight:600;margin-left:5px"> {{return}}%</span></h2>
                         </div>
-                        <h1>Bets</h1>
+                        <h1 style="font-family: Inter;font-size:20px">Bets</h1>
 						<div style="display: flex;padding: 0.2em;">
                             
                             <div style="width: 61%;padding: 0.6em;">
@@ -75,6 +75,8 @@
                                 <h2 style="font-weight: bold">Status</h2>
                             </div>
                         </div>
+                                                <hr style="margin: 0;">
+
 						{{#if userBets}}
                         {{#each userBets}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
@@ -104,8 +106,7 @@
                             
                             {{/if}}
                         
-                        <h1 style="margin-top: 70px;">Invests</h1>
-
+                        <h1 style="margin-top: 70px;font-family: Inter;font-size:20px">Invests</h1>
 						<div style="display: flex;padding: 0.2em;">
                             
                             <div style="width: 61%;padding: 0.6em;">
@@ -121,6 +122,7 @@
                                 <h2 style="font-weight: bold">Status</h2>
                             </div>
                         </div>
+                          <hr style="margin: 0;">
 						{{#if userInvests}}
                         {{#each userInvests}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
@@ -149,7 +151,8 @@
                             
                             {{/if}}
 							<div class="desc" style="margin-top:70px">
-                        <a href="/logout"><button>Log Out</button></a>
+                        <a href="/logout">    <button type="submit" id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
+                        {{buttondis}}>Logout</button></a>
                     </div>
 					</div>
 
