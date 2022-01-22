@@ -1089,7 +1089,7 @@ if (cluster.isMaster) {
               {
                 name: "Lootbox",
                 sku: "001",
-                price: "3.99",
+                price: "2.99",
                 currency: "USD",
                 quantity: 1,
               },
@@ -1097,7 +1097,7 @@ if (cluster.isMaster) {
           },
           amount: {
             currency: "USD",
-            total: "3.99",
+            total: "2.99",
           },
           description: "Lootbox!",
         },
@@ -1115,7 +1115,26 @@ if (cluster.isMaster) {
         }
       }
     });
+  });
 
+  app.get("/success", requiresAuth(), async (req, res) => {
+    const userProfile = await Profile.findOne({
+      userID: req.oidc.user.sub.substring(15, 34),
+    });
+    const coins = userProfile.coins;
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+    const execute_payment_json = {
+      payer_id: payerId,
+      transactions: [
+        {
+          amount: {
+            currency: "USD",
+            total: "2.99",
+          },
+        },
+      ],
+    };
     paypal.payment.execute(
       paymentId,
       execute_payment_json,
@@ -1127,7 +1146,7 @@ if (cluster.isMaster) {
             return res.redirect("/tokens");
           } else {
             userProfile.payments.push(payment.id);
-            userProfile.tokens = tokens + 17645;
+            userProfile.coins = coins + 17645;
             userProfile.save();
             return res.redirect("/tokens");
           }
