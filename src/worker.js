@@ -182,9 +182,9 @@ const updateMatches = async () => {
       }
       if (element.category == "soccer") {
         betResult(element.outcomeID);
+        const deleted = await Outcome.deleteMany({ timeEnd: { $lt: date }, category: 'basketball' });
       }
     });
-    const deleted = await Outcome.deleteMany({ timeEnd: { $lt: date } });
   }
 };
 setInterval(updateMatches, 60000);

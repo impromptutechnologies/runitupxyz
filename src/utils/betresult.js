@@ -1,5 +1,7 @@
 var request = require("request");
 const Bet = require("../models/betSchema");
+const Outcome = require("../models/betSchema");
+const date = moment.utc().format("MM-DD HH:mm");
 
 const betResult = (id) => {
   const exists = Bet.find(
@@ -68,6 +70,15 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
+                  Outcome.deleteMany(
+                    { timeEnd: { $lt: date } },
+                    (error, deleted) => {
+                      if (error) {
+                        console.log(error);
+                      }
+                      return;
+                    }
+                  );
                 }
               );
             }
@@ -86,6 +97,15 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
+                  Outcome.deleteMany(
+                    { timeEnd: { $lt: date } },
+                    (error, deleted) => {
+                      if (error) {
+                        console.log(error);
+                      }
+                      return;
+                    }
+                  );
                 }
               );
             } if (data.response[0].teams.away.winner !== true && data.response[0].teams.home.winner !== true) {
@@ -102,9 +122,18 @@ const betResult = (id) => {
                   if (error) {
                     console.log(error);
                   }
-                  return;
+                  Outcome.deleteMany(
+                    { timeEnd: { $lt: date } },
+                    (error, deleted) => {
+                      if (error) {
+                        console.log(error);
+                      }
+                      return;
+                    }
+                  );
                 }
               );
+              
             }
           } else {
             console.log(data.response[0].fixture.status.short)
