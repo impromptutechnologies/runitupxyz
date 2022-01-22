@@ -111,7 +111,7 @@ const checkReturn = async () => {
   var date = moment.utc().format("MM-DD HH:mm");
   const investmentstock = await Invest.find({ category: "stocks" });
   const investmentcrypto = await Invest.find({ category: "crypto" });
-  var today = new Date();
+  const today = new Date();
   if (
     date == moment.utc().format(`${month}-${day} 13:28`) &&
     investmentcrypto.length !== 0 

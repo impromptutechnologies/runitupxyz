@@ -32,6 +32,7 @@ if (cluster.isMaster) {
   const depositAddress = require("./utils/depositAddress");
   const updateBalance = require("./utils/updateBalance");
   const updateBalanceERC20 = require("./utils/updateBalanceERC20");
+  const betResultInv = require("./utils/betResultInv");
 
   const deployToken = require("./utils/deployToken");
 
@@ -708,6 +709,17 @@ if (cluster.isMaster) {
   app.get("/stockpricecheck", requiresAuth(), async (req, res) => {
     console.log('hey')
     stockPrice()
+    return res.redirect('/')
+    /*
+        newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    */
+  })
+
+  app.get("/betresultinv", requiresAuth(), async (req, res) => {
+    betResultInv('SPCE', "stocks");
+    betResultInv('BTC', "crypto");
     return res.redirect('/')
     /*
         newMatchesBasketball("1");
