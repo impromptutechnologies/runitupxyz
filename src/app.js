@@ -15,6 +15,7 @@ if (cluster.isMaster) {
   require("./db/mongoose");
   const path = require("path");
   const hbs = require("hbs");
+  const stockPrice = require("./utils/stockprice");
   const Profile = require("./models/profileSchema");
   const Outcome = require("./models/outcomeSchema");
   const Bet = require("./models/betSchema");
@@ -201,8 +202,7 @@ if (cluster.isMaster) {
     }
   });
 
-  //requiresAuth(),
-  app.get("/accounttest", async (req, res) => {
+  app.get("/accounttest", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       //userID: req.oidc.user.sub.substring(15, 34),
       userID: '834304396673679411',
@@ -509,8 +509,7 @@ if (cluster.isMaster) {
 
 
 
-  // requiresAuth(),
-  app.post("/auth/newOther", async (req, res) => {
+  app.post("/auth/newOther", requiresAuth(), async (req, res) => {
     if (
       /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
@@ -571,12 +570,9 @@ if (cluster.isMaster) {
       res.redirect("/adminpanel");
     }
   });
-  //requiresAuth(),
-  app.get("/adminpanel", async (req, res) => {
+  app.get("/adminpanel",requiresAuth(), async (req, res) => {
     if (
-      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
-      (1 + 1) == 2
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const outcomesc = await Outcome.find({
         category: "esportscod",
@@ -655,8 +651,7 @@ if (cluster.isMaster) {
       res.redirect("/");
     }
   });
-  // requiresAuth()
-  app.post("/auth/newMatch", async (req, res) => {
+  app.post("/auth/newMatch",requiresAuth(), async (req, res) => {
     if (
       /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
@@ -695,14 +690,25 @@ if (cluster.isMaster) {
   });
 
   //ADMIN PANEL
-  app.get("/newnewnew", async (req, res) => {
-    console.log('eh')
+  app.get("/newsoccergames", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
+    ) {
+      console.log('eh')
     newMatchesSoccer('prem')
     newMatchesSoccer('champ')
     newMatchesSoccer('seriea')
     newMatchesSoccer('bundes')
     newMatchesSoccer('laliga')
     return res.redirect('/bets')
+    }
+    
+  })
+
+  app.get("/stockpricecheck", requiresAuth(), async (req, res) => {
+    console.log('hey')
+    stockPrice()
+    return res.redirect('/')
     /*
         newMatchesBasketball("1");
     newMatchesBasketball("2");
@@ -710,7 +716,19 @@ if (cluster.isMaster) {
     */
   })
 
-  app.get("/newnewnew1", async (req, res) => {
+  app.get("/betresultinv", requiresAuth(), async (req, res) => {
+    console.log('hey')
+    stockPrice()
+    return res.redirect('/')
+    /*
+        newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    */
+  })
+
+
+  app.get("/newbasketballgames", requiresAuth(), async (req, res) => {
     console.log('eh')
       /*newMatchesSoccer('prem')
     newMatchesSoccer('champ')
@@ -740,7 +758,7 @@ if (cluster.isMaster) {
     res.redirect('/about')
   });
 
-  app.get('/tokens', (req, res) => {
+  app.get('/tokens', requiresAuth(), (req, res) => {
     res.render('tokens')
   });
 
@@ -759,8 +777,8 @@ if (cluster.isMaster) {
   //BETS
   app.get("/bets", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("bets");
-      /*if (reply) {
+      const reply = await GET_ASYNC("bets");
+      if (reply) {
         res.render("bet", { outcomes: JSON.parse(reply) });
         return;
       }
@@ -769,7 +787,7 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         3600
-      );*/
+      );
       console.log('hello');
       const outcomes = await Outcome.find({
         category: "soccer",
@@ -803,8 +821,8 @@ if (cluster.isMaster) {
 
   app.get("/betsbb", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("betsbb");
-      /*if (reply) {
+      const reply = await GET_ASYNC("betsbb");
+      if (reply) {
         res.render("betbasketball", { outcomes: JSON.parse(reply) });
         return;
       }const saveResult = await SET_ASYNC(
@@ -812,7 +830,7 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         3600
-      );*/
+      );
       const outcomes = await Outcome.find({
         category: "basketball",
         //timeStart: { $gt: date },
@@ -953,8 +971,8 @@ if (cluster.isMaster) {
 
   app.get("/betscr", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("betscr");
-      /*if (reply) {
+      const reply = await GET_ASYNC("betscr");
+      if (reply) {
         res.render("betcrypto", {
           outcomes: JSON.parse(reply),
           time2: "13:30",
@@ -966,7 +984,7 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         10000
-      );*/
+      );
       const outcomes = await Crypto.find({})
         .select({ Crypto: 1, symbol: 1 })
         .lean();
@@ -983,8 +1001,8 @@ if (cluster.isMaster) {
 
   app.get("/betsst", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("betsst");
-      /*if (reply) {
+      const reply = await GET_ASYNC("betsst");
+      if (reply) {
         res.render("betstock", {
           outcomes: JSON.parse(reply),
           time2: "13:30",
@@ -996,7 +1014,7 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         10000
-      );*/
+      );
       const outcomes = await Stock.find({})
         .select({ company: 1, ticker: 1 })
         .lean();
@@ -1015,8 +1033,8 @@ if (cluster.isMaster) {
 
   app.get("/casino", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("casino");
-      /*if (reply) {
+      const reply = await GET_ASYNC("casino");
+      if (reply) {
         res.render("betcasino", { outcomes: JSON.parse(reply) });
         return;
       }const saveResult = await SET_ASYNC(
@@ -1024,7 +1042,7 @@ if (cluster.isMaster) {
         JSON.stringify(casinoCommands),
         "EX",
         10000
-      );*/
+      );
       const casinoCommands = await Casino.find({})
         .select({ description: 1, command: 1 })
         .lean();
@@ -1037,8 +1055,8 @@ if (cluster.isMaster) {
 
   app.get("/betsq", async (req, res) => {
     try {
-      //const reply = await GET_ASYNC("betsq");
-      /*if (reply) {
+      const reply = await GET_ASYNC("betsq");
+      if (reply) {
         res.render("betrandom", { outcomes: JSON.parse(reply) });
         return;
       }const saveResult = await SET_ASYNC(
@@ -1046,7 +1064,7 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         10000
-      );*/
+      );
       const outcomes = await Outcome.find({
         category: "random",
         timeStart: { $gt: date },

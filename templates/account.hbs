@@ -161,8 +161,10 @@
 
 
 					<div class="desc" style="width:350px;margin:initial;display:none" id="wthdraw">
-                        <h1 style="font-size: 50px;"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
-						
+                        <h1 style="font-size: 50px;margin-bottom:0;font-family:Inter"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+                        <div style="margin-bottom:50px;display:flex">
+                            <h2 style="color:#fff;font-size:20px;font-weight:400">📈 <span style="color:{{color}};font-weight:600;margin-left:5px"> {{return}}%</span></h2>
+                        </div>
 						
 						{{#if userWithdraws}}
 						<div style="display: flex;padding: 0.2em;">
@@ -198,9 +200,10 @@
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
 									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px" placeholder="Tokens" name="tokens">
-									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" placeholder="Address" name="address">
+									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" placeholder="Ethereum Address" name="address">
 									
-									<button style="margin-top:40px" type="submit">Withdraw</button>
+                                    <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
+                        >Withdraw</button>
 								</form>
                             </div>
                         </div>

@@ -8,7 +8,7 @@ const stockPrice = (callback) => {
     Stock.find({}, (error, stocks) => {
         const date = moment.utc().format("YYYY-MM-DD");
         stocks.forEach((stock) => {
-            const url = `http://api.marketstack.com/v1/eod/${date}?access_key=${process.env.STOCK_API}&symbols=${stock.ticker}&limit=1`;
+            const url = `http://api.marketstack.com/v1/eod/2022-01-21?access_key=${process.env.STOCK_API}&symbols=${stock.ticker}&limit=1`;
             request ({ url, json: true },(error, { body }) => {
                 if (error) {
                   console.log("Unable to connect", undefined);

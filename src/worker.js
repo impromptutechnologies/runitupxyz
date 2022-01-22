@@ -111,9 +111,10 @@ const checkReturn = async () => {
   var date = moment.utc().format("MM-DD HH:mm");
   const investmentstock = await Invest.find({ category: "stocks" });
   const investmentcrypto = await Invest.find({ category: "crypto" });
+  var today = new Date();
   if (
     date == moment.utc().format(`${month}-${day} 13:28`) &&
-    investmentcrypto.length !== 0
+    investmentcrypto.length !== 0 
   ) {
     cryptoPriceOpen((error, highest) => {
       if (error) {
@@ -124,8 +125,10 @@ const checkReturn = async () => {
 
   if (
     date == moment.utc().format(`${month}-${day} 22:00`) &&
-    investmentstock.length !== 0
+    investmentstock.length !== 0 && today.getDay() !== 6 &&
+    today.getDay() !== 0
   ) {
+    console.log('here')
     stockPrice((error, highest) => {
       if (error) {
         return console.log(error);
@@ -145,12 +148,19 @@ const checkReturn = async () => {
 
   if (
     date == moment.utc().format(`${month}-${day} 22:03`) &&
-    (investmentcrypto.length !== 0 || investmentstock.length !== 0)
+    (investmentstock.length !== 0) && today.getDay() !== 6 &&
+    today.getDay() !== 0
   ) {
     const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
-    const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
-    console.log(higheststock.ticker, highestcrypto.ticker)
+    console.log(higheststock.ticker)
     betResultInv(higheststock.ticker, "stocks");
+  };
+  if (
+    date == moment.utc().format(`${month}-${day} 22:03`) &&
+    (investmentcrypto.length !== 0)
+  ) {
+    const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
+    console.log(highestcrypto.ticker)
     betResultInv(highestcrypto.symbol, "crypto");
   };
 };
