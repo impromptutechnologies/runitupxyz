@@ -745,6 +745,7 @@ if (cluster.isMaster) {
   })
 
   //MISC
+  
   app.get("", (req, res) => {
     res.render("index");
   });
@@ -752,21 +753,10 @@ if (cluster.isMaster) {
     res.render("about");
   });
 
-
-  app.get('/createERC20', (req, res) => {
-    deployToken();
-    res.redirect('/about')
-  });
-
   app.get('/tokens', requiresAuth(), (req, res) => {
     res.render('tokens')
   });
 
-  app.get("/createWallet", (req, res) => {
-    createWallet();
-    console.log('hello')
-    res.render("about");
-  });
   app.get("/arena", (req, res) => {
     res.render("arena");
   });
@@ -1176,7 +1166,7 @@ if (cluster.isMaster) {
 
   
 
-  app.get("/success", requiresAuth(), async (req, res) => {
+  /*app.get("/success", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     }).sort({ userID: 1 });
@@ -1196,7 +1186,7 @@ if (cluster.isMaster) {
     };
     completePayment(req.oidc.user.sub.substring(15, 34), tokens, paymentId, execute_payment_json);
     return res.redirect("/account");
-  });
+  });*/
 
 
   app.get("x",requiresAuth(), async (req, res) => {
