@@ -1640,7 +1640,6 @@
 		.desc img{
 			height: 69px;
 			margin-bottom: 20px;
-			border-radius: 50%;
 		}
 		.options{
 			list-style-type: none;padding-left:0px
@@ -1726,7 +1725,7 @@
 		}
 
 	h2 {
-		font-size: 12px;
+		font-size: 15px;
 		font-weight: 100;
         margin-bottom: 0;
 	}
