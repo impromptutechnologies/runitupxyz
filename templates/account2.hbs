@@ -12,14 +12,7 @@
             <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BMZX322G5J');
-</script>
+		
 	</head>
 	<body>
 
@@ -28,13 +21,13 @@
 				<div class="inner">
 					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/logo.png" style="height:40px;width:auto;"></a>
 					<nav id="nav">
-          <a href="/">Home</a>
-          <a href="bets">Commands</a>
-					<a href="/arena">Gaming<sub style="font-size: 10px;">soon!</sub></a>
-          
-          <a href="about">About</a>
-          <a href="account">Account</a>
-        </nav>
+						<a href="/">Home</a>
+						<a href="/bets">Commands</a>
+                        <a href="/tokens">Lootbox</a>
+						<a href="/about">About</a>
+						<!--<a href="/arena">Arena<sub style="font-size: 10px;">soon!</sub></a>-->
+                        <a href="/account">Account</a>
+					</nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
@@ -43,19 +36,28 @@
 			<section id="banner" style="padding-bottom: 5em">
                 <div class="landing">
                     <div class="desc">
-                        <!--<img src={{profileImage}}>-->
-                        <h1>{{username}}</h1>
+                        <img src={{profileImage}} style="border-radius:50%">
+                        <h3>{{username}}</h3>
+
+                            <div style="width:350px;font-size:12px;display:flex">
+                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:32px;margin-bottom:0">
+                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">0x192u0uda09dua90wdu90aw</p>
+                            </div>
                     </div>
                 </div>
 			</section>
+
 		<!-- One -->
 			<section id="one" style="padding-bottom: 5em;padding: 3em;
     padding-top: 0em;">
+
+
+
                 <div style="display: flex;max-width:75em;margin:auto">
                     <div class="desc" style="margin:initial;width:350px;" id="openbets">
-                        <h1 style="font-size: 50px;margin-bottom:0"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()">
+                        <h1 style="font-size: 50px;margin-bottom:0"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
                         <div style="margin-bottom:50px">
-                            <h2 style="color:rgba(255, 255, 255, 0.55);font-size: 0.3em;font-weight:400">Weekly Return: <span style="color:{{color}};font-weight:600">{{return}}%</span></h2>
+                            <h2 style="color:rgba(255, 255, 255, 0.55);font-size: 0.8em;font-weight:400">Weekly Return: <span style="color:{{color}};font-weight:600">{{return}}%</span></h2>
                         </div>
                         <h1>Bets</h1>
 						<div style="display: flex;padding: 0.2em;">
@@ -86,9 +88,10 @@
 								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
                                     <h2>{{this.betAmount}}</h2>
                                 </div>
-                                 <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
+                                <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
                                     <h2>{{this.status}}</h2>
                                 </div>
+                               
                             </div>
                         </div>
                         {{/each}}
@@ -114,6 +117,9 @@
 							<div style="margin-left:10px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Amount</h2>
                             </div>
+                            <div style="margin-left:10px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Status</h2>
+                            </div>
                         </div>
 						{{#if userInvests}}
                         {{#each userInvests}}
@@ -128,6 +134,9 @@
 								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
                                     <h2>{{this.investAmount}}</h2>
                                 </div>
+                                <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
+                                    <h2>{{this.status}}</h2>
+                                </div>
                             </div>
                         </div>
                         {{/each}}
@@ -140,11 +149,19 @@
                             
                             {{/if}}
 							<div class="desc" style="margin-top:70px">
-                        <a href="/logout"><button>Log Out</button></a>
+                        <a href="/logout">    <button type="submit" id="ethbut" style="font-weight: 100;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
+                        {{buttondis}}>Invite Bot</button></a>
                     </div>
 					</div>
+
+
+					
+
+
 					<div class="desc" style="width:350px;margin:initial;display:none" id="wthdraw">
-                                                <h1 style="font-size: 50px;margin-bottom:0"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()">
+                        <h1 style="font-size: 50px;"><img src='https://altvaton.sirv.com/Images/coin.png' style="height:35px;margin-bottom:0;margin-right:10px">{{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+						
+						
 						{{#if userWithdraws}}
 						<div style="display: flex;padding: 0.2em;">
                             <div style="width: 55%;padding: 0.6em;">
@@ -185,33 +202,23 @@
 								</form>
                             </div>
                         </div>
-
-                        <h1>Deposit</h1>
-                        <p>{{ depositAddress }}</p>
-						<p style="margin-top:5px">Please send your SHIB, DOGE or ETH to the address above.</p>
-                        <br>
-                        <p>Once the transaction has confirmed, click the button below to refresh your token balance.</p>
-                        <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
-                            <div style="display:flex;width: 100%;">
-                                <form action="/auth/refreshBalance" method="POST">
-                                    <input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" value={{depositAddress}} name="address" hidden>
-									<button style="margin-top:40px" type="submit">Refresh Balance</button>
-								</form>
-                            </div>
-                            <div style="display:flex;width: 100%;">
-                                <form action="/auth/refreshBalance1" method="POST">
-                                    <input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" value={{depositAddress}} name="address" hidden>
-									<button style="margin-top:40px" type="submit">Refresh Balance1</button>
-								</form>
-                            </div>
-                        </div>
-                        {{/if}}
-                        <br> 
+                            
+                            {{/if}}
+                            <br>
+                            
+                        
 					</div>
-                </div>
-                </div>
-			</section>
 
+
+
+						
+                    </div>
+                    
+
+                   
+                </div>
+				 
+			</section>
 		
 
 		<!-- Footer -->
@@ -235,7 +242,6 @@
 			<script src="./js/skel.min.js"></script>
 			<script src="./js/util.js"></script>
 			<script src="./js/main.js"></script>
-
 			
 
 	</body>
