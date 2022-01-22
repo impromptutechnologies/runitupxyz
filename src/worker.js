@@ -176,7 +176,7 @@ const updateMatches = async () => {
     console.log("no finished matches across the board");
   } else {
     console.log(outcomes);
-    outcomes.forEach((element) => {
+    outcomes.forEach(async (element) => {
       if (element.category == "basketball") {
         betResultBasketball(element.outcomeID);
       }
