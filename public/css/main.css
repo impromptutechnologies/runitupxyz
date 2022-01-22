@@ -1638,8 +1638,9 @@
 		}
 		
 		.desc img{
-			height: 49px;
+			height: 69px;
 			margin-bottom: 20px;
+			border-radius: 50%;
 		}
 		.options{
 			list-style-type: none;padding-left:0px
