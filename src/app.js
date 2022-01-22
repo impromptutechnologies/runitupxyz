@@ -772,12 +772,7 @@ if (cluster.isMaster) {
         res.render("bet", { outcomes: JSON.parse(reply) });
         return;
       }
-      const saveResult = await SET_ASYNC(
-        "bets",
-        JSON.stringify(outcomes),
-        "EX",
-        3600
-      );
+      
       console.log('hello');
       const outcomes = await Outcome.find({
         category: "soccer",
@@ -786,7 +781,12 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .lean()
         .limit(10);
-      
+        const saveResult = await SET_ASYNC(
+          "bets",
+          JSON.stringify(outcomes),
+          "EX",
+          3600
+        );
       res.render("bet", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -815,12 +815,7 @@ if (cluster.isMaster) {
       if (reply) {
         res.render("betbasketball", { outcomes: JSON.parse(reply) });
         return;
-      }const saveResult = await SET_ASYNC(
-        "betsbb",
-        JSON.stringify(outcomes),
-        "EX",
-        3600
-      );
+      }
       const outcomes = await Outcome.find({
         category: "basketball",
         //timeStart: { $gt: date },
@@ -829,7 +824,12 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .sort({ timeStart: 1 })
         .lean();
-      
+        const saveResult = await SET_ASYNC(
+          "betsbb",
+          JSON.stringify(outcomes),
+          "EX",
+          3600
+        );
       res.render("betbasketball", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -969,16 +969,16 @@ if (cluster.isMaster) {
           time1: "20:00",
         });
         return;
-      }const saveResult = await SET_ASYNC(
-        "betscr",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
+      }
       const outcomes = await Crypto.find({})
         .select({ Crypto: 1, symbol: 1 })
         .lean();
-      
+        const saveResult = await SET_ASYNC(
+          "betscr",
+          JSON.stringify(outcomes),
+          "EX",
+          3600
+        );
       res.render("betcrypto", {
         outcomes: outcomes,
         time2: "13:30",
@@ -999,16 +999,16 @@ if (cluster.isMaster) {
           time1: "20:00",
         });
         return;
-      }const saveResult = await SET_ASYNC(
-        "betsst",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
+      }
       const outcomes = await Stock.find({})
         .select({ company: 1, ticker: 1 })
         .lean();
-      
+        const saveResult = await SET_ASYNC(
+          "betsst",
+          JSON.stringify(outcomes),
+          "EX",
+          3600
+        );
       res.render("betstock", {
         outcomes: outcomes,
         time2: "13:30",
@@ -1027,16 +1027,16 @@ if (cluster.isMaster) {
       if (reply) {
         res.render("betcasino", { outcomes: JSON.parse(reply) });
         return;
-      }const saveResult = await SET_ASYNC(
-        "casino",
-        JSON.stringify(casinoCommands),
-        "EX",
-        10000
-      );
+      }
       const casinoCommands = await Casino.find({})
         .select({ description: 1, command: 1 })
         .lean();
-      
+        const saveResult = await SET_ASYNC(
+          "casino",
+          JSON.stringify(casinoCommands),
+          "EX",
+          10000
+        );
       res.render("betcasino", { outcomes: casinoCommands });
     } catch (err) {
       console.log(err);
@@ -1049,12 +1049,7 @@ if (cluster.isMaster) {
       if (reply) {
         res.render("betrandom", { outcomes: JSON.parse(reply) });
         return;
-      }const saveResult = await SET_ASYNC(
-        "betsq",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
+      }
       const outcomes = await Outcome.find({
         category: "random",
         timeStart: { $gt: date },
@@ -1071,6 +1066,12 @@ if (cluster.isMaster) {
           desc: 1,
         })
         .lean();
+        const saveResult = await SET_ASYNC(
+          "betsq",
+          JSON.stringify(outcomes),
+          "EX",
+          10000
+        );
       
       res.render("betrandom", { outcomes: outcomes });
     } catch (err) {
