@@ -161,7 +161,7 @@ if (cluster.isMaster) {
           id: userProfile.userID,
           profileImage: req.oidc.user.picture,
           username: userProfile.username,
-          depositAddr:userProfile.depositAddress,
+          depositAddr: userProfile.depositAddress,
           return: Math.round(userR, 2),
           tokens: Math.round(userProfile.tokens, 2),
           color: "red",
@@ -181,7 +181,7 @@ if (cluster.isMaster) {
         });
       } */
         res.render("account", {
-          depositAddr:userProfile.depositAddress,
+          depositAddr: userProfile.depositAddress,
           userWithdraws: userWithdraws,
           userBets: userBets,
           userInvests: userInvests,
