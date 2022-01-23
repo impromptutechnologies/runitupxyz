@@ -1139,9 +1139,11 @@ if (cluster.isMaster) {
   });
 
   app.get("/success", requiresAuth(), async (req, res) => {
+    console.log(req.oidc.user.sub.substring(15, 34))
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     });
+    console.log(userProfile)
     const coins = userProfile.tokens;
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
