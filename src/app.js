@@ -1142,7 +1142,7 @@ if (cluster.isMaster) {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     });
-    const coins = userProfile.coins;
+    const coins = userProfile.tokens;
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
     const execute_payment_json = {
@@ -1167,7 +1167,7 @@ if (cluster.isMaster) {
             return res.redirect("/tokens");
           } else {
             userProfile.payments.push(payment.id);
-            userProfile.coins = coins + 17645;
+            userProfile.tokens = coins + 17645;
             userProfile.save();
             return res.redirect("/tokens");
           }
