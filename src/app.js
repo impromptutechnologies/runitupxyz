@@ -46,7 +46,7 @@ if (cluster.isMaster) {
   const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: "DrsQo_EEsqCn9glv_GBGHoSb3M3qkinmOQOjC9Fp1641fH9OWzq-juLtdRXyAYHS",
+    secret: process.env.SECRET,
     baseURL: "https://getmeow.gg/",
     clientID: process.env.CLIENT_ID,
     issuerBaseURL: "https://meowbot.us.auth0.com",
@@ -161,6 +161,7 @@ if (cluster.isMaster) {
           id: userProfile.userID,
           profileImage: req.oidc.user.picture,
           username: userProfile.username,
+          depositAddr:userProfile.depositAddress,
           return: Math.round(userR, 2),
           tokens: Math.round(userProfile.tokens, 2),
           color: "red",
@@ -180,6 +181,7 @@ if (cluster.isMaster) {
         });
       } */
         res.render("account", {
+          depositAddr:userProfile.depositAddress,
           userWithdraws: userWithdraws,
           userBets: userBets,
           userInvests: userInvests,
@@ -736,9 +738,9 @@ if (cluster.isMaster) {
     res.render("about");
   });
 
-  app.get("/tokens", requiresAuth(), (req, res) => {
+  /*app.get("/tokens", requiresAuth(), (req, res) => {
     res.render("tokens");
-  });
+  });*/
 
   app.get("/arena", (req, res) => {
     res.render("arena");

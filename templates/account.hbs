@@ -19,7 +19,7 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/heart.png" style="height:40px;width:auto;"></a>
+					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/logo.png" style="height:40px;width:auto;"></a>
 					<nav id="nav">
 						<a href="/">Home</a>
 						<a href="/bets">Commands</a>
@@ -41,7 +41,7 @@
 
                             <div style="width:350px;font-size:12px;display:flex">
                                 <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:32px;margin-bottom:0">
-                                <!--<p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">0x192u0uda09dua90wdu90aw</p>-->
+                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">{{depositAddr}}</p>
                             </div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                         {{/each}}
                         {{else}}
 						<h1>Withdraw</h1>
-						<p style="margin-top:5px">It will automatically detect the right crypto</p>
+						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH Address</p>
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">

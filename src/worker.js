@@ -179,10 +179,11 @@ const updateMatches = async () => {
     outcomes.forEach(async (element) => {
       if (element.category == "basketball") {
         betResultBasketball(element.outcomeID);
+        const deleted = await Outcome.deleteOne({ timeEnd: { $lt: date }, outcomeID: element.outcomeID, category: 'basketball' });
       }
       if (element.category == "soccer") {
         betResult(element.outcomeID);
-        const deleted = await Outcome.deleteMany({ timeEnd: { $lt: date }, category: 'basketball' });
+        const deleted = await Outcome.deleteOne({ timeEnd: { $lt: date }, outcomeID: element.outcomeID, category: 'soccer' });
       }
     });
   }
