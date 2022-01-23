@@ -27,7 +27,7 @@ if (cluster.isMaster) {
   const newMatchesBasketball = require("./utils/newmatchesb");
   const Withdraw = require("./models/withdrawSchema.js");
   const WAValidator = require("wallet-address-validator");
-  const completePayment = require('./queues/payment');
+  const completePayment = require("./queues/payment");
   const createWallet = require("./utils/createWallet");
   const depositAddress = require("./utils/depositAddress");
   const updateBalance = require("./utils/updateBalance");
@@ -36,18 +36,12 @@ if (cluster.isMaster) {
 
   const deployToken = require("./utils/deployToken");
 
-
-
   const Crypto = require("./models/cryptoSchema.js");
   var compression = require("compression");
   const { auth } = require("express-openid-connect");
   const { requiresAuth } = require("express-openid-connect");
   const paypal = require("paypal-rest-sdk");
   const dirname = __dirname;
-
-
-  
-
 
   const config = {
     authRequired: false,
@@ -102,7 +96,6 @@ if (cluster.isMaster) {
 
   app.set("view engine", "hbs");
   app.set("views", viewsPath);
-  
 
   hbs.registerHelper("substring", function (aString) {
     var theString = aString.substring(0, 5) + "...";
@@ -111,9 +104,7 @@ if (cluster.isMaster) {
 
   app.get("/", async (req, res) => {
     res.render("index");
-
   });
-
 
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
@@ -147,7 +138,7 @@ if (cluster.isMaster) {
         creatorID: req.oidc.user.sub.substring(15, 34),
       })
         .sort({ creatorID: 1 })
-        .select({ Code: 1, investAmount: 1, status: 1  })
+        .select({ Code: 1, investAmount: 1, status: 1 })
         .lean()
         .limit(5);
       const userWithdraws = await Withdraw.find({
@@ -175,7 +166,7 @@ if (cluster.isMaster) {
           color: "red",
         });
       } else {
-      /*if(userReturn == 0){
+        /*if(userReturn == 0){
         res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
@@ -206,30 +197,32 @@ if (cluster.isMaster) {
   app.get("/accounttest", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       //userID: req.oidc.user.sub.substring(15, 34),
-      userID: '834304396673679411',
-    }).sort({ userID: 1 }).lean();
+      userID: "834304396673679411",
+    })
+      .sort({ userID: 1 })
+      .lean();
     if (userProfile == null) {
       res.render("makeaccount", {
         //profileImage: req.oidc.user.picture,
-        username: 'MeowMeowMeow#3479',
+        username: "MeowMeowMeow#3479",
       });
     } else {
       const userBets = await Bet.find({
-        creatorID: '834304396673679411',
+        creatorID: "834304396673679411",
       })
         .sort({ creatorID: 1 })
         .select({ Code: 1, betOdds: 1, betAmount: 1 })
         .lean()
         .limit(5);
       const userInvests = await Invest.find({
-        creatorID: '834304396673679411',
+        creatorID: "834304396673679411",
       })
         .sort({ creatorID: 1 })
         .select({ Code: 1, investAmount: 1 })
         .lean()
         .limit(5);
       const userWithdraws = await Withdraw.find({
-        userID: '834304396673679411',
+        userID: "834304396673679411",
       })
         .sort({ userID: 1 })
         .select({ tokens: 1, crypto: 1, address: 1 })
@@ -253,7 +246,7 @@ if (cluster.isMaster) {
           color: "red",
         });
       } else {
-      /*if(userReturn == 0){
+        /*if(userReturn == 0){
         res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
@@ -282,41 +275,36 @@ if (cluster.isMaster) {
     }
   });
 
-
   app.post("/auth/refreshBalance", async (req, res) => {
     const tokens = await Profile.findOne({
-      userID: '834304396673679411',
+      userID: "834304396673679411",
     })
       .sort({ userID: 1 })
       .lean();
-    updateBalance(req.body.address, tokens.cryptoBalance)
+    updateBalance(req.body.address, tokens.cryptoBalance);
     res.redirect("/accounttest");
-
-  })
+  });
 
   app.post("/auth/refreshBalance1", async (req, res) => {
     const tokens = await Profile.findOne({
-      userID: '834304396673679411',
+      userID: "834304396673679411",
     })
       .sort({ userID: 1 })
       .lean();
-    updateBalanceERC20(req.body.address)
+    updateBalanceERC20(req.body.address);
     res.redirect("/accounttest");
-
-  })
+  });
 
   app.post("/auth/register", async (req, res) => {
     let profile = await Profile.create({
       userID: req.body.email,
       depositAddress: req.body.depositAddress,
-      externalID: '',
+      externalID: "",
       tokens: 1000,
     });
     profile.save();
     res.redirect("/accounttest");
-  })
-
-
+  });
 
   app.post("/auth/withdraw", requiresAuth(), async (req, res) => {
     const tokens = await Profile.findOne({
@@ -350,18 +338,12 @@ if (cluster.isMaster) {
     }
     res.redirect("/account");
   });
-  
+
   app.get("/callback", requiresAuth(), async (req, res) => {
     res.redirect("account");
   });
 
   //ACCOUNT
-
-
-
-
-
-
 
   //ADMIN PANEL
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
@@ -506,10 +488,6 @@ if (cluster.isMaster) {
     }
   });
 
-
-
-
-
   app.post("/auth/newOther", requiresAuth(), async (req, res) => {
     if (
       /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -571,10 +549,8 @@ if (cluster.isMaster) {
       res.redirect("/adminpanel");
     }
   });
-  app.get("/adminpanel",requiresAuth(), async (req, res) => {
-    if (
-      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
-    ) {
+  app.get("/adminpanel", requiresAuth(), async (req, res) => {
+    if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
       const outcomesc = await Outcome.find({
         category: "esportscod",
         timeStart: { $gt: date },
@@ -652,7 +628,7 @@ if (cluster.isMaster) {
       res.redirect("/");
     }
   });
-  app.post("/auth/newMatch",requiresAuth(), async (req, res) => {
+  app.post("/auth/newMatch", requiresAuth(), async (req, res) => {
     if (
       /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
@@ -692,72 +668,67 @@ if (cluster.isMaster) {
 
   //ADMIN PANEL
   app.get("/newsoccergames", requiresAuth(), async (req, res) => {
-    if (
-      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
-    ) {
-      console.log('eh')
-    newMatchesSoccer('prem')
-    newMatchesSoccer('champ')
-    newMatchesSoccer('seriea')
-    newMatchesSoccer('bundes')
-    newMatchesSoccer('laliga')
-    return res.redirect('/bets')
+    if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
+      console.log("eh");
+      newMatchesSoccer("prem");
+      newMatchesSoccer("champ");
+      newMatchesSoccer("seriea");
+      newMatchesSoccer("bundes");
+      newMatchesSoccer("laliga");
+      return res.redirect("/bets");
     }
-    
-  })
+  });
 
   app.get("/stockpricecheck", requiresAuth(), async (req, res) => {
-    console.log('hey')
-    stockPrice()
-    return res.redirect('/')
+    console.log("hey");
+    stockPrice();
+    return res.redirect("/");
     /*
         newMatchesBasketball("1");
     newMatchesBasketball("2");
     newMatchesBasketball("3");
     */
-  })
+  });
 
   app.get("/betresultinv", requiresAuth(), async (req, res) => {
-    betResultInv('SPCE', "stocks");
-    betResultInv('BTC', "crypto");
-    return res.redirect('/')
+    betResultInv("SPCE", "stocks");
+    betResultInv("BTC", "crypto");
+    return res.redirect("/");
     /*
         newMatchesBasketball("1");
     newMatchesBasketball("2");
     newMatchesBasketball("3");
     */
-  })
+  });
 
   app.get("/betresultinv", requiresAuth(), async (req, res) => {
-    console.log('hey')
-    stockPrice()
-    return res.redirect('/')
+    console.log("hey");
+    stockPrice();
+    return res.redirect("/");
     /*
         newMatchesBasketball("1");
     newMatchesBasketball("2");
     newMatchesBasketball("3");
     */
-  })
-
+  });
 
   app.get("/newbasketballgames", requiresAuth(), async (req, res) => {
-    console.log('eh')
-      /*newMatchesSoccer('prem')
+    console.log("eh");
+    /*newMatchesSoccer('prem')
     newMatchesSoccer('champ')
     newMatchesSoccer('seriea')
     newMatchesSoccer('bundes')
     newMatchesSoccer('laliga')
     return res.redirect('/bets')
     /**/
-        newMatchesBasketball("1");
+    newMatchesBasketball("1");
     newMatchesBasketball("2");
     newMatchesBasketball("3");
-    return res.redirect('/bets2')
-    
-  })
+    return res.redirect("/bets2");
+  });
 
   //MISC
-  
+
   app.get("", (req, res) => {
     res.render("index");
   });
@@ -765,8 +736,8 @@ if (cluster.isMaster) {
     res.render("about");
   });
 
-  app.get('/tokens', requiresAuth(), (req, res) => {
-    res.render('tokens')
+  app.get("/tokens", requiresAuth(), (req, res) => {
+    res.render("tokens");
   });
 
   app.get("/arena", (req, res) => {
@@ -784,21 +755,22 @@ if (cluster.isMaster) {
         res.render("bet", { outcomes: JSON.parse(reply) });
         return;
       }
-      
-      console.log('hello');
+
+      console.log("hello");
       const outcomes = await Outcome.find({
         category: "soccer",
         "option1.0.odds": { $gt: 0 },
-      }).sort({ timeStart: 1 })
+      })
+        .sort({ timeStart: 1 })
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .lean()
         .limit(10);
-        const saveResult = await SET_ASYNC(
-          "bets",
-          JSON.stringify(outcomes),
-          "EX",
-          3600
-        );
+      const saveResult = await SET_ASYNC(
+        "bets",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );
       res.render("bet", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -807,11 +779,12 @@ if (cluster.isMaster) {
 
   app.get("/bets2", async (req, res) => {
     try {
-      console.log('hello');
+      console.log("hello");
       const outcomes = await Outcome.find({
         category: "soccer",
         "option1.0.odds": { $gt: 0 },
-      }).sort({ timeStart: 1 })
+      })
+        .sort({ timeStart: 1 })
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .lean()
         .limit(10);
@@ -836,12 +809,12 @@ if (cluster.isMaster) {
         .select({ team1: 1, team2: 1, timeStart: 1, option1: 1 })
         .sort({ timeStart: 1 })
         .lean();
-        const saveResult = await SET_ASYNC(
-          "betsbb",
-          JSON.stringify(outcomes),
-          "EX",
-          3600
-        );
+      const saveResult = await SET_ASYNC(
+        "betsbb",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );
       res.render("betbasketball", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -933,7 +906,6 @@ if (cluster.isMaster) {
         3600
       );
 
-
       const outcomeslol = await Outcome.find({
         category: "esportslol",
         timeStart: { $gt: date },
@@ -952,7 +924,6 @@ if (cluster.isMaster) {
         })
         .lean();
 
-
       const saveResult3 = await SET_ASYNC(
         "outcomeslol",
         JSON.stringify(outcomeslol),
@@ -970,7 +941,6 @@ if (cluster.isMaster) {
     }
   });
 
-
   app.get("/betscr", async (req, res) => {
     try {
       const reply = await GET_ASYNC("betscr");
@@ -985,12 +955,12 @@ if (cluster.isMaster) {
       const outcomes = await Crypto.find({})
         .select({ Crypto: 1, symbol: 1 })
         .lean();
-        const saveResult = await SET_ASYNC(
-          "betscr",
-          JSON.stringify(outcomes),
-          "EX",
-          3600
-        );
+      const saveResult = await SET_ASYNC(
+        "betscr",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );
       res.render("betcrypto", {
         outcomes: outcomes,
         time2: "13:30",
@@ -1015,12 +985,12 @@ if (cluster.isMaster) {
       const outcomes = await Stock.find({})
         .select({ company: 1, ticker: 1 })
         .lean();
-        const saveResult = await SET_ASYNC(
-          "betsst",
-          JSON.stringify(outcomes),
-          "EX",
-          3600
-        );
+      const saveResult = await SET_ASYNC(
+        "betsst",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );
       res.render("betstock", {
         outcomes: outcomes,
         time2: "13:30",
@@ -1030,8 +1000,6 @@ if (cluster.isMaster) {
       console.log(err);
     }
   });
-
-
 
   app.get("/casino", async (req, res) => {
     try {
@@ -1043,12 +1011,12 @@ if (cluster.isMaster) {
       const casinoCommands = await Casino.find({})
         .select({ description: 1, command: 1 })
         .lean();
-        const saveResult = await SET_ASYNC(
-          "casino",
-          JSON.stringify(casinoCommands),
-          "EX",
-          10000
-        );
+      const saveResult = await SET_ASYNC(
+        "casino",
+        JSON.stringify(casinoCommands),
+        "EX",
+        10000
+      );
       res.render("betcasino", { outcomes: casinoCommands });
     } catch (err) {
       console.log(err);
@@ -1078,13 +1046,13 @@ if (cluster.isMaster) {
           desc: 1,
         })
         .lean();
-        const saveResult = await SET_ASYNC(
-          "betsq",
-          JSON.stringify(outcomes),
-          "EX",
-          10000
-        );
-      
+      const saveResult = await SET_ASYNC(
+        "betsq",
+        JSON.stringify(outcomes),
+        "EX",
+        10000
+      );
+
       res.render("betrandom", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
@@ -1139,47 +1107,48 @@ if (cluster.isMaster) {
   });
 
   app.get("/success", requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34))
+    console.log(req.oidc.user.sub.substring(15, 34));
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     });
-    console.log(userProfile)
-    const coins = userProfile.tokens;
-    const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId;
-    const execute_payment_json = {
-      payer_id: payerId,
-      transactions: [
-        {
-          amount: {
-            currency: "USD",
-            total: "2.99",
+    if (userProfile == null) {
+      res.redirect("/makeaccount.hbs");
+    } else {
+      console.log(userProfile);
+      const coins = userProfile.tokens;
+      const payerId = req.query.PayerID;
+      const paymentId = req.query.paymentId;
+      const execute_payment_json = {
+        payer_id: payerId,
+        transactions: [
+          {
+            amount: {
+              currency: "USD",
+              total: "2.99",
+            },
           },
-        },
-      ],
-    };
-    paypal.payment.execute(
-      paymentId,
-      execute_payment_json,
-      function (error, payment) {
-        if (error) {
-          throw error;
-        } else {
-          if (userProfile.payments.includes(payment.id)) {
-            return res.redirect("/tokens");
+        ],
+      };
+      paypal.payment.execute(
+        paymentId,
+        execute_payment_json,
+        function (error, payment) {
+          if (error) {
+            throw error;
           } else {
-            userProfile.payments.push(payment.id);
-            userProfile.tokens = coins + 17645;
-            userProfile.save();
-            return res.redirect("/tokens");
+            if (userProfile.payments.includes(payment.id)) {
+              return res.redirect("/tokens");
+            } else {
+              userProfile.payments.push(payment.id);
+              userProfile.tokens = coins + 17645;
+              userProfile.save();
+              return res.redirect("/tokens");
+            }
           }
         }
-      }
-    );
+      );
+    }
   });
-
-
-  
 
   /*app.get("/success", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
@@ -1203,8 +1172,7 @@ if (cluster.isMaster) {
     return res.redirect("/account");
   });*/
 
-
-  app.get("x",requiresAuth(), async (req, res) => {
+  app.get("x", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     })
@@ -1217,7 +1185,6 @@ if (cluster.isMaster) {
     }
   });
 
-
   app.get("*", (req, res) => {
     res.render("404");
   });
@@ -1227,19 +1194,7 @@ if (cluster.isMaster) {
   });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  /*
+/*
   
     paypal.payment.execute(
       paymentId,
