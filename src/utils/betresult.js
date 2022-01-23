@@ -1,6 +1,8 @@
 var request = require("request");
 const Bet = require("../models/betSchema");
 const Outcome = require("../models/betSchema");
+const moment = require("moment-timezone");
+
 const date = moment.utc().format("MM-DD HH:mm");
 
 const betResult = (id) => {
