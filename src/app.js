@@ -114,6 +114,17 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
 
+
+  app.get("/stockpricecheck", async (req, res) => {
+    stockPrice();
+    return res.redirect("/");
+
+    /*
+        newMatchesBasketball("1");
+    newMatchesBasketball("2");
+    newMatchesBasketball("3");
+    */
+  });
   //ACCOUNT
   app.get("/account", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
@@ -682,17 +693,7 @@ if (cluster.isMaster) {
   });
 
   //requiresAuth(),
-  app.get("/stockpricechecke", async (req, res) => {
-    console.log("hey");
-    stockPrice((data) => {
-      return res.redirect("/");
-    });
-    /*
-        newMatchesBasketball("1");
-    newMatchesBasketball("2");
-    newMatchesBasketball("3");
-    */
-  });
+
 
   //requiresAuth(),
   app.get("/betresultinv",  async (req, res) => {
@@ -939,7 +940,7 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get("/betscr", async (req, res) => {
+  /*app.get("/betscr", async (req, res) => {
     try {
       const reply = await GET_ASYNC("betscr");
       if (reply) {
@@ -967,7 +968,7 @@ if (cluster.isMaster) {
     } catch (err) {
       console.log(err);
     }
-  });
+  });*/
 
   app.get("/betsst", async (req, res) => {
     try {
