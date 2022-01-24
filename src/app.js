@@ -681,7 +681,8 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get("/stockpricecheck", requiresAuth(), async (req, res) => {
+  //requiresAuth(),
+  app.get("/stockpricechecke", async (req, res) => {
     console.log("hey");
     stockPrice();
     return res.redirect("/");
@@ -692,9 +693,13 @@ if (cluster.isMaster) {
     */
   });
 
-  app.get("/betresultinv", requiresAuth(), async (req, res) => {
-    betResultInv("SPCE", "stocks");
-    betResultInv("BTC", "crypto");
+  //requiresAuth(),
+  app.get("/betresultinv",  async (req, res) => {
+    const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
+    const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
+
+    betResultInv(higheststock.ticker, "stocks");
+    betResultInv(highestcrypto.ticker, "crypto");
     return res.redirect("/");
     /*
         newMatchesBasketball("1");
@@ -703,16 +708,6 @@ if (cluster.isMaster) {
     */
   });
 
-  app.get("/betresultinv", requiresAuth(), async (req, res) => {
-    console.log("hey");
-    stockPrice();
-    return res.redirect("/");
-    /*
-        newMatchesBasketball("1");
-    newMatchesBasketball("2");
-    newMatchesBasketball("3");
-    */
-  });
 
   app.get("/newbasketballgames", requiresAuth(), async (req, res) => {
     console.log("eh");
