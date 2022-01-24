@@ -14,6 +14,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
 		
 	</head>
+
+    <script>
+        function myFunction3() {
+  /* Get the text field */
+  var copyText = document.getElementById("myInput");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+   /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
+}
+    </script>
 	<body>
 
 		<!-- Header -->
@@ -23,7 +40,6 @@
 					<nav id="nav">
 						<a href="/">Home</a>
 						<a href="/bets">Commands</a>
-                        <a href="/tokens">Lootbox</a>
 						<a href="/about">About</a>
 						<!--<a href="/arena">Arena<sub style="font-size: 10px;">soon!</sub></a>-->
                         <a href="/account">Account</a>
@@ -38,11 +54,27 @@
                     <div class="desc">
                         <img src={{profileImage}} style="border-radius:50%">
                         <h3>{{username}}</h3>
-
-                            <div style="width:350px;font-size:12px;display:flex">
-                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:32px;margin-bottom:0">
-                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">0x192u0uda09dua90wdu90aw</p>
+                        <div style="border:1px solid rgb(12, 212, 99);width:350px;font-size:12px;padding:5px;border-radius:10px">
+                                <p style="width:100%;margin-bottom: 0;color:rgb(12, 212, 99);margin-top:0;margin-left:5px;font-size:18px;font-family:'Avenir Light'"><span style="font-weight: bold">0.01 ETH Minimum Deposit</p>
+                                <div style="width:350px;font-size:12px;display:flex;margin-top:15px">
+                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:27px;margin-bottom:0">
+                                <p style="width:50%;margin-bottom: 0;color:white;margin-top:5px;margin-left:5px;font-size:15px;font-family:'Avenir Light';margin-top:3px;text-overflow: ellipsis;overflow:hidden">0x5fE0b0102562911495d5af34a2dF728fd0D439c8</p>
+                                <input type="text" value="0x5fE0b0102562911495d5af34a2dF728fd0D439c8" id="myInput" hidden style="display: none;">
+                                <p onclick="myFunction3()" style="font-weight: 400;
+    font-size: 16px;
+    color: rgba(242, 235, 235, 0.842);
+    margin-bottom: 0.55em; 
+    text-align: left;
+    margin-top: 2.2px;
+    margin-left: 11px;
+    width: 50%;
+    color: white;cursor:pointer">Copy</p>
+                                <!--                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'">{{depositAddr}}</p>
+-->
                             </div>
+                            </div>
+
+                            
                     </div>
                 </div>
 			</section>
@@ -195,7 +227,7 @@
                         {{/each}}
                         {{else}}
 						<h1>Withdraw</h1>
-						<p style="margin-top:5px">It will automatically detect the right crypto</p>
+						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH Address</p>
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
@@ -242,7 +274,6 @@
 				</div>
 			</footer>
 
-		
 			<script src="./js/jquery.min.js"></script>
 			<script src="./js/skel.min.js"></script>
 			<script src="./js/util.js"></script>

@@ -196,7 +196,7 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get("/accounttest", requiresAuth(), async (req, res) => {
+  app.get("/account2",  async (req, res) => {
     const userProfile = await Profile.findOne({
       //userID: req.oidc.user.sub.substring(15, 34),
       userID: "834304396673679411",
