@@ -684,8 +684,9 @@ if (cluster.isMaster) {
   //requiresAuth(),
   app.get("/stockpricechecke", async (req, res) => {
     console.log("hey");
-    stockPrice();
-    return res.redirect("/");
+    stockPrice((data) => {
+      return res.redirect("/");
+    });
     /*
         newMatchesBasketball("1");
     newMatchesBasketball("2");
