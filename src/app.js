@@ -47,9 +47,9 @@ if (cluster.isMaster) {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: "https://churro.gg/",
+    baseURL: "https://getmeow.gg/",
     clientID: process.env.CLIENT_ID,
-    issuerBaseURL: "https://Churrobot.us.auth0.com",
+    issuerBaseURL: "https://meowbot.us.auth0.com",
   };
 
   paypal.configure({
@@ -1051,8 +1051,8 @@ if (cluster.isMaster) {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "https://churro.gg/success",
-        cancel_url: "https://churro.gg/cancel",
+        return_url: "https://getmeow.gg/success",
+        cancel_url: "https://getmeow.gg/cancel",
       },
       transactions: [
         {
