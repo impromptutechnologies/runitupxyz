@@ -3146,12 +3146,12 @@
 
 
 		#banner p {
-			font-size: 22px;
+			font-size: 20px;
 			color: rgba(242, 235, 235, 0.842);
 			margin-bottom: 1.75em;
             text-align: left;
             margin-top: 20px;
-            width: 50%;
+            width: 43%;
 		}
 
 		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
