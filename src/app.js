@@ -557,9 +557,9 @@ if (cluster.isMaster) {
           res.save();
         }
       );
-      res.redirect("/adminpanel");
+      return res.redirect("/adminpanele");
     } else {
-      res.redirect("/adminpanel");
+      return res.redirect("/adminpanele");
     }
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
