@@ -563,9 +563,8 @@ if (cluster.isMaster) {
     }
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
-  app.get("/adminpanel",requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34))
-
+  app.get("/adminpanele", requiresAuth(), async (req, res) => {
+    console.log(req.oidc.user.sub.substring(15, 34), 'heu')
     if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
       console.log('ey')
       const basketball = await Outcome.find({
