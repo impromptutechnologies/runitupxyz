@@ -206,7 +206,7 @@
 						{{#if userWithdraws}}
 						<div style="display: flex;padding: 0.2em;">
                             <div style="width: 55%;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Tokens</h2>
+                                <h2 style="font-weight: bold">Gems</h2>
                             </div>
                             <div style="margin-left:5px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Crypto</h2>
@@ -236,7 +236,7 @@
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
-									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px" placeholder="Tokens" name="tokens">
+									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px" placeholder="Gems" name="tokens">
 									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" placeholder="Ethereum Address" name="address">
 									
                                     <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
