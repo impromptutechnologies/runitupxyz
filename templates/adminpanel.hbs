@@ -10,6 +10,7 @@
   <a href="#randoms">Random Events</a><br>
 </div>
 
+ 
 
 <div>
   <h1>Stats</h1>
@@ -21,7 +22,7 @@
 </div>
 
 <div id="ongoing">
-  <h1 style="margin-top:100px">Ongoing matches right now</h1>
+  <h1 style="margin-top:100px">matches open</h1>
 
   {{#if ongoing}}
     <form action="/auth/withdrawdelete" method="POST">
@@ -266,7 +267,10 @@
 
 <div id="changecrypto">
   <h1 style="margin-top:100px">Change Crypto and Bitcoin</h1>
-
+<form action="/auth/winningstock" method="POST">
+            <input name="winner" placeholder="winning stock" />
+            <button type="submit">Enter</button>
+        </form>
   {{#if stocks}}
     <form action="/auth/changestock" method="POST">
       <input placeholder="Original" name="tickerorg" />

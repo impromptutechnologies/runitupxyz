@@ -562,36 +562,10 @@ if (cluster.isMaster) {
       res.redirect("/adminpanel");
     }
   });
-  app.get("/adminpanel", requiresAuth(), async (req, res) => {
+  //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
+  app.get("/adminpanel",requiresAuth(), async (req, res) => {
     if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
-      const outcomesc = await Outcome.find({
-        category: "esportscod",
-        timeStart: { $gt: date },
-        "option1.0.odds": 0,
-      })
-        .sort({ timeStart: 1 })
-        .lean();
-      const outcomesd = await Outcome.find({
-        category: "esportsdota",
-        timeStart: { $gt: date },
-        "option1.0.odds": 0,
-      })
-        .sort({ timeStart: 1 })
-        .lean();
-      const outcomesgo = await Outcome.find({
-        category: "esportscsgo",
-        timeStart: { $gt: date },
-        "option1.0.odds": 0,
-      })
-        .sort({ timeStart: 1 })
-        .lean();
-      const outcomeslol = await Outcome.find({
-        category: "esportslol",
-        timeStart: { $gt: date },
-        "option1.0.odds": 0,
-      })
-        .sort({ timeStart: 1 })
-        .lean();
+      
       const basketball = await Outcome.find({
         category: "basketball",
         $or: [{ timeStart: { $regex: ".*20:00.*" } }, { option1: [] }],
@@ -623,15 +597,11 @@ if (cluster.isMaster) {
       res.render("adminpanel", {
         stocks: stocks,
         cryptos: cryptos,
-        outcomes: outcomesc,
-        outcomesd: outcomesd,
         usercount: usercount,
         paidusers: paidusers,
         revenues: revenuesmin,
         betcount: betcount,
         investcount: investcount,
-        outcomesgo: outcomesgo,
-        outcomeslol: outcomeslol,
         basketball: basketball,
         randoms: randoms,
         ongoing: ongoing,
@@ -678,6 +648,20 @@ if (cluster.isMaster) {
       res.redirect("/adminpanel");
     }
   });
+
+  app.post("/auth/winningStock", async (req, res) => {
+    if (
+      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
+      1 == 1
+    ) {
+      betResultInv(req.body.winner, "stocks")
+      res.redirect("/adminpanel");
+    } else {
+      res.redirect("/adminpanel");
+    }
+  });
+
 
   //ADMIN PANEL
   app.get("/newsoccergames", requiresAuth(), async (req, res) => {
