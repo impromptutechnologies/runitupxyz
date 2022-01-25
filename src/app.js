@@ -564,8 +564,10 @@ if (cluster.isMaster) {
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
   app.get("/adminpanel",requiresAuth(), async (req, res) => {
+    console.log(req.oidc.user.sub.substring(15, 34))
+
     if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
-      
+      console.log('ey')
       const basketball = await Outcome.find({
         category: "basketball",
         $or: [{ timeStart: { $regex: ".*20:00.*" } }, { option1: [] }],
