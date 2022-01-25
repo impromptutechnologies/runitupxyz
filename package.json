@@ -1,7 +1,7 @@
 {
-  "name": "meow",
+  "name": "Churro",
   "version": "1.0.0",
-  "description": "meow",
+  "description": "Churro",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/worker.js",

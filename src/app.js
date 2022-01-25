@@ -47,9 +47,9 @@ if (cluster.isMaster) {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.SECRET,
-    baseURL: "https://getmeow.gg/",
+    baseURL: "https://churro.gg/",
     clientID: process.env.CLIENT_ID,
-    issuerBaseURL: "https://meowbot.us.auth0.com",
+    issuerBaseURL: "https://Churrobot.us.auth0.com",
   };
 
   paypal.configure({
@@ -217,7 +217,7 @@ if (cluster.isMaster) {
     if (userProfile == null) {
       res.render("makeaccount", {
         //profileImage: req.oidc.user.picture,
-        username: "MeowMeowMeow#3479",
+        username: "ChurroChurroChurro#3479",
       });
     } else {
       const userBets = await Bet.find({
@@ -1051,8 +1051,8 @@ if (cluster.isMaster) {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "https://getmeow.gg/success",
-        cancel_url: "https://getmeow.gg/cancel",
+        return_url: "https://churro.gg/success",
+        cancel_url: "https://churro.gg/cancel",
       },
       transactions: [
         {
