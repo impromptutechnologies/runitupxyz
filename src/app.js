@@ -1107,7 +1107,7 @@ if (cluster.isMaster) {
               return res.redirect("/account");
             } else {
               userProfile.payments.push(payment.id);
-              userProfile.tokens = coins + 17645;
+              userProfile.tokens = coins + 6942;
               userProfile.save();
               return res.redirect("/account");
             }
