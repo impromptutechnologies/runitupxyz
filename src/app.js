@@ -1057,7 +1057,7 @@ if (cluster.isMaster) {
               {
                 name: "Lootbox",
                 sku: "001",
-                price: "2.99",
+                price: "5.99",
                 currency: "USD",
                 quantity: 1,
               },
@@ -1065,7 +1065,7 @@ if (cluster.isMaster) {
           },
           amount: {
             currency: "USD",
-            total: "2.99",
+            total: "5.99",
           },
           description: "Lootbox!",
         },
@@ -1116,12 +1116,12 @@ if (cluster.isMaster) {
             throw error;
           } else {
             if (userProfile.payments.includes(payment.id)) {
-              return res.redirect("/tokens");
+              return res.redirect("/account");
             } else {
               userProfile.payments.push(payment.id);
               userProfile.tokens = coins + 17645;
               userProfile.save();
-              return res.redirect("/tokens");
+              return res.redirect("/account");
             }
           }
         }
