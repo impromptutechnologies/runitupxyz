@@ -346,7 +346,7 @@ if (cluster.isMaster) {
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const update = await Outcome.findOneAndUpdate(
         { outcomeID: req.body.outcomeID },
