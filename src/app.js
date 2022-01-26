@@ -333,18 +333,6 @@ if (cluster.isMaster) {
         address: req.body.address,
       });
     }
-    if (WAValidator.validate(req.body.address, "BTC") == true) {
-      const coinUpdate = await Profile.findOneAndUpdate(
-        { userID: req.oidc.user.sub.substring(15, 34) },
-        { tokens: parseInt(tokens.tokens - req.body.tokens) }
-      );
-      const withdraw = await Withdraw.create({
-        userID: req.oidc.user.sub.substring(15, 34),
-        crypto: "bitcoin",
-        tokens: req.body.tokens,
-        address: req.body.address,
-      });
-    }
     res.redirect("/account");
   });
 
