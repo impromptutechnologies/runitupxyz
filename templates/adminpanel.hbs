@@ -215,12 +215,14 @@
   <p>If the time is 20:00 most likely the API guys fucked up.</p>
   
   <h3>Add Odds</h3>
-  <form action="/auth/addBB" method="POST">
+  <form action="/auth/addSoc" method="POST">
     <input placeholder="outcomeID" name="outcomeID" />
     <input placeholder="Code" name="Code" />
     <input placeholder="odds" name="odds" type="number" step="0.01"/>
     <input placeholder="Code2" name="Code2" />
     <input placeholder="odds2" name="odds2" type="number" step="0.01"/>
+    <input placeholder="Code3" name="Code3" />
+    <input placeholder="odds3" name="odds3" type="number" step="0.01"/>
     <button type="submit">Enter</button>
   </form> 
   {{#if ongoing1}}

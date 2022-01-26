@@ -358,6 +358,21 @@ if (cluster.isMaster) {
     }
   });
 
+  app.post("/auth/addoddsoc", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
+    ) {
+      const update = await Outcome.findOneAndUpdate(
+        { outcomeID: req.body.outcomeID },
+        { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2, "option1.0.odds3": req.body.odd3 }
+      );
+      res.redirect("/adminpanel");
+    } else {
+      res.redirect("/adminpanel");
+    }
+  });
+
   app.post("/auth/withdrawdelete", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -538,6 +553,36 @@ if (cluster.isMaster) {
           const Code2 = req.body.Code2;
           const odds2 = req.body.odds2;
           res.addOptions([Code, odds, Code2, odds2]);
+          res.save();
+        }
+      );
+      return res.redirect("/adminpanele");
+    } else {
+      return res.redirect("/adminpanele");
+    }
+  });
+
+  app.post("/auth/addSoc", requiresAuth(), async (req, res) => {
+    if (
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169" ||
+      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+    ) {
+      Outcome.findOne(
+        {
+          outcomeID: req.body.outcomeID,
+        },
+        (err, res) => {
+          console.log(res);
+          if (err) {
+            console.log(err);
+          }
+          const Code = req.body.Code;
+          const odds = req.body.odds;
+          const Code2 = req.body.Code2;
+          const odds2 = req.body.odds2;
+          const Code3 = req.body.Code2;
+          const odds3 = req.body.odds2;
+          res.addOptions([Code, odds, Code2, odds2, Code3, odds3]);
           res.save();
         }
       );
