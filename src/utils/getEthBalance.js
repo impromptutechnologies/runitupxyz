@@ -10,12 +10,11 @@ const options = {
     "port": null,
     "path": `/v3/ethereum/account/balance/${address}`,
     "headers": {
-        "x-testnet-type": "ethereum-ropsten",
-        "content-type": "application/json",
-        "x-api-key": process.env.API_TATUM
-      }
+      "x-testnet-type": "ethereum-ropsten",
+      "content-type": "application/json",
+      "x-api-key": process.env.API_TATUM
+    }
   };
-  
   const req = http.request(options, function (res) {
     const chunks = [];
   

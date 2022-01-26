@@ -150,14 +150,12 @@ if (cluster.isMaster) {
           if(userProfile.lastTransaction == data){
             const newTokens =
             (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
-          console.log(newTokens);
           const portfolio = await Profile.findOneAndUpdate(
             {
               customerID: userProfile.customerID,
             },
             { tokens: newTokens, lastTransaction: data }
           );
-          console.log(portfolio);
           return res.render("account", {
             userWithdraws: userWithdraws,
             userBets: userBets,
@@ -166,7 +164,6 @@ if (cluster.isMaster) {
             username: userProfile.username,
             depositAddr: userProfile.depositAddress,
             tokens: Math.round(userProfile.tokens, 2),
-            color: "red",
           });
           }else{
             return res.render("account", {
@@ -177,7 +174,6 @@ if (cluster.isMaster) {
               username: userProfile.username,
               depositAddr: userProfile.depositAddress,
               tokens: Math.round(userProfile.tokens, 2),
-              color: "red",
             });
 
           }
@@ -192,7 +188,6 @@ if (cluster.isMaster) {
           username: userProfile.username,
           depositAddr: userProfile.depositAddress,
           tokens: Math.round(userProfile.tokens, 2),
-          color: "red",
         });
       }
     });
