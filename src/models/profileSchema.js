@@ -8,7 +8,7 @@ const profileSchema = new mongoose.Schema({
     customerID: {type: String, default:0, required:false},
     returntokens: {type: Number, default:0},
     bettokens: {type: Number, default:0},
-    //payments:[],
+    payments:[],
     lastTransaction: {type:String, required:false, default:""},
     depositAddress:{type:String, required:false},
     derivationKey:{type:String, required:false},
