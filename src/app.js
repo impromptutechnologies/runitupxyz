@@ -146,16 +146,29 @@ if (cluster.isMaster) {
         //const value = String(data - (data * 0.05))
         const value = String(data - 0.001);
         console.log(value);
-        transferEth(String(value), userProfile.privateKey, async (data) => {
-          if(userProfile.lastTransaction == data){
-            const newTokens =
-            (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
-          const portfolio = await Profile.findOneAndUpdate(
-            {
-              customerID: userProfile.customerID,
-            },
-            { tokens: newTokens, lastTransaction: data }
-          );
+        if(userProfile.lastTransaction == ""){
+              transferEth(String(value), userProfile.privateKey, async (data) => {
+                const newTokens =
+                (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
+              const portfolio = await Profile.findOneAndUpdate(
+                {
+                  customerID: userProfile.customerID,
+                },
+                { tokens: newTokens, lastTransaction: data }
+              );
+              return res.render("account", {
+                userWithdraws: userWithdraws,
+                userBets: userBets,
+                id: userProfile.userID,
+                profileImage: req.oidc.user.picture,
+                username: userProfile.username,
+                depositAddr: userProfile.depositAddress,
+                tokens: Math.round(userProfile.tokens, 2),
+              });
+              
+              
+            });
+        }else{
           return res.render("account", {
             userWithdraws: userWithdraws,
             userBets: userBets,
@@ -165,21 +178,15 @@ if (cluster.isMaster) {
             depositAddr: userProfile.depositAddress,
             tokens: Math.round(userProfile.tokens, 2),
           });
-          }else{
-            return res.render("account", {
-              userWithdraws: userWithdraws,
-              userBets: userBets,
-              id: userProfile.userID,
-              profileImage: req.oidc.user.picture,
-              username: userProfile.username,
-              depositAddr: userProfile.depositAddress,
-              tokens: Math.round(userProfile.tokens, 2),
-            });
-
-          }
-          
-        });
+        }
+        
       } else {
+        const portfolio = await Profile.findOneAndUpdate(
+          {
+            customerID: userProfile.customerID,
+          },
+          { lastTransaction: "" }
+        );
         return res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
