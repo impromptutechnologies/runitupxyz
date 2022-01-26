@@ -29,6 +29,9 @@ if (cluster.isMaster) {
   const newMatchesBasketball = require("./utils/newmatchesb");
   const Withdraw = require("./models/withdrawSchema.js");
   const WAValidator = require("wallet-address-validator");
+  const setReturns = require("./utils/setReturns");
+  const winLoss = require("./utils/winLoss");
+
   const completePayment = require("./queues/payment");
   const createWallet = require("./utils/createWallet");
   const depositAddress = require("./utils/depositAddress");
@@ -947,9 +950,9 @@ if (cluster.isMaster) {
     }
   });*/
 
-  app.get("/betsst", async (req, res) => {
+  app.get("/stockrace", async (req, res) => {
     try {
-      const reply = await GET_ASYNC("betsst");
+      /*const reply = await GET_ASYNC("betsst");
       if (reply) {
         res.render("betstock", {
           outcomes: JSON.parse(reply),
@@ -957,8 +960,8 @@ if (cluster.isMaster) {
           time1: "20:00",
         });
         return;
-      }
-      const outcomes = await Stock.find({})
+      }*/
+      /*const outcomes = await Stock.find({})
         .select({ company: 1, ticker: 1 })
         .lean();
       const saveResult = await SET_ASYNC(
@@ -966,9 +969,8 @@ if (cluster.isMaster) {
         JSON.stringify(outcomes),
         "EX",
         3600
-      );
+      );*/
       res.render("betstock", {
-        outcomes: outcomes,
         time2: "13:30",
         time1: "21:35",
       });
@@ -1147,6 +1149,36 @@ if (cluster.isMaster) {
     completePayment(req.oidc.user.sub.substring(15, 34), tokens, paymentId, execute_payment_json);
     return res.redirect("/account");
   });*/
+  app.get("/betzeee", async (req, res) => {
+    await setReturns()
+    return res.redirect('/')
+  });
+
+  app.get("/cuteze", async (req, res) => {
+    const betStock = await Invest.find({});
+    winLoss((data) => {
+      console.log(data)
+      betStock.forEach(async (stock) => {
+        console.log(stock.Code, stock.change, data)
+        if (stock.change > data) {
+             Invest.updateMany(
+              { Code: stock.Code },
+              { status: 'won', percentile: data}, (req, res) => {
+                console.log(res)
+              });
+
+          } else {
+             Invest.deleteMany(
+                { Code: stock.Code }, (req, res) => {
+                  console.log(res)
+                });
+          }
+        })
+    });
+    return res.redirect('/about')
+
+  });
+
 
   app.get("x", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({

@@ -1,20 +1,21 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Churro Stock</title>
+		<title>Churro Basketball</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="./css/main.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="./css/main.css" />
         <link rel="icon" href="https://altvaton.sirv.com/Images/churros.png">
         <meta name="description" 
-			content="Bet tokens on the prices of Stocks!">
+			content="BetGems on the biggest sporting events daily! Soccer, Basketball and Esports for now.">
             <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
-         
+    
+        
 	</head>
-	<body onload=changeTimezone()>
+	<body onload=changeTimezone() style="background-color: rgb(26, 33, 42);">
 
 		<!-- Header -->
 			<header id="header">
@@ -23,6 +24,8 @@
 					<nav id="nav">
           <a href="/">Home</a>
           <a href="bets">Commands</a>
+                     <a href="stockrace">Stock Race</a>
+
 <!--					<a href="/tokens">Lootbox</a>
 -->          
           <a href="about">About</a>
@@ -36,12 +39,18 @@
 			<section id="banner" style="padding-bottom: 5em">
                 <div class="landing">
                     <div class="desc">
-                        <h3>Stocks</h3>
+                        <h1 style="">Daily Stock Race 🚀</h1>
+                        <p style="font-size: 22px;font-family:'Avenir Light';color:white;margin-top:40px">Pick one stock 📈, Perform in the top 50% of picks, Double your tokens  💎!</p>
+                                                    <img src="https://altvaton.sirv.com/Images/Screen%20Shot%202022-01-25%20at%2022.52.56.png" style="height: 450px;border-radius:15px" alt="" />
+
                             <div>
-                            <p style="margin-bottom: 0;font-size:20px;font-family:'Avenir Light'">!invstock &lt;Tokens&gt; &lt;Code&gt;</p>
-                            <p style="font-size:20px;font-family:'Avenir Light'">!invstock 500 AAPL</p>
-                            <div style="border:1px solid #16f336;width:350px;font-size:12px;padding:5px;border-radius:10px">
-                                <p style="width:100%;margin-bottom: 0;color:#16f336;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'"><span style="font-weight: bold">Claim Winnings:</span> !claim 💎  </p>
+                            <p style="margin-bottom: 0;margin-top:20px;font-size:18px;font-family: 'Inter';
+    font-weight: 300;">!invstock &lt;Code&gt;</p>
+                            <p style="font-size:18px;font-family: 'Inter';
+    font-weight: 300;">!invstock AAPL</p>
+                            <div style="width:350px;font-size:12px;border-radius:0px">
+                                <p style="width:100%;margin-bottom: 0;color:#fff;margin-top:0;font-size:18px;font-family: 'Inter';
+    font-weight: 300;"><span style="font-weight: bold">Claim Winnings: </span> <span style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">!claim</span></p>
                             </div>
                         </div>
                     </div>
@@ -49,56 +58,8 @@
 			</section>
 
 		<!-- One -->
-			<section id="one" style="padding-bottom: 5em">
-                <div class="content">
-                    <div class="desc">
-                       <div class="tabs">
-                            <a href="/bets"><img src="https://altvaton.sirv.com/Images/football.svg" style="margin-left: 0;"></a>
-                            <!--<a href="/betsg"><img src="https://altvaton.sirv.com/Images/gamepad.svg"></a>-->
-                            <a href="/betsbb"><img src="https://altvaton.sirv.com/Images/bb.svg"></a>
-                            <!--<a href="/betft"><img src="./images/footbal.svg"></a>-->
-                            <a href="/betsst"><img src="https://altvaton.sirv.com/Images/risk.svg" style="border-bottom: 1px solid white"></a>
-                          <!--  <a href="/betscr"><img src="https://altvaton.sirv.com/Images/bitcoin.svg"></a>
--->                            <a href="/casino"><img src="https://altvaton.sirv.com/Images/cards.svg"></a>
-                            <!--<a href="/betsq"><img src="https://altvaton.sirv.com/Images/q.svg"></a>-->
-                        </div>
-                        <h2>Pick which stock will rise most (from 9:30am-4pm NY Time)<br> and make 300%! 
-                        Updated every week!</h2><br>
-                         <h2>Place your command between the hours of <br><span class="datestock">{{time1}}</span> to <span class="datestock">{{time2}}</span> in your local time.</h2>
-                        <div style="display: flex;margin-top:40px">
-                            
-                            <div style="width: 90%;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Stock</h2>
-                            </div>
-                            <div style="margin-left:20px;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Code</h2>
-                            </div>
-                        </div>
-
-
-
-                        {{#each outcomes}}
-                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
-                            <div style="width:90%">
-                                <div style="padding: 0.6em;">
-                                    <h2>{{this.company}}</h2>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="padding: 0.6em;">
-                                    <h2>{{this.ticker}}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        {{/each}}
-
-
-                        
-                        
-                         
-                    </div>
-                </div>
-			</section>
+		
+        	
 		
 
 		<!-- Footer -->
@@ -116,24 +77,25 @@
 					</div>
 				</div>
 			</footer>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-        <script type="text/javascript">
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script type="text/javascript">
       
             function changeTimezone() {
                     
-                var values = document.getElementsByClassName("datestock");
+                var values = document.getElementsByClassName("date");
                 
                 Object.keys(values).forEach((element) => {
-                    var stillUtc = moment.utc(values[element].innerHTML, 'hh:mm A').toDate();
-                    var time2 = moment(stillUtc).local().format('hh:mm A');
+                    var stillUtc = moment.utc(values[element].innerHTML, 'MM-DD hh:mm').toDate();
+                    var time2 = moment(stillUtc).local().format('MM-DD hh:mm A');
                     values[element].innerHTML = time2;
+
+            
 
                 })
           
                     
             }
         </script>
-
 		
 			<script src="./js/jquery.min.js"></script>
 			<script src="./js/skel.min.js"></script>
@@ -142,3 +104,15 @@
 
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

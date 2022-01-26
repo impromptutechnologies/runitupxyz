@@ -2580,6 +2580,10 @@
 
 			@media screen and (max-width: 480px) {
 
+				.helpimg{
+					display: None;
+				}
+
 				ul.actions {
 					margin: 0 0 2em 0;
 				}
