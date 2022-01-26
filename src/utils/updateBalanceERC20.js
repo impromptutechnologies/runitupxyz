@@ -10,7 +10,6 @@ const updateBalance = (address) => {
         "port": null,
         "path": `/v3/blockchain/token/balance/ETH/0xdE6b1961590Ea60Ed15358fe981Ce9Fd2E666B1F/${address}`,
         "headers": {
-          "x-testnet-type": "ethereum-ropsten",
           "x-api-key": "0fdf3b86-9db3-493b-adac-247ed57fc9f6"
         }
       };

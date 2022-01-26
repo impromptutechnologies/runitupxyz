@@ -10,7 +10,6 @@ const options = {
     "path": "/v3/ethereum/transaction",
     "headers": {
         "content-type": "application/json",
-        "x-testnet-type": "ethereum-ropsten",
         "x-api-key": process.env.API_TATUM
     }
   };

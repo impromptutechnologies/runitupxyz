@@ -9,7 +9,6 @@ const deployToken = () => {
         "path": "/v3/blockchain/token/deploy",
         "headers": {
           "content-type": "application/json",
-          "x-testnet-type": "ethereum-ropsten",
           "x-api-key": "0fdf3b86-9db3-493b-adac-247ed57fc9f6"
         }
       };

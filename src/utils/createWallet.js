@@ -9,7 +9,6 @@ const createWallet = () => {
         "port": null,
         "path": "/v3/ethereum/wallet",
         "headers": {
-          "x-testnet-type": "ethereum-ropsten",
           "x-api-key": "0fdf3b86-9db3-493b-adac-247ed57fc9f6"
         }
       };

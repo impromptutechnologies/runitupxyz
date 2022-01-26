@@ -12,7 +12,6 @@ const updateBalance = (address, balance) => {
     "port": null,
     "path": `/v3/ethereum/account/balance/${address}`,
     "headers": {
-      "x-testnet-type": "ethereum-ropsten",
       "x-api-key": "0fdf3b86-9db3-493b-adac-247ed57fc9f6"
     }
   };

@@ -9,7 +9,6 @@ const options = {
     "port": null,
     "path": "/v3/ethereum/address/xpub6EGmMwZZGCQ6bN88khrrqNsgwqv8R47ZnEUP9MkYbDVSmgrekTC49QdJpezvgmrJB4qVdCNGWJfiPoa6yhwig7zvXshGoFtirDbE7cUeV6v/0",
     "headers": {
-        "x-testnet-type": "ethereum-ropsten",
         "x-api-key": "0fdf3b86-9db3-493b-adac-247ed57fc9f6"
     }
   };
