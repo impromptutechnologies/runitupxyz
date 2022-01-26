@@ -1091,7 +1091,7 @@ if (cluster.isMaster) {
           {
             amount: {
               currency: "USD",
-              total: "2.99",
+              total: "5.99",
             },
           },
         ],
