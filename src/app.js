@@ -716,7 +716,7 @@ if (cluster.isMaster) {
   });
 
   //requiresAuth(),
-  app.get("/tokenss", (req, res) => {
+  app.get("/tokens", (req, res) => {
     return res.render("tokens");
   });
 
