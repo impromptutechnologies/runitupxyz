@@ -561,12 +561,15 @@ if (cluster.isMaster) {
       const ongoing = await Outcome.find({})
         .select({ outcomeID: 1, team1: 1, team2: 1 })
         .lean();
-      const stocks = await Stock.find({})
+        const ongoing1 = await Outcome.find({option1: []})
+        .select({ outcomeID: 1, team1: 1, team2: 1 })
+        .lean();
+      /*const stocks = await Stock.find({})
         .select({ ticker: 1, company: 1 })
         .lean();
       const cryptos = await Crypto.find({})
         .select({ symbol: 1, Crypto: 1 })
-        .lean();
+        .lean();*/
       const usercount = await Profile.count({}).lean();
       const paidusers = await Profile.count({ payments: { $ne: [] } }).lean();
       const revenuesmin = paidusers * 2.5;
@@ -580,8 +583,6 @@ if (cluster.isMaster) {
         .lean();
 
       res.render("adminpanel", {
-        stocks: stocks,
-        cryptos: cryptos,
         usercount: usercount,
         paidusers: paidusers,
         revenues: revenuesmin,
@@ -590,6 +591,7 @@ if (cluster.isMaster) {
         basketball: basketball,
         randoms: randoms,
         ongoing: ongoing,
+        ongoing1: ongoing1,
         withdrawals: userWithdraws,
       });
     } else {
