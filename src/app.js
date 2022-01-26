@@ -10,7 +10,7 @@ if (cluster.isMaster) {
   }
 } else {
   const getEthBalance = require("./utils/getEthBalance");
-  const transferEth = require("./utils/getEthBalance");
+  const transferEth = require("./utils/transferEth");
   const express = require("express");
   require("dotenv").config();
   const moment = require("moment-timezone");
