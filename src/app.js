@@ -715,9 +715,10 @@ if (cluster.isMaster) {
     res.render("about");
   });
 
-  /*app.get("/tokens", requiresAuth(), (req, res) => {
-    res.render("tokens");
-  });*/
+  //requiresAuth(),
+  app.get("/tokenss", (req, res) => {
+    return res.render("tokens");
+  });
 
   app.get("/arena", (req, res) => {
     res.render("arena");
