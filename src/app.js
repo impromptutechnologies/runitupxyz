@@ -114,17 +114,6 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
 
-
-  app.get("/stockpricecheck", async (req, res) => {
-    stockPrice();
-    return res.redirect("/");
-
-    /*
-        newMatchesBasketball("1");
-    newMatchesBasketball("2");
-    newMatchesBasketball("3");
-    */
-  });
   //ACCOUNT
   app.get("/account", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
@@ -132,82 +121,68 @@ if (cluster.isMaster) {
     })
       .sort({ userID: 1 })
       .lean();
-    if (userProfile == null) {
-      res.render("makeaccount", {
-        profileImage: req.oidc.user.picture,
-        username: req.oidc.user.name,
-      });
-    } else {
-      const userBets = await Bet.find({
-        creatorID: req.oidc.user.sub.substring(15, 34),
-      })
-        .sort({ creatorID: 1 })
-        .select({ Code: 1, betOdds: 1, betAmount: 1, status: 1 })
-        .lean()
-        .limit(5);
-      const userInvests = await Invest.find({
-        creatorID: req.oidc.user.sub.substring(15, 34),
-      })
-        .sort({ creatorID: 1 })
-        .select({ Code: 1, investAmount: 1, status: 1 })
-        .lean()
-        .limit(5);
-      const userWithdraws = await Withdraw.find({
-        userID: req.oidc.user.sub.substring(15, 34),
-      })
-        .sort({ userID: 1 })
-        .select({ tokens: 1, crypto: 1, address: 1 })
-        .lean()
-        .limit(5);
-      const userReturn =
-        ((userProfile.returntokens - userProfile.bettokens) /
-          userProfile.bettokens) *
-        100;
-      const userR = userReturn || 0;
-      if (userReturn < 0) {
-        res.render("account", {
+    const userBets = await Bet.find({
+      creatorID: req.oidc.user.sub.substring(15, 34),
+    })
+      .sort({ creatorID: 1 })
+      .select({ Code: 1, betOdds: 1, betAmount: 1, status: 1 })
+      .lean()
+      .limit(5);
+
+    const userWithdraws = await Withdraw.find({
+      userID: req.oidc.user.sub.substring(15, 34),
+    })
+      .sort({ userID: 1 })
+      .select({ tokens: 1, crypto: 1, address: 1 })
+      .lean()
+      .limit(5);
+
+    getEthBalance(userProfile.depositAddress, async (data) => {
+      console.log(data);
+      if (data >= 0.005) {
+        console.log("hello");
+        //const value = String(data - (data * 0.05))
+        const value = String(data - 0.001);
+        console.log(value);
+        transferEth(String(value), userProfile.privateKey, async (data) => {
+          const newTokens =
+            (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
+          console.log(newTokens);
+          const portfolio = await Profile.findOneAndUpdate(
+            {
+              customerID: userProfile.customerID,
+            },
+            { tokens: newTokens }
+          );
+          console.log(portfolio);
+
+          return res.render("account", {
+            userWithdraws: userWithdraws,
+            userBets: userBets,
+            id: userProfile.userID,
+            profileImage: req.oidc.user.picture,
+            username: userProfile.username,
+            depositAddr: userProfile.depositAddress,
+            tokens: Math.round(userProfile.tokens, 2),
+            color: "red",
+          });
+        });
+      } else {
+        return res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
-          userInvests: userInvests,
           id: userProfile.userID,
           profileImage: req.oidc.user.picture,
           username: userProfile.username,
           depositAddr: userProfile.depositAddress,
-          return: Math.round(userR, 2),
           tokens: Math.round(userProfile.tokens, 2),
           color: "red",
         });
-      } else {
-        /*if(userReturn == 0){
-        res.render("account", {
-          userWithdraws: userWithdraws,
-          userBets: userBets,
-          userInvests: userInvests,
-          id: userProfile.userID,
-          profileImage: req.oidc.user.picture,
-          username: userProfile.username,
-          return: Math.round(userR, 2),
-          tokens: Math.round(userProfile.tokens, 2),
-          color: 'grey'
-        });
-      } */
-        res.render("account", {
-          depositAddr: userProfile.depositAddress,
-          userWithdraws: userWithdraws,
-          userBets: userBets,
-          userInvests: userInvests,
-          id: userProfile.userID,
-          profileImage: req.oidc.user.picture,
-          username: userProfile.username,
-          return: Math.round(userR, 2),
-          tokens: Math.round(userProfile.tokens, 2),
-          color: "rgb(12, 212, 99)",
-        });
       }
-    }
+    });
   });
 
-  app.get("/account2",  async (req, res) => {
+  app.get("/account2", async (req, res) => {
     const userProfile = await Profile.findOne({
       //userID: req.oidc.user.sub.substring(15, 34),
       userID: "834304396673679411",
@@ -564,9 +539,9 @@ if (cluster.isMaster) {
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
   app.get("/adminpanele", requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34), 'heu')
+    console.log(req.oidc.user.sub.substring(15, 34), "heu");
     if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
-      console.log('ey')
+      console.log("ey");
       const basketball = await Outcome.find({
         category: "basketball",
         $or: [{ timeStart: { $regex: ".*20:00.*" } }, { option1: [] }],
@@ -656,13 +631,12 @@ if (cluster.isMaster) {
       req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
       1 == 1
     ) {
-      betResultInv(req.body.winner, "stocks")
+      betResultInv(req.body.winner, "stocks");
       res.redirect("/adminpanel");
     } else {
       res.redirect("/adminpanel");
     }
   });
-
 
   //ADMIN PANEL
   app.get("/newsoccergames", requiresAuth(), async (req, res) => {
@@ -679,11 +653,12 @@ if (cluster.isMaster) {
 
   //requiresAuth(),
 
-
   //requiresAuth(),
-  app.get("/betresultinv",  async (req, res) => {
-    const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
-    const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
+  app.get("/betresultinv", async (req, res) => {
+    const highestcrypto = await Crypto.findOne({})
+      .sort({ return: -1 })
+      .limit(1);
+    const higheststock = await Stock.findOne({}).sort({ return: -1 }).limit(1);
 
     betResultInv(higheststock.ticker, "stocks");
     betResultInv(highestcrypto.ticker, "crypto");
@@ -694,7 +669,6 @@ if (cluster.isMaster) {
     newMatchesBasketball("3");
     */
   });
-
 
   app.get("/newbasketballgames", requiresAuth(), async (req, res) => {
     console.log("eh");
