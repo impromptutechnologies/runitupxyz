@@ -716,7 +716,7 @@ if (cluster.isMaster) {
   });
 
   //requiresAuth(),
-  app.get("/tokens", (req, res) => {
+  app.get("/lootbox", (req, res) => {
     return res.render("tokens");
   });
 
