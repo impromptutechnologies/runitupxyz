@@ -1074,7 +1074,7 @@ if (cluster.isMaster) {
   });
 
   app.get("/success", requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34));
+    console.log(req.oidc.user.sub.substring(15, 34), 'hey');
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     });
