@@ -9,6 +9,9 @@ const betResultBasketball = require("./utils/betResultBasketball");
 //const betResultEsports = require("./utils/betResultEsports");
 const betResultInv = require("./utils/betResultInv");
 const stockPrice = require("./utils/stockprice");
+const setReturns = require("./utils/setReturns");
+const winLoss = require("./utils/winLoss");
+
 const cryptoPrice = require("./utils/cryptoprice");
 const cryptoPriceOpen = require("./utils/cryptopriceopen");
 const newMatchesSoccer = require("./utils/newmatches");
@@ -110,9 +113,8 @@ const checkReturn = async () => {
   var month = moment.utc().format("MM");
   var date = moment.utc().format("MM-DD HH:mm");
   const investmentstock = await Invest.find({ category: "stocks" });
-  const investmentcrypto = await Invest.find({ category: "crypto" });
   const today = new Date();
-  if (
+  /*if (
     date == moment.utc().format(`${month}-${day} 13:28`) &&
     investmentcrypto.length !== 0 
   ) {
@@ -121,7 +123,9 @@ const checkReturn = async () => {
         return console.log(error);
       }
     });
-  }
+  }*/
+
+
 
   if (
     date == moment.utc().format(`${month}-${day} 22:00`) &&
@@ -129,13 +133,14 @@ const checkReturn = async () => {
     today.getDay() !== 0
   ) {
     console.log('here')
-    stockPrice((error, highest) => {
+    setReturns()
+    /*stockPrice((error, highest) => {
       if (error) {
         return console.log(error);
       }
-    });
+    });*/
   }
-  if (
+  /*if (
     date == moment.utc().format(`${month}-${day} 22:00`) &&
     investmentcrypto.length !== 0
   ) {
@@ -144,25 +149,41 @@ const checkReturn = async () => {
         return console.log(error);
       }
     });
-  }
+  }*/
 
   if (
     date == moment.utc().format(`${month}-${day} 22:03`) &&
     (investmentstock.length !== 0) && today.getDay() !== 6 &&
     today.getDay() !== 0
   ) {
-    const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
-    console.log(higheststock.ticker)
-    betResultInv(higheststock.ticker, "stocks");
+    winLoss((data) => {
+      console.log(data)
+      investmentstock.forEach(async (stock) => {
+        console.log(stock.Code, stock.change, data)
+        if (stock.change > data) {
+             Invest.updateMany(
+              { Code: stock.Code },
+              { status: 'won', percentile: data}, (req, res) => {
+                console.log(res)
+              });
+
+          } else {
+             Invest.deleteMany(
+                { Code: stock.Code }, (req, res) => {
+                  console.log(res)
+                });
+          }
+        })
+    });
   };
-  if (
+  /*if (
     date == moment.utc().format(`${month}-${day} 22:03`) &&
     (investmentcrypto.length !== 0)
   ) {
     const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
     console.log(highestcrypto.ticker)
     betResultInv(highestcrypto.symbol, "crypto");
-  };
+  };*/
 };
 setInterval(checkReturn, 60000);
 

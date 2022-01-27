@@ -171,7 +171,7 @@ if (cluster.isMaster) {
         if(value > 0.004){
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
-                (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
+                ((parseFloat(value) * 3000)*1000) + profileData.tokens;
               const portfolio = await Profile.findOneAndUpdate(
                 {
                   customerID: userProfile.customerID,
