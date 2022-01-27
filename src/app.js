@@ -576,9 +576,9 @@ if (cluster.isMaster) {
           res.save();
         }
       );
-      return res.redirect("/adminpanele");
+      return res.redirect("/adminpanel");
     } else {
-      return res.redirect("/adminpanele");
+      return res.redirect("/adminpanel");
     }
   });
 
@@ -606,13 +606,13 @@ if (cluster.isMaster) {
           res.save();
         }
       );
-      return res.redirect("/adminpanele");
+      return res.redirect("/adminpanel");
     } else {
-      return res.redirect("/adminpanele");
+      return res.redirect("/adminpanel");
     }
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
-  app.get("/adminpanele", requiresAuth(), async (req, res) => {
+  app.get("/adminpanel", requiresAuth(), async (req, res) => {
     console.log(req.oidc.user.sub.substring(15, 34), "heu");
     if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
       console.log("ey");
