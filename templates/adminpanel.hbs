@@ -225,6 +225,14 @@
     <input placeholder="odds3" name="odds3" type="number" step="0.01"/>
     <button type="submit">Enter</button>
   </form> 
+  <form action="/auth/addbb" method="POST">
+    <input placeholder="outcomeID" name="outcomeID" />
+    <input placeholder="Code" name="Code" />
+    <input placeholder="odds" name="odds" type="number" step="0.01"/>
+    <input placeholder="Code2" name="Code2" />
+    <input placeholder="odds2" name="odds2" type="number" step="0.01"/>
+    <button type="submit">Enter</button>
+  </form> 
   {{#if ongoing1}}
     <form action="/auth/withdrawdelete" method="POST">
       <input placeholder="userID" name="userID" />
