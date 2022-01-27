@@ -114,8 +114,8 @@ if (cluster.isMaster) {
   });
 
 
-  app.get("/getethbaal", async (req, res) => {
-    getBalance("61efaf8a8022366e84575a72", (data) => {
+  app.get("/getethbaale", async (req, res) => {
+    getBalance("61f1e3a3763de95164f215f5", (data) => {
       console.log(data)
     })
     res.render("index");
@@ -159,37 +159,17 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
 
-    getEthBalance(userProfile.depositAddress, async (data) => {
+    getBalance(userProfile.customerID, async (data) => {
       console.log(data);
-      if (data >= 0.005) {
+      const newVal = data;
+      if (data > userProfile.lastTransaction) {
         console.log("hello");
         //const value = String(data - (data * 0.05))
-        const value = String(data - 0.001);
+        const value = (data - userProfile.lastTransaction) - 0.001;
         console.log(value);
-        if(userProfile.lastTransaction !== ""){
-          transferEth(String(value), userProfile.privateKey, async (data) => {
-            const newTokens =
-            (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
-          const portfolio = await Profile.findOneAndUpdate(
-            {
-              customerID: userProfile.customerID,
-            },
-            { tokens: newTokens, lastTransaction: data }
-          );
-          return res.render("account", {
-            userWithdraws: userWithdraws,
-            userBets: userBets,
-            id: userProfile.userID,
-            profileImage: req.oidc.user.picture,
-            username: userProfile.username,
-            depositAddr: userProfile.depositAddress,
-            tokens: Math.round(userProfile.tokens, 2),
-          });
-          
-          
-        });
-    }
-        if(userProfile.lastTransaction == ""){
+        const excess = 0.004-value
+        
+        if(value > 0.004){
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
                 (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
@@ -197,7 +177,7 @@ if (cluster.isMaster) {
                 {
                   customerID: userProfile.customerID,
                 },
-                { tokens: newTokens, lastTransaction: data }
+                { tokens: newTokens, lastTransaction: newVal }
               );
               return res.render("account", {
                 userWithdraws: userWithdraws,
@@ -220,16 +200,17 @@ if (cluster.isMaster) {
             username: userProfile.username,
             depositAddr: userProfile.depositAddress,
             tokens: Math.round(userProfile.tokens, 2),
+            moreNeeded: `${excess} needed`
           });
         }
         
       } else {
-        const portfolio = await Profile.findOneAndUpdate(
+        /*const portfolio = await Profile.findOneAndUpdate(
           {
             customerID: userProfile.customerID,
           },
           { lastTransaction: "" }
-        );
+        );*/
         return res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
