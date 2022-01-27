@@ -10,6 +10,8 @@ if (cluster.isMaster) {
   }
 } else {
   const getEthBalance = require("./utils/getEthBalance");
+  const getBalance = require("./utils/getBalance");
+
   const transferEth = require("./utils/transferEth");
   const express = require("express");
   require("dotenv").config();
@@ -111,6 +113,15 @@ if (cluster.isMaster) {
     res.render("index");
   });
 
+
+  app.get("/getethbaal", async (req, res) => {
+    getBalance("61efaf8a8022366e84575a72", (data) => {
+      console.log(data)
+    })
+    res.render("index");
+  });
+
+  
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
   });
@@ -126,6 +137,12 @@ if (cluster.isMaster) {
     })
       .sort({ userID: 1 })
       .lean();
+      if (userProfile == null) {
+        res.render("makeaccount", {
+          //profileImage: req.oidc.user.picture,
+          username: "Create Your Account!",
+        });
+      }
     const userBets = await Bet.find({
       creatorID: req.oidc.user.sub.substring(15, 34),
     })
@@ -149,6 +166,29 @@ if (cluster.isMaster) {
         //const value = String(data - (data * 0.05))
         const value = String(data - 0.001);
         console.log(value);
+        if(userProfile.lastTransaction !== ""){
+          transferEth(String(value), userProfile.privateKey, async (data) => {
+            const newTokens =
+            (parseFloat(value) * 10000) / 0.01 + userProfile.tokens;
+          const portfolio = await Profile.findOneAndUpdate(
+            {
+              customerID: userProfile.customerID,
+            },
+            { tokens: newTokens, lastTransaction: data }
+          );
+          return res.render("account", {
+            userWithdraws: userWithdraws,
+            userBets: userBets,
+            id: userProfile.userID,
+            profileImage: req.oidc.user.picture,
+            username: userProfile.username,
+            depositAddr: userProfile.depositAddress,
+            tokens: Math.round(userProfile.tokens, 2),
+          });
+          
+          
+        });
+    }
         if(userProfile.lastTransaction == ""){
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
