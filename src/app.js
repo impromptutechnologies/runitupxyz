@@ -770,6 +770,37 @@ if (cluster.isMaster) {
     res.render("about");
   });
 
+  app.get("/setRez", (req, res) => {
+    setReturns();
+    res.render("about");
+  });
+
+  app.get("/winLos", async (req, res) => {
+    const investmentstock = await Invest.find({ category: "stocks" });
+    winLoss((data) => {
+      console.log(data)
+      investmentstock.forEach(async (stock) => {
+        console.log(stock.Code, stock.change, data)
+        if (stock.change > data) {
+             Invest.updateMany(
+              { Code: stock.Code },
+              { status: 'won', percentile: data}, (req, res) => {
+                console.log(res)
+              });
+  
+          } else {
+             Invest.deleteMany(
+                { Code: stock.Code }, (req, res) => {
+                  console.log(res)
+                });
+          }
+        })
+    }); 
+    res.render("about");
+  });
+
+  
+
   //requiresAuth(),
   app.get("/lootbox", requiresAuth(), (req, res) => {
     return res.render("tokens");

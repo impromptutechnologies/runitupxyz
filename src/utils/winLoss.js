@@ -13,8 +13,10 @@ const winLoss = async (callback) => {
         //console.log(i, match.playerStats.teamPlacement, match.mode, match.utcStartSeconds, bet.timeEnd, endtime);
         //&& (starttime/1000) < match.utcStartSeconds    
     })  
-    console.log(percentile(45, matcheslist))
-    callback(percentile(45, matcheslist))
+    console.log(percentile(50, matcheslist))
+    console.log(percentile(20, matcheslist))
+    console.log(percentile(100, matcheslist))
+    callback(percentile(50, matcheslist))
     /*betStock.forEach((stock) => {
         if (stock.change > percentilel) {
              betStockDaySchema.findOneAndUpdate(
