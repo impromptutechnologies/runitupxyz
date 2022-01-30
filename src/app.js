@@ -151,6 +151,13 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
 
+      const userInvests = await Invest.find({
+        creatorID: req.oidc.user.sub.substring(15, 34),
+      })
+        .sort({ creatorID: 1 })
+        .select({ Code: 1, investAmount: 1, status: 1 })
+        .lean()
+        .limit(5);
     const userWithdraws = await Withdraw.find({
       userID: req.oidc.user.sub.substring(15, 34),
     })
@@ -181,6 +188,7 @@ if (cluster.isMaster) {
               return res.render("account", {
                 userWithdraws: userWithdraws,
                 userBets: userBets,
+                userInvests: userInvests,
                 id: userProfile.userID,
                 profileImage: req.oidc.user.picture,
                 username: userProfile.username,
@@ -194,6 +202,7 @@ if (cluster.isMaster) {
           return res.render("account", {
             userWithdraws: userWithdraws,
             userBets: userBets,
+            userInvests: userInvests,
             id: userProfile.userID,
             profileImage: req.oidc.user.picture,
             username: userProfile.username,
@@ -213,6 +222,7 @@ if (cluster.isMaster) {
         return res.render("account", {
           userWithdraws: userWithdraws,
           userBets: userBets,
+          userInvests: userInvests,
           id: userProfile.userID,
           profileImage: req.oidc.user.picture,
           username: userProfile.username,
