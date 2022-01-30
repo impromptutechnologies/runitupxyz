@@ -113,6 +113,37 @@
                         </div>
                                                 <hr style="margin: 0;">
 
+
+                         {{#if userInvest}}
+
+                            {{#each userInvests}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="display:flex;width: 100%;">
+                                <div style="padding: 0.6em;width:80%">
+                                    <h2>{{this.Code}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;margin-left:30px;">
+                                    <h2>3</h2>
+                                </div>
+								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
+                                    <h2>{{this.investAmount}}</h2>
+                                </div>
+                                <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
+                                    <h2>{{this.status}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                        <div style="width:85%">
+                                <div style="padding: 0.6em;">
+                                    <h2>No Invests</h2>
+                                </div>
+                                </div>
+                            
+                            {{/if}}
+
+
 						{{#if userBets}}
                         {{#each userBets}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
