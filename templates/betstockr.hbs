@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Meow Stock</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="./css/main.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="icon" href="https://altvaton.sirv.com/Images/favicon.png">
+        <meta name="description" 
+			content="Bet tokens on the prices of Stocks!">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
+         
+	</head>
+	<body onload=changeTimezone()>
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/churros.png" style="height:50px;width:auto;"></a>
+					<nav id="nav">
+          <a href="/">Home</a>
+          <a href="bets">Commands</a>
+<!--					<a href="/tokens">Lootbox</a>
+-->          
+          <a href="about">About</a>
+          <a href="account">Account</a>
+        </nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner" style="padding-bottom: 5em">
+                <div class="landing">
+                    <div class="desc">
+                        <h3 style=";font-family:Inter">📈</h3>
+                        <div style="display: flex;">
+                           
+                            <div style="width:270px">
+                            <p style="margin-bottom: 0;font-size:18px;font-family: 'Inter';
+    font-weight: 300;width:100%">!bet &lt;Gems&gt; &lt;Code&gt;</p>
+                            <p style="font-size:18px;font-family: 'Inter';
+    font-weight: 300;width:100%"><span style="font-weight: bold"></span> !invstock 500 AAPL</p>
+                            <div style="width:350px;font-size:12px;border-radius:0px">
+                                <p style="width:100%;margin-bottom: 0;color:#fff;margin-top:0;font-size:18px;font-family: 'Inter';
+    font-weight: 300;"><span style="font-weight: bold">Claim Winnings: </span><span style="background-color:#1f262f;padding: 0.65em;border-radius: 4px">!claim</span></p>
+                            </div>
+                        </div>
+
+
+
+                         <div class="helpimg">
+                                <img src="https://altvaton.sirv.com/Images/Screen%20Shot%202022-01-25%20at%2022.58.41.png" style="height: 250px;border-radius:15px" alt="" />
+                            </div>
+
+                        </div>
+                            
+
+
+
+
+                    </div>
+                </div>
+			</section>
+
+		<!-- One -->
+			<section id="one" style="padding-bottom: 5em">
+                <div class="content">
+                    <div class="desc">
+                       <div class="tabs">
+                            <a href="/bets"><img src="https://altvaton.sirv.com/Images/football.svg" style="margin-left: 0;"></a>
+                            <!--<a href="/betsg"><img src="https://altvaton.sirv.com/Images/gamepad.svg"></a>-->
+                            <a href="/betsbb"><img src="https://altvaton.sirv.com/Images/bb.svg"></a>
+                            <!--<a href="/betft"><img src="./images/footbal.svg"></a>-->
+                            <a href="/betsst"><img src="https://altvaton.sirv.com/Images/risk.svg" style="border-bottom: 1px solid white"></a>
+                          <!--  <a href="/betscr"><img src="https://altvaton.sirv.com/Images/bitcoin.svg"></a>
+                            <a href="/casino"><img src="https://altvaton.sirv.com/Images/cards.svg"></a>-->
+                            <!--<a href="/betsq"><img src="https://altvaton.sirv.com/Images/q.svg"></a>-->
+                        </div>
+                        <h2>Pick which stock will rise most (from 9:30am-4pm NY Time)<br> and make 300%! 
+                        Updated every week!</h2><br>
+                         <h2>Place your command between the hours of <br><span class="datestock">{{time1}}</span> to <span class="datestock">{{time2}}</span> in your local time.</h2>
+                        <div style="display: flex;margin-top:40px">
+                            
+                            <div style="width: 90%;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Stock</h2>
+                            </div>
+                            <div style="margin-left:20px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Code</h2>
+                            </div>
+                        </div>
+
+
+
+                        {{#each outcomes}}
+                        <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
+                            <div style="width:90%">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.company}}</h2>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.ticker}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+
+
+                        
+                        
+                         
+                    </div>
+                </div>
+			</section>
+		
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="flex">
+						<div class="copyright">
+                            &copy; IMPROMPTU 지민아, 사랑해 ♥️ <a href="/privacyterm"><span style="margin-left: 20px">Terms and Conditions</span></a> <span style="margin-left: 20px">contact@getmeow.gg</span>
+						</div>
+
+						<ul class="icons">
+							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script type="text/javascript">
+      
+            function changeTimezone() {
+                    
+                var values = document.getElementsByClassName("datestock");
+                
+                Object.keys(values).forEach((element) => {
+                    var stillUtc = moment.utc(values[element].innerHTML, 'hh:mm A').toDate();
+                    var time2 = moment(stillUtc).local().format('hh:mm A');
+                    values[element].innerHTML = time2;
+
+                })
+          
+                    
+            }
+        </script>
+
+		
+			<script src="./js/jquery.min.js"></script>
+			<script src="./js/skel.min.js"></script>
+			<script src="./js/util.js"></script>
+			<script src="./js/main.js"></script>
+
+	</body>
+</html>

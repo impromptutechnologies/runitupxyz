@@ -106,26 +106,14 @@ schedule.scheduleJob("0 0 * * 0", () => {
 
 
 
-
-
 const checkReturn = async () => {
   var day = moment.utc().format("DD");
   var month = moment.utc().format("MM");
   var date = moment.utc().format("MM-DD HH:mm");
   const investmentstock = await Invest.find({ category: "stocks" });
+  //const investmentcrypto = await Invest.find({ category: "crypto" });
   const today = new Date();
-  /*if (
-    date == moment.utc().format(`${month}-${day} 13:28`) &&
-    investmentcrypto.length !== 0 
-  ) {
-    cryptoPriceOpen((error, highest) => {
-      if (error) {
-        return console.log(error);
-      }
-    });
-  }*/
-
-
+  
 
   if (
     date == moment.utc().format(`${month}-${day} 22:00`) &&
@@ -133,59 +121,29 @@ const checkReturn = async () => {
     today.getDay() !== 0
   ) {
     console.log('here')
-    setReturns()
-    /*stockPrice((error, highest) => {
-      if (error) {
-        return console.log(error);
-      }
-    });*/
-  }
-  /*if (
-    date == moment.utc().format(`${month}-${day} 22:00`) &&
-    investmentcrypto.length !== 0
-  ) {
-    cryptoPrice((error, highest) => {
+    stockPrice((error, highest) => {
       if (error) {
         return console.log(error);
       }
     });
-  }*/
+  }
+  
 
   if (
     date == moment.utc().format(`${month}-${day} 22:03`) &&
     (investmentstock.length !== 0) && today.getDay() !== 6 &&
     today.getDay() !== 0
   ) {
-    winLoss((data) => {
-      console.log(data)
-      investmentstock.forEach(async (stock) => {
-        console.log(stock.Code, stock.change, data)
-        if (stock.change > data) {
-             Invest.updateMany(
-              { Code: stock.Code },
-              { status: 'won', percentile: data}, (req, res) => {
-                console.log(res)
-              });
-
-          } else {
-             Invest.deleteMany(
-                { Code: stock.Code }, (req, res) => {
-                  console.log(res)
-                });
-          }
-        })
-    });
+    const higheststock = await Stock.findOne({}).sort({return:-1}).limit(1);;
+    console.log(higheststock.ticker)
+    betResultInv(higheststock.ticker, "stocks");
   };
-  /*if (
-    date == moment.utc().format(`${month}-${day} 22:03`) &&
-    (investmentcrypto.length !== 0)
-  ) {
-    const highestcrypto = await Crypto.findOne({}).sort({return:-1}).limit(1);;
-    console.log(highestcrypto.ticker)
-    betResultInv(highestcrypto.symbol, "crypto");
-  };*/
+
 };
 setInterval(checkReturn, 60000);
+
+
+
 
 
 

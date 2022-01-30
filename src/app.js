@@ -1066,6 +1066,35 @@ if (cluster.isMaster) {
     }
   });
 
+  app.get("/betsst", async (req, res) => {
+    try {
+      /*const reply = await GET_ASYNC("betsst");
+      if (reply) {
+        res.render("betstock", {
+          outcomes: JSON.parse(reply),
+          time2: "13:30",
+          time1: "20:00",
+        });
+        return;
+      }*/
+      const outcomes = await Stock.find({})
+        .select({ company: 1, ticker: 1 })
+        .lean();
+      /*const saveResult = await SET_ASYNC(
+        "betsst",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );*/
+      res.render("betstockr", {
+        time2: "13:30",
+        time1: "21:35",outcomes
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
   app.get("/casino", async (req, res) => {
     try {
       const reply = await GET_ASYNC("casino");
