@@ -1134,7 +1134,7 @@ if (cluster.isMaster) {
       },
       redirect_urls: {
         return_url: "https://churro.gg/success",
-        cancel_url: "https://churro.gg/cancel",
+        cancel_url: "https://churro.gg/",
       },
       transactions: [
         {
