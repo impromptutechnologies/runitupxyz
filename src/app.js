@@ -177,11 +177,11 @@ if (cluster.isMaster) {
           const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
           const excess = 0.005-value
           const fee = String(data*0.000000001)
-          console.log(parseFloat((21000*(data*0.000000001))/1000000000), userProfile.lastTransaction, fee);
 
 
           if (value > 0.002) {
-            transferEth(String(data*0.000000001), String(value), userProfile.privateKey, async (data) => {
+            transferEth(String(data * 0.000000001),
+            String(value.toFixed(5)), userProfile.privateKey, async (data) => {
               const newTokens =
                 parseFloat(value) * 4000 * 1000 + userProfile.tokens;
               if (data !== undefined) {
