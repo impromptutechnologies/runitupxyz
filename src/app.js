@@ -158,6 +158,7 @@ if (cluster.isMaster) {
         .select({ Code: 1, investAmount: 1, status: 1 })
         .lean()
         .limit(5);
+        console.log(userInvests)
     const userWithdraws = await Withdraw.find({
       userID: req.oidc.user.sub.substring(15, 34),
     })
