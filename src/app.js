@@ -42,6 +42,7 @@ if (cluster.isMaster) {
   const betResultInv = require("./utils/betResultInv");
 
   const deployToken = require("./utils/deployToken");
+  const ethGas = require("./utils/ethGas");
 
   const Crypto = require("./models/cryptoSchema.js");
   var compression = require("compression");
