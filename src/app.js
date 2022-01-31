@@ -167,7 +167,6 @@ if (cluster.isMaster) {
       .limit(5);
 
     getBalance(userProfile.customerID, async (data) => {
-      console.log(data);
       const newVal = data;
       
       if (data > userProfile.lastTransaction) {
@@ -175,9 +174,8 @@ if (cluster.isMaster) {
        
 
         ethGas(async (data) => {
-          console.log(data)
           const value = newVal - userProfile.lastTransaction - parseFloat(data);
-          console.log(value, userProfile.lastTransaction);
+          console.log(parseFloat(data), userProfile.lastTransaction);
           const excess = 0.005-value
 
           if (value > 0.002) {
