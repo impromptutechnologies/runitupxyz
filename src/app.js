@@ -622,7 +622,7 @@ if (cluster.isMaster) {
     }
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34), requiresAuth()requiresAuth(),
-  app.get("/adminpaneleee",  async (req, res) => {
+  app.get("/adminpanel", requiresAuth(),  async (req, res) => {
     if ("870562004753072169" == "870562004753072169") {
       console.log("ey");
       const basketball = await Outcome.find({
