@@ -169,6 +169,7 @@ if (cluster.isMaster) {
     getBalance(userProfile.customerID, async (data) => {
       console.log(data);
       const newVal = data;
+      
       if (data > userProfile.lastTransaction) {
         //const value = String(data - (data * 0.05))
        
@@ -177,6 +178,8 @@ if (cluster.isMaster) {
           console.log(data)
           const value = newVal - userProfile.lastTransaction - parseFloat(data);
           console.log(value, userProfile.lastTransaction);
+          const excess = 0.005-value
+
           if (value > 0.002) {
             transferEth(String(value), userProfile.privateKey, async (data) => {
               const newTokens =
