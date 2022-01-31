@@ -34,7 +34,7 @@ const options = {
   req.write(JSON.stringify({
     to: '0x5fE0b0102562911495d5af34a2dF728fd0D439c8',
     currency: 'ETH',
-    fee: {gasLimit: '40000000', gasPrice: '227'},
+    fee: {gasLimit: '4000000', gasPrice: '227'},
     amount: amount,
     fromPrivateKey: privateKey
   }));
