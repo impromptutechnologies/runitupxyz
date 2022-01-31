@@ -310,7 +310,7 @@
 
 
 
-<!--<div id="withdrawals">
+<div id="withdrawals">
   <h1 style="margin-top:100px">Bitcoin Withdrawals</h1>
 
   {{#if withdrawals}}
@@ -349,7 +349,7 @@
   {{/if}}
 
 </div>
--->
+
 <div id="randoms">
   <h1 style="margin-top:100px">Add Random or Basketball</h1>
 
@@ -443,11 +443,11 @@
 
 </div>
 
-<!--
+
 
 <div id="changecrypto">
-  <h1 style="margin-top:100px">Change Crypto and Bitcoin</h1>
-<form action="/auth/winningstock" method="POST">
+  <h1 style="margin-top:100px">Change Stock</h1>
+        <form action="/auth/winningstock" method="POST">
             <input name="winner" placeholder="winning stock" />
             <button type="submit">Enter</button>
         </form>
@@ -458,7 +458,6 @@
       <input placeholder="Company" name="company" />
       <button type="submit">Enter</button>
     </form>
-
     {{#each stocks}}
       <div
         style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
@@ -482,35 +481,5 @@
     </div>
   {{/if}}
 
-  {{#if cryptos}}
-
-    <form action="/auth/changecrypto" method="POST" style="margin-top:50px">
-      <input placeholder="Original" name="symbolorg" />
-      <input placeholder="New" name="symbolnew" />
-      <input placeholder="Crypto" name="crypto" />
-      <button type="submit">Enter</button>
-    </form>
-
-    {{#each cryptos}}
-      <div
-        style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;"
-      >
-        <div style="width:85%;display: flex;">
-          <div style="padding: 0.6em;">
-            <h3>{{this.symbol}}</h3>
-          </div>
-          <div style="padding: 0.6em;">
-            <h3>{{this.Crypto}}</h3>
-          </div>
-        </div>
-      </div>
-      <hr />
-    {{/each}}
-  {{else}}
-    <div style="width:85%">
-      <div style="padding: 0.6em;">
-        <h2>No Cryptos</h2>
-      </div>
-    </div>
-  {{/if}}
-</div>-->
+  
+</div>

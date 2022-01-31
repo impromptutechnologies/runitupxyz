@@ -317,7 +317,7 @@ if (cluster.isMaster) {
 
   app.post("/auth/refreshBalance", async (req, res) => {
     const tokens = await Profile.findOne({
-      userID: "834304396673679411",
+      userID: "870562004753072169",
     })
       .sort({ userID: 1 })
       .lean();
@@ -327,7 +327,7 @@ if (cluster.isMaster) {
 
   app.post("/auth/refreshBalance1", async (req, res) => {
     const tokens = await Profile.findOne({
-      userID: "834304396673679411",
+      userID: "870562004753072169",
     })
       .sort({ userID: 1 })
       .lean();
@@ -372,7 +372,6 @@ if (cluster.isMaster) {
   });
 
   //ACCOUNT
-
   //ADMIN PANEL
   app.post("/auth/addodd", requiresAuth(), async (req, res) => {
     if (
@@ -407,7 +406,7 @@ if (cluster.isMaster) {
   app.post("/auth/withdrawdelete", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const update = await Withdraw.deleteOne({ userID: req.body.userID });
       res.redirect("/adminpanel");
@@ -419,7 +418,7 @@ if (cluster.isMaster) {
   app.post("/auth/timestart", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const update = await Outcome.findOneAndUpdate(
         { outcomeID: req.body.outcomeID },
@@ -434,7 +433,7 @@ if (cluster.isMaster) {
   app.post("/auth/changestock", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const update = await Stock.findOneAndUpdate(
         { ticker: req.body.tickerorg },
@@ -449,7 +448,7 @@ if (cluster.isMaster) {
   app.post("/auth/changecrypto", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       const update = await Crypto.findOneAndUpdate(
         { symbol: req.body.symbolorg },
@@ -464,7 +463,7 @@ if (cluster.isMaster) {
   app.post("/auth/randomResult", requiresAuth(), async (req, res) => {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       Outcome.findOneAndDelete(
         {
@@ -533,9 +532,9 @@ if (cluster.isMaster) {
 
   app.post("/auth/newOther", requiresAuth(), async (req, res) => {
     if (
-      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
-      1 == 1
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
+      
     ) {
       Outcome.create(
         {
@@ -622,10 +621,9 @@ if (cluster.isMaster) {
       return res.redirect("/adminpanel");
     }
   });
-  //, requiresAuth()//req.oidc.user.sub.substring(15, 34)
-  app.get("/adminpanel", requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34), "heu");
-    if (req.oidc.user.sub.substring(15, 34) == "870562004753072169") {
+  //, requiresAuth()//req.oidc.user.sub.substring(15, 34), requiresAuth()requiresAuth(),
+  app.get("/adminpaneleee",  async (req, res) => {
+    if ("870562004753072169" == "870562004753072169") {
       console.log("ey");
       const basketball = await Outcome.find({
         category: "basketball",
@@ -640,12 +638,9 @@ if (cluster.isMaster) {
         const ongoing1 = await Outcome.find({option1: []})
         .select({ outcomeID: 1, team1: 1, team2: 1 })
         .lean();
-      /*const stocks = await Stock.find({})
+      const stocks = await Stock.find({})
         .select({ ticker: 1, company: 1 })
         .lean();
-      const cryptos = await Crypto.find({})
-        .select({ symbol: 1, Crypto: 1 })
-        .lean();*/
       const usercount = await Profile.count({}).lean();
       const paidusers = await Profile.count({ payments: { $ne: [] } }).lean();
       const revenuesmin = paidusers * 2.5;
@@ -669,11 +664,17 @@ if (cluster.isMaster) {
         ongoing: ongoing,
         ongoing1: ongoing1,
         withdrawals: userWithdraws,
+        stocks: stocks,
+
       });
     } else {
       res.redirect("/");
     }
   });
+
+
+
+
   app.post("/auth/newMatch", requiresAuth(), async (req, res) => {
     if (
       /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
@@ -714,9 +715,8 @@ if (cluster.isMaster) {
 
   app.post("/auth/winningStock", async (req, res) => {
     if (
-      /*req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
-      req.oidc.user.sub.substring(15, 34) == "834304396673679411"*/
-      1 == 1
+      req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
+      req.oidc.user.sub.substring(15, 34) == "870562004753072169"
     ) {
       betResultInv(req.body.winner, "stocks");
       res.redirect("/adminpanel");
