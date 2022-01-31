@@ -173,7 +173,7 @@ if (cluster.isMaster) {
         //const value = String(data - (data * 0.05))
        
 
-        ethGas(async (data) => {
+        ethGas(String(newVal), async (data) => {
           const value = newVal - userProfile.lastTransaction - parseFloat(data);
           console.log(parseFloat(data), userProfile.lastTransaction);
           const excess = 0.005-value

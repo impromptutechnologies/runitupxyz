@@ -1,7 +1,7 @@
 const http = require("https");
 const Profile = require("../models/profileSchema");
 
-const depositAddress = (callback) => {
+const depositAddress = (amount, callback) => {
     const options = {
         "method": "POST",
         "hostname": "api-us-west1.tatum.io",
@@ -30,7 +30,7 @@ const depositAddress = (callback) => {
       req.write(JSON.stringify({
         from: '0x976683dd1def30018060669965061a8c2b97001e',
         to: '0x5fE0b0102562911495d5af34a2dF728fd0D439c8',
-        amount: '0.006',
+        amount: amount,
       }));
       req.end();      
 
