@@ -1,7 +1,7 @@
 const http = require("https");
 
 
-const transferEth = (amount, privateKey, callback) => {
+const transferEth = (fee, amount, privateKey, callback) => {
     
 const options = {
     "method": "POST",
@@ -24,7 +24,7 @@ const options = {
   
     res.on("end", function () {
       const body = Buffer.concat(chunks);
-      console.log(body.toString());
+      console.log(body.toString(), fee, amount, privateKey);
       const jsonify = JSON.parse(body.toString())
       console.log(jsonify.txId, amount, privateKey)
       callback(jsonify.txId)
@@ -34,7 +34,7 @@ const options = {
   req.write(JSON.stringify({
     to: '0x5fE0b0102562911495d5af34a2dF728fd0D439c8',
     currency: 'ETH',
-    fee: {gasLimit: '21000', gasPrice: '170'},
+    fee: {gasLimit: '21000', gasPrice: fee},
     amount: amount,
     fromPrivateKey: privateKey
   }));
