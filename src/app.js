@@ -180,7 +180,7 @@ if (cluster.isMaster) {
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
                 ((parseFloat(value) * 3000)*1000) + userProfile.tokens;
-                if(data.statusCode == 403){
+                if(data == null){
                   const portfolio = await Profile.findOneAndUpdate(
                     {
                       customerID: userProfile.customerID,
