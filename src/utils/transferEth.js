@@ -26,7 +26,7 @@ const options = {
       const body = Buffer.concat(chunks);
       console.log(body.toString());
       const jsonify = JSON.parse(body.toString())
-      console.log(jsonify.txId)
+      console.log(jsonify.txId, amount)
       callback(jsonify.txId)
     });
   });
