@@ -180,22 +180,25 @@ if (cluster.isMaster) {
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
                 ((parseFloat(value) * 3000)*1000) + userProfile.tokens;
-              const portfolio = await Profile.findOneAndUpdate(
-                {
-                  customerID: userProfile.customerID,
-                },
-                { tokens: newTokens, lastTransaction: newVal }
-              );
-              return res.render("account", {
-                userWithdraws: userWithdraws,
-                userBets: userBets,
-                userInvests: userInvests,
-                id: userProfile.userID,
-                profileImage: req.oidc.user.picture,
-                username: userProfile.username,
-                depositAddr: userProfile.depositAddress,
-                tokens: Math.round(userProfile.tokens, 2),
-              });
+                if(data.statusCode == 403){
+                  const portfolio = await Profile.findOneAndUpdate(
+                    {
+                      customerID: userProfile.customerID,
+                    },
+                    { tokens: newTokens, lastTransaction: newVal }
+                  );
+                  return res.render("account", {
+                    userWithdraws: userWithdraws,
+                    userBets: userBets,
+                    userInvests: userInvests,
+                    id: userProfile.userID,
+                    profileImage: req.oidc.user.picture,
+                    username: userProfile.username,
+                    depositAddr: userProfile.depositAddress,
+                    tokens: Math.round(userProfile.tokens, 2),
+                  });
+                }
+              
               
               
             });
