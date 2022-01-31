@@ -176,7 +176,7 @@ if (cluster.isMaster) {
         console.log(value, userProfile.lastTransaction);
         const excess = 0.004-value
         
-        if(value > 0.004){
+        if(value > 0.001){
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
                 ((parseFloat(value) * 3000)*1000) + userProfile.tokens;
