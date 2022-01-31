@@ -172,14 +172,14 @@ if (cluster.isMaster) {
       const newVal = data;
       if (data > userProfile.lastTransaction) {
         //const value = String(data - (data * 0.05))
-        const value = (data - userProfile.lastTransaction) - 0.0038;
+        const value = (data - userProfile.lastTransaction) - 0.0036;
         console.log(value, userProfile.lastTransaction);
         const excess = 0.004-value
         
-        if(value > 0.004){
+        if(value > 0.002){
               transferEth(String(value), userProfile.privateKey, async (data) => {
                 const newTokens =
-                ((parseFloat(value) * 3000)*1000) + userProfile.tokens;
+                ((parseFloat(value) * 4000)*1000) + userProfile.tokens;
                 if(data !== undefined){
                   const portfolio = await Profile.findOneAndUpdate(
                     {
