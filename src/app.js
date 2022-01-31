@@ -113,15 +113,13 @@ if (cluster.isMaster) {
     res.render("index");
   });
 
-
   app.get("/getethbaale", async (req, res) => {
     getBalance("61f1e3a3763de95164f215f5", (data) => {
-      console.log(data)
-    })
+      console.log(data);
+    });
     res.render("index");
   });
 
-  
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
   });
@@ -137,12 +135,12 @@ if (cluster.isMaster) {
     })
       .sort({ userID: 1 })
       .lean();
-      if (userProfile == null) {
-        res.render("makeaccount", {
-          //profileImage: req.oidc.user.picture,
-          username: "Create Your Account!",
-        });
-      }
+    if (userProfile == null) {
+      res.render("makeaccount", {
+        profileImage: req.oidc.user.picture,
+        username: "Create Your Account!",
+      });
+    }
     const userBets = await Bet.find({
       creatorID: req.oidc.user.sub.substring(15, 34),
     })
@@ -151,14 +149,14 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
 
-      const userInvests = await Invest.find({
-        creatorID: req.oidc.user.sub.substring(15, 34),
-      })
-        .sort({ creatorID: 1 })
-        .select({ Code: 1, investAmount: 1, status: 1 })
-        .lean()
-        .limit(5);
-        console.log(userInvests)
+    const userInvests = await Invest.find({
+      creatorID: req.oidc.user.sub.substring(15, 34),
+    })
+      .sort({ creatorID: 1 })
+      .select({ Code: 1, investAmount: 1, status: 1 })
+      .lean()
+      .limit(5);
+    console.log(userInvests);
     const userWithdraws = await Withdraw.find({
       userID: req.oidc.user.sub.substring(15, 34),
     })
@@ -172,51 +170,49 @@ if (cluster.isMaster) {
       const newVal = data;
       if (data > userProfile.lastTransaction) {
         //const value = String(data - (data * 0.05))
-        const value = (data - userProfile.lastTransaction) - 0.0036;
-        console.log(value, userProfile.lastTransaction);
-        const excess = 0.004-value
-        
-        if(value > 0.002){
-              transferEth(String(value), userProfile.privateKey, async (data) => {
-                const newTokens =
-                ((parseFloat(value) * 4000)*1000) + userProfile.tokens;
-                if(data !== undefined){
-                  const portfolio = await Profile.findOneAndUpdate(
-                    {
-                      customerID: userProfile.customerID,
-                    },
-                    { tokens: newTokens, lastTransaction: newVal }
-                  );
-                  
-                }
-                return res.render("account", {
-                  userWithdraws: userWithdraws,
-                  userBets: userBets,
-                  userInvests: userInvests,
-                  id: userProfile.userID,
-                  profileImage: req.oidc.user.picture,
-                  username: userProfile.username,
-                  depositAddr: userProfile.depositAddress,
-                  tokens: Math.round(userProfile.tokens, 2),
-                });
-              
-              
-              
+       
+
+        ethGas(async (data) => {
+          console.log(data)
+          const value = newVal - userProfile.lastTransaction - parseFloat(data);
+          console.log(value, userProfile.lastTransaction);
+          if (value > 0.002) {
+            transferEth(String(value), userProfile.privateKey, async (data) => {
+              const newTokens =
+                parseFloat(value) * 4000 * 1000 + userProfile.tokens;
+              if (data !== undefined) {
+                const portfolio = await Profile.findOneAndUpdate(
+                  {
+                    customerID: userProfile.customerID,
+                  },
+                  { tokens: newTokens, lastTransaction: newVal }
+                );
+              }
+              return res.render("account", {
+                userWithdraws: userWithdraws,
+                userBets: userBets,
+                userInvests: userInvests,
+                id: userProfile.userID,
+                profileImage: req.oidc.user.picture,
+                username: userProfile.username,
+                depositAddr: userProfile.depositAddress,
+                tokens: Math.round(userProfile.tokens, 2),
+              });
             });
-        }else{
-          return res.render("account", {
-            userWithdraws: userWithdraws,
-            userBets: userBets,
-            userInvests: userInvests,
-            id: userProfile.userID,
-            profileImage: req.oidc.user.picture,
-            username: userProfile.username,
-            depositAddr: userProfile.depositAddress,
-            tokens: Math.round(userProfile.tokens, 2),
-            moreNeeded: `${excess} needed`
-          });
-        }
-        
+          } else {
+            return res.render("account", {
+              userWithdraws: userWithdraws,
+              userBets: userBets,
+              userInvests: userInvests,
+              id: userProfile.userID,
+              profileImage: req.oidc.user.picture,
+              username: userProfile.username,
+              depositAddr: userProfile.depositAddress,
+              tokens: Math.round(userProfile.tokens, 2),
+              moreNeeded: `${excess} needed`,
+            });
+          }
+        });
       } else {
         /*const portfolio = await Profile.findOneAndUpdate(
           {
@@ -399,7 +395,11 @@ if (cluster.isMaster) {
     ) {
       const update = await Outcome.findOneAndUpdate(
         { outcomeID: req.body.outcomeID },
-        { "option1.0.odds": req.body.odd1, "option1.0.odds2": req.body.odd2, "option1.0.odds3": req.body.odd3 }
+        {
+          "option1.0.odds": req.body.odd1,
+          "option1.0.odds2": req.body.odd2,
+          "option1.0.odds3": req.body.odd3,
+        }
       );
       res.redirect("/adminpanel");
     } else {
@@ -538,7 +538,6 @@ if (cluster.isMaster) {
     if (
       req.oidc.user.sub.substring(15, 34) == "450122601314910208" ||
       req.oidc.user.sub.substring(15, 34) == "870562004753072169"
-      
     ) {
       Outcome.create(
         {
@@ -626,7 +625,7 @@ if (cluster.isMaster) {
     }
   });
   //, requiresAuth()//req.oidc.user.sub.substring(15, 34), requiresAuth()requiresAuth(),
-  app.get("/adminpanel", requiresAuth(),  async (req, res) => {
+  app.get("/adminpanel", requiresAuth(), async (req, res) => {
     if ("870562004753072169" == "870562004753072169") {
       console.log("ey");
       const basketball = await Outcome.find({
@@ -639,7 +638,7 @@ if (cluster.isMaster) {
       const ongoing = await Outcome.find({})
         .select({ outcomeID: 1, team1: 1, team2: 1 })
         .lean();
-        const ongoing1 = await Outcome.find({option1: []})
+      const ongoing1 = await Outcome.find({ option1: [] })
         .select({ outcomeID: 1, team1: 1, team2: 1 })
         .lean();
       const stocks = await Stock.find({})
@@ -669,15 +668,11 @@ if (cluster.isMaster) {
         ongoing1: ongoing1,
         withdrawals: userWithdraws,
         stocks: stocks,
-
       });
     } else {
       res.redirect("/");
     }
   });
-
-
-
 
   app.post("/auth/newMatch", requiresAuth(), async (req, res) => {
     if (
@@ -793,28 +788,26 @@ if (cluster.isMaster) {
   app.get("/winLos", async (req, res) => {
     const investmentstock = await Invest.find({ category: "stocks" });
     winLoss((data) => {
-      console.log(data)
+      console.log(data);
       investmentstock.forEach(async (stock) => {
-        console.log(stock.Code, stock.change, data)
+        console.log(stock.Code, stock.change, data);
         if (stock.change > data) {
-             Invest.updateMany(
-              { Code: stock.Code },
-              { status: 'won', percentile: data}, (req, res) => {
-                console.log(res)
-              });
-  
-          } else {
-             Invest.deleteMany(
-                { Code: stock.Code }, (req, res) => {
-                  console.log(res)
-                });
-          }
-        })
-    }); 
+          Invest.updateMany(
+            { Code: stock.Code },
+            { status: "won", percentile: data },
+            (req, res) => {
+              console.log(res);
+            }
+          );
+        } else {
+          Invest.deleteMany({ Code: stock.Code }, (req, res) => {
+            console.log(res);
+          });
+        }
+      });
+    });
     res.render("about");
   });
-
-  
 
   //requiresAuth(),
   app.get("/lootbox", requiresAuth(), (req, res) => {
@@ -1103,7 +1096,8 @@ if (cluster.isMaster) {
       );*/
       res.render("betstockr", {
         time2: "13:30",
-        time1: "21:35",outcomes
+        time1: "21:35",
+        outcomes,
       });
     } catch (err) {
       console.log(err);
@@ -1216,7 +1210,7 @@ if (cluster.isMaster) {
   });
 
   app.get("/success", requiresAuth(), async (req, res) => {
-    console.log(req.oidc.user.sub.substring(15, 34), 'hey');
+    console.log(req.oidc.user.sub.substring(15, 34), "hey");
     const userProfile = await Profile.findOne({
       userID: req.oidc.user.sub.substring(15, 34),
     });
@@ -1281,35 +1275,33 @@ if (cluster.isMaster) {
     return res.redirect("/account");
   });*/
   app.get("/betzeee", async (req, res) => {
-    await setReturns()
-    return res.redirect('/')
+    await setReturns();
+    return res.redirect("/");
   });
 
   app.get("/cuteze", async (req, res) => {
     const betStock = await Invest.find({});
     winLoss((data) => {
-      console.log(data)
+      console.log(data);
       betStock.forEach(async (stock) => {
-        console.log(stock.Code, stock.change, data)
+        console.log(stock.Code, stock.change, data);
         if (stock.change > data) {
-             Invest.updateMany(
-              { Code: stock.Code },
-              { status: 'won', percentile: data}, (req, res) => {
-                console.log(res)
-              });
-
-          } else {
-             Invest.deleteMany(
-                { Code: stock.Code }, (req, res) => {
-                  console.log(res)
-                });
-          }
-        })
+          Invest.updateMany(
+            { Code: stock.Code },
+            { status: "won", percentile: data },
+            (req, res) => {
+              console.log(res);
+            }
+          );
+        } else {
+          Invest.deleteMany({ Code: stock.Code }, (req, res) => {
+            console.log(res);
+          });
+        }
+      });
     });
-    return res.redirect('/about')
-
+    return res.redirect("/about");
   });
-
 
   app.get("x", requiresAuth(), async (req, res) => {
     const userProfile = await Profile.findOne({
