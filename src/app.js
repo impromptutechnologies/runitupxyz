@@ -187,17 +187,18 @@ if (cluster.isMaster) {
                     },
                     { tokens: newTokens, lastTransaction: newVal }
                   );
-                  return res.render("account", {
-                    userWithdraws: userWithdraws,
-                    userBets: userBets,
-                    userInvests: userInvests,
-                    id: userProfile.userID,
-                    profileImage: req.oidc.user.picture,
-                    username: userProfile.username,
-                    depositAddr: userProfile.depositAddress,
-                    tokens: Math.round(userProfile.tokens, 2),
-                  });
+                  
                 }
+                return res.render("account", {
+                  userWithdraws: userWithdraws,
+                  userBets: userBets,
+                  userInvests: userInvests,
+                  id: userProfile.userID,
+                  profileImage: req.oidc.user.picture,
+                  username: userProfile.username,
+                  depositAddr: userProfile.depositAddress,
+                  tokens: Math.round(userProfile.tokens, 2),
+                });
               
               
               
