@@ -174,12 +174,12 @@ if (cluster.isMaster) {
        
 
         ethGas(String(newVal), async (data) => {
-          const value = newVal - userProfile.lastTransaction - parseFloat(data);
-          console.log(parseFloat(data), userProfile.lastTransaction);
+          const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
+          console.log(parseFloat((21000*(data*0.000000001))/1000000000), userProfile.lastTransaction);
           const excess = 0.005-value
 
           if (value > 0.002) {
-            transferEth(String(value), userProfile.privateKey, async (data) => {
+            transferEth(String(data*0.000000001), String(value), userProfile.privateKey, async (data) => {
               const newTokens =
                 parseFloat(value) * 4000 * 1000 + userProfile.tokens;
               if (data !== undefined) {
