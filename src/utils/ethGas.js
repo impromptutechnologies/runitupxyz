@@ -23,7 +23,8 @@ const depositAddress = (amount, callback) => {
         res.on("end", function () {
           const body = Buffer.concat(chunks);
           console.log(body.toString());
-          callback(body.toString().estimations.standard)
+          const jsonify = JSON.parse(body.toString())
+          callback(jsonify.estimations.standard)
         });
       });
       
