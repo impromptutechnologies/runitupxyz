@@ -172,7 +172,7 @@ if (cluster.isMaster) {
       const newVal = data;
       if (data > userProfile.lastTransaction) {
         //const value = String(data - (data * 0.05))
-        const value = (data - userProfile.lastTransaction) - 0.002;
+        const value = (data - userProfile.lastTransaction) - 0.0021;
         console.log(value, userProfile.lastTransaction);
         const excess = 0.004-value
         
