@@ -177,7 +177,7 @@ if (cluster.isMaster) {
           const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
           const excess = 0.006-newVal
           const fee = String(data*0.000000001)
-          console.log(value, excess, fee)
+          console.log(value, excess, fee, parseFloat((21000*(data*0.000000001))/1000000000))
 
 
           if (value > 0.002) {
