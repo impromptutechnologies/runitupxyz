@@ -175,8 +175,9 @@ if (cluster.isMaster) {
 
         ethGas(String(newVal), async (data) => {
           const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
-          const excess = 0.005-value
+          const excess = 0.006-newVal
           const fee = String(data*0.000000001)
+          console.log(value, excess, fee)
 
 
           if (value > 0.002) {
