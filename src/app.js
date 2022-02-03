@@ -1079,36 +1079,7 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get("/betsst", async (req, res) => {
-    try {
-      /*const reply = await GET_ASYNC("betsst");
-      if (reply) {
-        res.render("betstock", {
-          outcomes: JSON.parse(reply),
-          time2: "13:30",
-          time1: "20:00",
-        });
-        return;
-      }*/
-      const outcomes = await Stock.find({})
-        .select({ company: 1, ticker: 1 })
-        .lean();
-      /*const saveResult = await SET_ASYNC(
-        "betsst",
-        JSON.stringify(outcomes),
-        "EX",
-        3600
-      );*/
-      res.render("betstockr", {
-        time2: "13:30",
-        time1: "21:35",
-        outcomes,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
+ 
   app.get("/casino", async (req, res) => {
     try {
       const reply = await GET_ASYNC("casino");
@@ -1131,41 +1102,7 @@ if (cluster.isMaster) {
     }
   });
 
-  app.get("/betsq", async (req, res) => {
-    try {
-      const reply = await GET_ASYNC("betsq");
-      if (reply) {
-        res.render("betrandom", { outcomes: JSON.parse(reply) });
-        return;
-      }
-      const outcomes = await Outcome.find({
-        category: "random",
-        timeStart: { $gt: date },
-      })
-        .sort({ timeStart: 1 })
-        .select({
-          team1: 1,
-          team2: 1,
-          timeStart: 1,
-          odds: 1,
-          odds2: 1,
-          Code: 1,
-          Code2: 1,
-          desc: 1,
-        })
-        .lean();
-      const saveResult = await SET_ASYNC(
-        "betsq",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
-
-      res.render("betrandom", { outcomes: outcomes });
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  
   //BETS
 
   //PAY
@@ -1373,4 +1310,72 @@ if (cluster.isMaster) {
     };
     completePayment(userProfile, tokens, paymentId, execute_payment_json);
     res.redirect("about");
-  });*/
+  });
+  
+  
+   app.get("/betsst", async (req, res) => {
+    try {
+      const reply = await GET_ASYNC("betsst");
+      if (reply) {
+        res.render("betstock", {
+          outcomes: JSON.parse(reply),
+          time2: "13:30",
+          time1: "20:00",
+        });
+        return;
+      }
+      const outcomes = await Stock.find({})
+        .select({ company: 1, ticker: 1 })
+        .lean();
+      const saveResult = await SET_ASYNC(
+        "betsst",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );
+      res.render("betstockr", {
+        time2: "13:30",
+        time1: "21:35",
+        outcomes,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.get("/betsq", async (req, res) => {
+    try {
+      const reply = await GET_ASYNC("betsq");
+      if (reply) {
+        res.render("betrandom", { outcomes: JSON.parse(reply) });
+        return;
+      }
+      const outcomes = await Outcome.find({
+        category: "random",
+        timeStart: { $gt: date },
+      })
+        .sort({ timeStart: 1 })
+        .select({
+          team1: 1,
+          team2: 1,
+          timeStart: 1,
+          odds: 1,
+          odds2: 1,
+          Code: 1,
+          Code2: 1,
+          desc: 1,
+        })
+        .lean();
+      const saveResult = await SET_ASYNC(
+        "betsq",
+        JSON.stringify(outcomes),
+        "EX",
+        10000
+      );
+
+      res.render("betrandom", { outcomes: outcomes });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+*/
