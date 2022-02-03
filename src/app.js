@@ -1080,7 +1080,7 @@ if (cluster.isMaster) {
   });
 
  
-  app.get("/casino", async (req, res) => {
+  /*app.get("/casino", async (req, res) => {
     try {
       const reply = await GET_ASYNC("casino");
       if (reply) {
@@ -1097,6 +1097,14 @@ if (cluster.isMaster) {
         10000
       );
       res.render("betcasino", { outcomes: casinoCommands });
+    } catch (err) {
+      console.log(err);
+    }
+  });*/
+
+  app.get("/general", async (req, res) => {
+    try {
+      res.render("general");
     } catch (err) {
       console.log(err);
     }
