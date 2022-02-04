@@ -71,12 +71,12 @@ schedule.scheduleJob("55 */1 * * *", () => {
 
 
 
-/*const setTokens = async () => {
+const setTokens = async () => {
   Profile.updateMany(
     {
       tokens: { $exists: true, $gt: 0 },
     },[
-      {"$set": {"returntokens": '$tokens' }}
+      {"$set": {"lastTransaction": 0 }}
   ],
     (err, res) => {
       console.log(res);
@@ -85,7 +85,7 @@ schedule.scheduleJob("55 */1 * * *", () => {
 };
 schedule.scheduleJob("0 0 * * 0", () => {
   setTokens();
-});*/
+});
 
 
 
