@@ -59,7 +59,7 @@
                         <h3>{{username}}</h3>
                         <div style="background:black;width:355px;font-size:12px;padding:10px;border-radius:10px;margin-top: 40px;">
 <!--<h3 style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size: 14px;font-family:'Inter';"><span style="font-weight: bold;font-family:'Inter'">Eth 0.01 = 💎10000 </span></h3>-->
-                                <p style="width:100%;margin-bottom: 0;color:white;margin-top: 8px;margin-left:5px;font-size: 16px;font-family:'Avenir Light';"><span>Send ETH to the address below to buy Gems. 0.01 ETH minimum.</span></p>
+                                <p style="width:100%;margin-bottom: 0;color:white;margin-top: 8px;margin-left:5px;font-size: 16px;font-family:'Avenir Light';"><span>Every 1000 Gems 💎 is equivalent to 1 Giveaway entry 🎁.</span></p>
 
                                 
                             </div>
@@ -214,7 +214,7 @@
                         <h1 style="font-size: 50px;margin-bottom:0;font-family:Inter">💎 {{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
                         
 						{{#if userWithdraws}}
-                                                <h1 style="font-family: 'Avenir Light';font-size:20px">Withdraws</h1>
+                                                <h1 style="font-family: 'Avenir Light';font-size:20px">Purchase ETH</h1>
 						<div style="display: flex;padding: 0.2em;">
                             <div style="width: 55%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Gems</h2>
@@ -244,8 +244,8 @@
                         </div>
                         {{/each}}
                         {{else}}
-						<h1>Withdraw</h1>
-						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH Address</p>
+						<h1>Purchase ETH</h1>
+						<p style="margin-top:5px;font-family:Avenir Light">ETH automatically calculated.</p>
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
@@ -253,7 +253,7 @@
 									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="Ethereum Address" name="address">
 									
                                     <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
-                        >Withdraw</button>
+                        >Purchase</button>
 								</form>
                             </div>
                         </div>
