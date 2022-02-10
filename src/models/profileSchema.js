@@ -9,12 +9,12 @@ const profileSchema = new mongoose.Schema({
     returntokens: {type: Number, default:0},
     bettokens: {type: Number, default:0},
     payments:[],
-    lastTransaction: {type:String, required:false, default:"no"},
-   /*depositAddress:{type:String, required:false},
+    lastTransaction: {type:Number, required:false, default:0},
+    depositAddress:{type:String, required:false},
     derivationKey:{type:String, required:false},
     privateKey:{type:String, required:false},
     cryptoBalance:{type:Number, default:0},
-    invites: {type: Number, default:0},*/
+    invites: {type: Number, default:0},
 });
 
 const Profile = mongoose.model('Profile', profileSchema);

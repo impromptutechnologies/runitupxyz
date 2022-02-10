@@ -11,7 +11,7 @@
 			content="Login with Discord! Simple as that.">
             <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 		
 	</head>
 
@@ -26,7 +26,7 @@
 
    /* Copy the text inside the text field */
   navigator.clipboard.writeText(copyText.value).then(() => {
-        alert("successfully copied"+ copyText.value);
+        alert(copyText.value);
       }).catch(() => {
         alert("something went wrong"+ copyText.value);
       });
@@ -35,48 +35,46 @@
 }
     </script>
 	<body>
-
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
 					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/churros.png" style="height:50px;width:auto;"></a>
 					<nav id="nav">
-						<a href="/">Home</a>
-						<a href="/bets">Commands</a>
-						<a href="/about">About</a>
-						<!--<a href="/arena">Arena<sub style="font-size: 10px;">soon!</sub></a>-->
-                        <a href="/account">Account</a>
-					</nav>
+          <a href="/">Home</a>
+          <!--<a href="bets">About</a>-->
+
+          <!--<a href="DAO">GeniusDAO</a>->
+					<!--<a href="/arena">Gaming<sub style="font-size: 10px;">soon!</sub></a>-->
+          
+          <a href="about">About</a>
+          <a href="account">Account</a>
+            
+          <a
+            style="color:white;text-decoration:none"
+            href="https://discord.com/api/oauth2/authorize?client_id=834305925669584896&permissions=268511264&scope=bot"
+            target="_blank"
+          >          <button type="submit" id="ethbut" style="font-weight: 600;color:white!important;font-family:'Avenir Light';background:linear-gradient(90deg,#0f36ff,#f55);;border-radius:35px;width: 167px;border:none;margin-top:15px"; 
+                        {{buttondis}}>Invite</button></a>
+
+
+       
+                      
+            
+        </nav>
 					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 				</div>
 			</header>
-
 		<!-- Banner -->
 			<section id="banner" style="padding-bottom: 5em">
                 <div class="landing">
                     <div class="desc">
-                        <img src={{profileImage}} style="border-radius:50%">
-                        <h3>{{username}}</h3>
-                        <div style="background:black;width:355px;font-size:12px;padding:15px;border-radius:10px;margin-top: 40px;">
+                        <img src={{profileImage}} style="border-radius:50%;height:50px">
+                        <h3 style="font-family: 'Press start 2p';font-size:25px">{{username}}</h3>
+                        <div style="background:black;width:365px;font-size:12px;padding:20px;border-radius:10px;margin-top: 40px;">
 <!--<h3 style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size: 14px;font-family:'Inter';"><span style="font-weight: bold;font-family:'Inter'">Eth 0.01 = 💎10000 </span></h3>-->
-                                <p style="width:100%;margin-bottom: 0;color:white;margin-top: 8px;margin-left:5px;font-size: 16px;font-family:'Avenir Light';"><span>Send ETH to the address below to buy Gems. 0.01 ETH minimum.</span></p>
+                                <p style="width:100%;margin-bottom: 0;color:white;margin-top: 8px;margin-left:5px;font-size: 16px;font-family:'Avenir Light';"><span>Every 1000 Gems you hold is one entry into our weekly 💎, 🎮 giveaway.</span></p>
 
-                                <div style="width:350px;font-size:12px;display:flex;margin-top: 15px;">
-                                <img src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png" style="height:27px;margin-bottom:0">
-                                <p style="width:110%;margin-bottom: 0;color:white;margin-top:5px;margin-left:5px;font-size:14px;font-family:'Inter';margin-top:3px;text-overflow: ellipsis;overflow:hidden;font-weight:600">{{depositAddr}}</p>
-                                <input type="text" value="{{depositAddr}}" id="myInput" hidden="" style="display: none;">
-                                <p onclick="myFunction3()" style="font-weight: 400;
-    font-size: 16px;
-    color: rgba(242, 235, 235, 0.842);
-    margin-bottom: 0.55em; 
-    text-align: left;
-    margin-top: 2.2px;
-    margin-left: 11px;
-    width: 50%;
-    color: white;cursor:pointer"><img src="https://altvaton.sirv.com/Images/copy%20(1).png" style="height:20px;margin-bottom:0"></p>
-                                <!--                                <p style="width:100%;margin-bottom: 0;color:white;margin-top:0;margin-left:5px;font-size:20px;font-family:'Avenir Light'"></p>
--->
-                            </div>
+                                
                             </div>
 
                             
@@ -92,20 +90,20 @@
 
                 <div style="display: flex;max-width:75em;margin:auto">
                     <div class="desc" style="margin:initial;width:350px;" id="openbets">
-                        <h1 style="font-size: 50px;margin-bottom:15px;font-family:Inter">💎 {{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
+                        <h1 style="font-size: 50px;margin-bottom:0px;font-family:Inter">💎 {{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
                         <div style="margin-bottom:50px;display:flex">
                         </div>
-                        <h1 style="font-family: 'Avenir Light';font-size:20px">Bets</h1>
+                        <h1 style="font-family: 'Avenir Light';font-size:20px">Invests</h1>
 						<div style="display: flex;padding: 0.2em;">
                             
                             <div style="width: 61%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Code</h2>
                             </div>
                             <div style="margin-left:20px;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Odds</h2>
+                                <h2 style="font-weight: bold">Day/Week</h2>
                             </div>
 							<div style="margin-left:10px;padding: 0.6em;">
-                                <h2 style="font-weight: bold">Amount</h2>
+                                <h2 style="font-weight: bold">Gems</h2>
                             </div>
                             <div style="margin-left:10px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Status</h2>
@@ -113,34 +111,33 @@
                         </div>
                                                 <hr style="margin: 0;">
 
-						{{#if userBets}}
-                        {{#each userBets}}
+
+                         {{#if userInvests}}
+
+                            {{#each userInvests}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <div style="padding: 0.6em;width:80%">
                                     <h2>{{this.Code}}</h2>
                                 </div>
                                 <div style="padding: 0.6em;margin-left:30px;">
-                                    <h2>{{this.betOdds}}</h2>
+                                    <h2>{{this.dayWeek}}</h2>
                                 </div>
 								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
-                                    <h2>{{this.betAmount}}</h2>
+                                    <h2>{{this.investAmount}}</h2>
                                 </div>
                                 <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
                                     <h2>{{this.status}}</h2>
                                 </div>
-                               
                             </div>
                         </div>
                         {{/each}}
                         {{else}}
-                        <div style="width:85%">
-                                <div style="padding: 0.6em;">
-                                    <h2>No Bets</h2>
-                                </div>
-                                </div>
-                            
-                            {{/if}}
+                       
+                        {{/if}}
+
+
+						
                             	<div class="desc" style="margin-top:70px">
                         <a href="/logout">    <button  id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
                         >Logout</button></a>
@@ -201,11 +198,9 @@
 
 					<div class="desc" style="width:350px;margin:initial;display:none" id="wthdraw">
                         <h1 style="font-size: 50px;margin-bottom:0;font-family:Inter">💎 {{tokens}} <img src='https://altvaton.sirv.com/Images/cashout.png' style="height:25px;margin-left:10px;margin-bottom:0;cursor:pointer" onclick="myFunction()"></h1>
-                        <div style="margin-bottom:50px;display:flex">
-                            <h2 style="color:#fff;font-size:20px;font-weight:400">📈 <span style="color:{{color}};font-weight:600;margin-left:5px"> {{return}}%</span></h2>
-                        </div>
-						
+                        
 						{{#if userWithdraws}}
+                                                <h1 style="font-family: 'Avenir Light';font-size:20px">Withdraws</h1>
 						<div style="display: flex;padding: 0.2em;">
                             <div style="width: 55%;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Gems</h2>
@@ -217,6 +212,8 @@
                                 <h2 style="font-weight: bold">Address</h2>
                             </div>
                         </div>
+                                                                        <hr style="margin: 0;">
+
                         {{#each userWithdraws}}
                         <div style="display: flex;background:rgb(26, 33, 42);height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 92%;white-space: nowrap; overflow:hidden;text-overflow: ellipsis;">
@@ -238,8 +235,8 @@
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
-									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px" placeholder="Gems" name="Tokens">
-									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px" placeholder="Ethereum Address" name="address">
+									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px;font-size:15px" placeholder="Gems" name="tokens">
+									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="Ethereum Address" name="address">
 									
                                     <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
                         >Withdraw</button>

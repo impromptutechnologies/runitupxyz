@@ -111,7 +111,13 @@ if (cluster.isMaster) {
   });
 
   app.get("/", async (req, res) => {
-    res.render("index");
+    const invests = await Invest.find({
+    })
+      .sort({ creatorID: 1 })
+      .select({ Code: 1, investAmount: 1, creatorName: 1, dayWeek: 1 })
+      .lean()
+      .limit(5);
+    res.render("index", {invests});
   });
 
   app.get("/getethbaale", async (req, res) => {
@@ -142,19 +148,12 @@ if (cluster.isMaster) {
         username: "Create Your Account!",
       });
     }
-    const userBets = await Bet.find({
-      creatorID: req.oidc.user.sub.substring(15, 34),
-    })
-      .sort({ creatorID: 1 })
-      .select({ Code: 1, betOdds: 1, betAmount: 1, status: 1 })
-      .lean()
-      .limit(5);
-
+    
     const userInvests = await Invest.find({
       creatorID: req.oidc.user.sub.substring(15, 34),
     })
       .sort({ creatorID: 1 })
-      .select({ Code: 1, investAmount: 1, status: 1 })
+      .select({ Code: 1, investAmount: 1, status: 1, dayWeek: 1 })
       .lean()
       .limit(5);
     console.log(userInvests);
@@ -175,12 +174,11 @@ if (cluster.isMaster) {
 
         ethGas(String(newVal), async (data) => {
           const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
-          const excess = 0.01-newVal
+          const excess = 0.005-value
           const fee = String(data*0.000000001)
-          console.log(value, excess, fee, parseFloat((21000*(data*0.000000001))/1000000000))
 
 
-          if (value > 0.003 && excess <= 0) {
+          if (value > 0.002) {
             transferEth(String(data * 0.000000001),
             String(value.toFixed(5)), userProfile.privateKey, async (data) => {
               const newTokens =
@@ -263,7 +261,7 @@ if (cluster.isMaster) {
         creatorID: "834304396673679411",
       })
         .sort({ creatorID: 1 })
-        .select({ Code: 1, investAmount: 1 })
+        .select({ Code: 1, investAmount: 1, status: 1, dayWeek: 1 })
         .lean()
         .limit(5);
       const userWithdraws = await Withdraw.find({
@@ -1079,8 +1077,37 @@ if (cluster.isMaster) {
     }
   });
 
- 
-  /*app.get("/casino", async (req, res) => {
+  app.get("/betsst", async (req, res) => {
+    try {
+      /*const reply = await GET_ASYNC("betsst");
+      if (reply) {
+        res.render("betstock", {
+          outcomes: JSON.parse(reply),
+          time2: "13:30",
+          time1: "20:00",
+        });
+        return;
+      }*/
+      const outcomes = await Stock.find({})
+        .select({ company: 1, ticker: 1 })
+        .lean();
+      /*const saveResult = await SET_ASYNC(
+        "betsst",
+        JSON.stringify(outcomes),
+        "EX",
+        3600
+      );*/
+      res.render("betstockr", {
+        time2: "13:30",
+        time1: "21:35",
+        outcomes,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  app.get("/casino", async (req, res) => {
     try {
       const reply = await GET_ASYNC("casino");
       if (reply) {
@@ -1100,17 +1127,43 @@ if (cluster.isMaster) {
     } catch (err) {
       console.log(err);
     }
-  });*/
+  });
 
-  app.get("/general", async (req, res) => {
+  app.get("/betsq", async (req, res) => {
     try {
-      res.render("general");
+      const reply = await GET_ASYNC("betsq");
+      if (reply) {
+        res.render("betrandom", { outcomes: JSON.parse(reply) });
+        return;
+      }
+      const outcomes = await Outcome.find({
+        category: "random",
+        timeStart: { $gt: date },
+      })
+        .sort({ timeStart: 1 })
+        .select({
+          team1: 1,
+          team2: 1,
+          timeStart: 1,
+          odds: 1,
+          odds2: 1,
+          Code: 1,
+          Code2: 1,
+          desc: 1,
+        })
+        .lean();
+      const saveResult = await SET_ASYNC(
+        "betsq",
+        JSON.stringify(outcomes),
+        "EX",
+        10000
+      );
+
+      res.render("betrandom", { outcomes: outcomes });
     } catch (err) {
       console.log(err);
     }
   });
-
-  
   //BETS
 
   //PAY
@@ -1318,72 +1371,4 @@ if (cluster.isMaster) {
     };
     completePayment(userProfile, tokens, paymentId, execute_payment_json);
     res.redirect("about");
-  });
-  
-  
-   app.get("/betsst", async (req, res) => {
-    try {
-      const reply = await GET_ASYNC("betsst");
-      if (reply) {
-        res.render("betstock", {
-          outcomes: JSON.parse(reply),
-          time2: "13:30",
-          time1: "20:00",
-        });
-        return;
-      }
-      const outcomes = await Stock.find({})
-        .select({ company: 1, ticker: 1 })
-        .lean();
-      const saveResult = await SET_ASYNC(
-        "betsst",
-        JSON.stringify(outcomes),
-        "EX",
-        3600
-      );
-      res.render("betstockr", {
-        time2: "13:30",
-        time1: "21:35",
-        outcomes,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-
-  app.get("/betsq", async (req, res) => {
-    try {
-      const reply = await GET_ASYNC("betsq");
-      if (reply) {
-        res.render("betrandom", { outcomes: JSON.parse(reply) });
-        return;
-      }
-      const outcomes = await Outcome.find({
-        category: "random",
-        timeStart: { $gt: date },
-      })
-        .sort({ timeStart: 1 })
-        .select({
-          team1: 1,
-          team2: 1,
-          timeStart: 1,
-          odds: 1,
-          odds2: 1,
-          Code: 1,
-          Code2: 1,
-          desc: 1,
-        })
-        .lean();
-      const saveResult = await SET_ASYNC(
-        "betsq",
-        JSON.stringify(outcomes),
-        "EX",
-        10000
-      );
-
-      res.render("betrandom", { outcomes: outcomes });
-    } catch (err) {
-      console.log(err);
-    }
-  });
-*/
+  });*/

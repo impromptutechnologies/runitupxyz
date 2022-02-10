@@ -12,18 +12,51 @@
               <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 <script>
+
+
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-BMZX322G5J');
 
-
+(function() {
+  var start = new Date;
+  start.setUTCHours(14, 30, 0);
+  var end = new Date;
+  end.setUTCHours(21, 30, 0); // 11pm
+  function pad(num) {
+    return ("0" + parseInt(num)).substr(-2);
+  }
+  function tick() {
+    var now = new Date;
+    console.log(now > start, now < end)
+    if (now > start && now < end) { // too late, go to tomorrow
+      //start.setDate(start.getDate() + 1);
+      document.getElementById('time').innerHTML =
+      "Market Open. Commands placed will be for next trading day"
+    } if(now > end){
+      var remain = ((start - now) / 1000);
+    var hh = pad((remain / 60 / 60) % 60);
+    var mm = pad((remain / 60) % 60);
+    var ss = pad(remain % 60);
+    document.getElementById('time').innerHTML =
+      "Time to place command: " + hh + ":" + mm + ":" + ss;
+      start.setDate(start.getDate() + 1)
+      document.getElementById('time').innerHTML = hh + ":" + mm + ":" + ss;
+    }
+    
+    setTimeout(tick, 1000);
+  }
+  document.addEventListener('DOMContentLoaded', tick);
+})();
 
 </script>
+
   </head>
   <body>
 
@@ -39,13 +72,25 @@
         </a>
         <nav id="nav">
           <a href="/">Home</a>
-          <a href="general">Commands</a>
+          <!--<a href="bets">About</a>-->
 
-          <a href="lootbox">Lootbox</a>
+          <!--<a href="DAO">GeniusDAO</a>->
 					<!--<a href="/arena">Gaming<sub style="font-size: 10px;">soon!</sub></a>-->
           
           <a href="about">About</a>
           <a href="account">Account</a>
+            
+          <a
+            style="color:white;text-decoration:none"
+            href="https://discord.com/api/oauth2/authorize?client_id=834305925669584896&permissions=268511264&scope=bot"
+            target="_blank"
+          >          <button type="submit" id="ethbut" style="font-weight: 600;color:white!important;font-family:'Avenir Light';background:linear-gradient(90deg,#0f36ff,#f55);;border-radius:35px;width: 167px;border:none;margin-top:15px"; 
+                        {{buttondis}}>Invite</button></a>
+
+
+       
+                      
+            
         </nav>
         <a href="#navPanel" class="navPanelToggle"><span
             class="fa fa-bars"
@@ -55,45 +100,79 @@
 
     <!-- Banner -->
     <section id="banner">
-      <div class="landing">
+
+
+
+      <div style="display: flex;width:100%">
+        <div class="landing" style="width: 100%;
+    margin: auto;">
         <div class="desc">
-          <h1 style="width:90%;    font-family: 'Inter';
-    font-weight: 300;line-height:1.1;margin-top:50px">Discord Soccer/NBA ⚽︎ 🏀 Bet Game. Use gems 💎 to purchase Crypto and More!</h1>
-          </p>
-          <p style="padding:9px;padding-left:30px;background:black;font-family:'Avenir Light';color:#ffffff;border-radius:15px">Server owner awarded 5% of tokens won on their server.</p>
+          <!--<h1 style="width:90%;    font-family: 'Inter';
+    font-weight: 300;line-height:1.1;margin-top:50px">Stock Race Bot 📈.</h1>-->
+          <p style="font-size:20px;font-weight:300;width:100%;color:white;font-family:'Press start 2p'">Pick your stock of the day/week. <br>Place in the top 33% to triple your Gems 💎</p>
+      
+      
+      
+      <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:205px">
+          <p style="margin-bottom: 0;font-size:12px;font-family: 'Press Start 2p';
+    font-weight: 300;width:100%;margin-top:10px">!invest &lt;Day/Week&gt; &lt;Ticker&gt;</p>
+                            <p style="font-size:12px;font-family: 'Press Start 2p';
+    font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span> !invest Day AAPL</p>
+    <a
+            style="color:white;text-decoration:none;margin-top:0px;margin-bottom:5px"
+            href="https://discord.com/api/oauth2/authorize?client_id=834305925669584896&permissions=268511264&scope=bot"
+            target="_blank"
+          >                   <img src="https://altvaton.sirv.com/Images/discord.png" style="height:30px;text-align:left;margin-left:3px;margin-bottom:10px" alt="" />
+</a>
+          <p style="width:100%;color:white;font-size:15px;font-weight:300;margin:0"><span id='time'></span></p>
+      </div>
+       
+           
+          
+        </div>
+      
+        <div class="desc" style="width: 100%;">
+          <h1 style="font-size:18px;font-weight:300;width:100%;margin-top:30px">Latest</h1>
+
+          {{#if invests}}
+
+                            {{#each invests}}
+                        
+                        <div style="display: flex;background:#1f262f;height: fit-content;margin-top:5px;padding: 0.2em;width:330px;border-radius:10px">
+                            <div style="width:330px">
+                                <div style="padding: 0.6em;">
+                                    <h2>{{this.creatorName}}</h2>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="padding: 0.6em;">
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.investAmount}}</h2>
+                                </div>
+                            </div>
+                            <div style="margin-left:10px">
+                                <div style="padding: 0.2em;">
+                                    <h2 style="background-color:rgb(26, 33, 42);padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        {{else}}
+                       
+                        {{/if}} 
+           
+                       
+                        
         </div>
         
 
         </div>
-        <div class="form">
-          <a
-            style="color:white;text-decoration:none"
-            href="https://discord.com/api/oauth2/authorize?client_id=834305925669584896&permissions=268511264&scope=bot"
-            target="_blank"
-          >          <button type="submit" id="ethbut" style="font-weight: 600;color:white!important;font-family:'Avenir Light';background:linear-gradient(90deg,#0f36ff,#f55);;border-radius:35px;width: 227px;border:none;"; 
-                        {{buttondis}}>Invite Bot</button></a>
-          <!--<button id="invbut">Invite Now</button>-->
         
+       
+      </div>
       
-        </div>
         
       </div>
-      <div class="desc" style="margin-top:0">  <a
-            style="color:white;text-decoration:none;text-align:left"
-            href="https://discord.gg/8vpUpaPK"
-            target="_blank"
-            
-          >
-          <img src="https://altvaton.sirv.com/Images/discord.png" style="height:70px;text-align:left;padding-top:30px;margin-left:3px" alt="" />
-</a>
-   <a
-            style="color:white;text-decoration:none;text-align:left"
-            href="https://twitter.com/Churrobetbot"
-            target="_blank"
-            
-          >
-          <img src="https://altvaton.sirv.com/Images/twitter%20(1).png" style="height:70px;text-align:left;padding-top:30px;margin-left:20px" alt="" />
-</a></div>
+      
      
     </section>
     <!--<div style="width:100%;background:black;text-align:center;padding-bottom:11px;padding-top:11px;border-left:0;border-right:0">
@@ -110,19 +189,22 @@
           <article>
             <header>
               <span style="font-size: 30px;">💎</span>
-              <h3 style="font-size: 20px;font-family:'Inter';font-weight:300">Acquire Gems</h3>
+              <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Acquire Gems</h3>
             </header>
-            <p style="font-size: 18px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">You are given 500 free per week. You can acquire Gems along with more via Lootbox!</p>
+            <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Between 500-1000 free gems weekly!</p>
             <!--<footer>
 								<a href="#" class="button special" style="margin-left: 0">More</a>
 							</footer>-->
           </article>
           <article>
             <header>
-              <span style="font-size: 30px;">🙏</span>
-              <h3 style="font-size: 20px;font-family:'Inter';font-weight:300">Stake</h3>
+              <img
+                src="https://altvaton.sirv.com/Images/tl.png"
+                style="height:35px;margin-bottom:10px"
+              />
+              <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Stake</h3>
             </header>
-            <p style="font-size: 18px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Bet Gems on NBA/Soccer/Sports. All via a Discord Command. More sports coming soon!</p>
+            <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Pick your stock of the day/week! Finish in the top 50% of picks for the day/week to double your Gems.</p>
             <!--<footer>
 								<a href="#" class="button special" style="margin-left: 0">More</a>
 							</footer>-->
@@ -133,9 +215,9 @@
                 src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png"
                 style="height:35px;margin-bottom:10px;margin-left: -8px;"
               />
-              <h3 style="font-size: 20px;font-family:'Inter';font-weight:300">Exit</h3>
+              <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Exit</h3>
             </header>
-            <p style="font-size: 18px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Use gems to purchase ETH, or enter them into the weekly/monthly Giveaway 🎁. Simple as that.</p>
+            <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Use your Gems to purchase ETH, SOL or enter our weekly giveaway.</p>
             <!--<footer>
 								<a href="#" class="button special" style="margin-left: 0">More</a>
 							</footer>-->
@@ -176,3 +258,15 @@
 
   </body>
 </html>
+
+
+
+<!--       
+                         <a
+            style="color:white;text-decoration:none;text-align:left;margin-top:30px;margin-left:20px;margin-top: -6px;"
+            href="https://discord.gg/8vpUpaPK"
+            target="_blank"
+            
+          >
+          <img src="https://altvaton.sirv.com/Images/discord.png" style="height:70px;text-align:left;padding-top:30px;margin-left:3px" alt="" />
+</a>-->
