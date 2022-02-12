@@ -9,11 +9,11 @@ const schedule = require("node-schedule");
 require("./db/mongoose");
 
 
-const setReturns = async () => {
+const setReturnss = async () => {
   setReturns();
 };
 schedule.scheduleJob("30 21 * * *", () => {
-  setReturns();
+  setReturnss();
 });
 
 
