@@ -165,76 +165,15 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
 
-    getBalance(userProfile.customerID, async (data) => {
-      const newVal = data;
-      
-      if (data > userProfile.lastTransaction) {
-        //const value = String(data - (data * 0.05))
-       
-
-        ethGas(String(newVal), async (data) => {
-          const value = newVal - userProfile.lastTransaction - parseFloat((21000*(data*0.000000001))/1000000000);
-          const excess = 0.005-value
-          const fee = String(data*0.000000001)
-
-
-          if (value > 0.002) {
-            transferEth(String(data * 0.000000001),
-            String(value.toFixed(5)), userProfile.privateKey, async (data) => {
-              const newTokens =
-                parseFloat(value) * 4000 * 1000 + userProfile.tokens;
-              if (data !== undefined) {
-                const portfolio = await Profile.findOneAndUpdate(
-                  {
-                    customerID: userProfile.customerID,
-                  },
-                  { tokens: newTokens, lastTransaction: newVal }
-                );
-              }
-              return res.render("account", {
-                userWithdraws: userWithdraws,
-                userBets: userBets,
-                userInvests: userInvests,
-                id: userProfile.userID,
-                profileImage: req.oidc.user.picture,
-                username: userProfile.username,
-                depositAddr: userProfile.depositAddress,
-                tokens: Math.round(userProfile.tokens, 2),
-              });
-            });
-          } else {
-            return res.render("account", {
-              userWithdraws: userWithdraws,
-              userBets: userBets,
-              userInvests: userInvests,
-              id: userProfile.userID,
-              profileImage: req.oidc.user.picture,
-              username: userProfile.username,
-              depositAddr: userProfile.depositAddress,
-              tokens: Math.round(userProfile.tokens, 2),
-              moreNeeded: `${excess} needed`,
-            });
-          }
-        });
-      } else {
-        /*const portfolio = await Profile.findOneAndUpdate(
-          {
-            customerID: userProfile.customerID,
-          },
-          { lastTransaction: "" }
-        );*/
-        return res.render("account", {
-          userWithdraws: userWithdraws,
-          userBets: userBets,
-          userInvests: userInvests,
-          id: userProfile.userID,
-          profileImage: req.oidc.user.picture,
-          username: userProfile.username,
-          depositAddr: userProfile.depositAddress,
-          tokens: Math.round(userProfile.tokens, 2),
-        });
-      }
-    });
+      return res.render("account", {
+        userWithdraws: userWithdraws,
+        userInvests: userInvests,
+        id: userProfile.userID,
+        profileImage: req.oidc.user.picture,
+        username: userProfile.username,
+        depositAddr: userProfile.depositAddress,
+        tokens: Math.round(userProfile.tokens, 2),
+      });
   });
 
   app.get("/account2", async (req, res) => {
