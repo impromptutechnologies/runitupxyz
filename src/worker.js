@@ -12,12 +12,12 @@ require("./db/mongoose");
 const setReturns = async () => {
   setReturns();
 };
-schedule.scheduleJob("0 0 * * 0", () => {
+schedule.scheduleJob("30 21 * * *", () => {
   setReturns();
 });
 
 
-const winLoss = async () => {
+const winLosss = async () => {
   const investmentstock = await Invest.find({ category: "stocks", dayWeek: "day" });
     winLoss((data) => {
       investmentstock.forEach(async (stock) => {
@@ -38,11 +38,11 @@ const winLoss = async () => {
       });
     });
 };
-schedule.scheduleJob("0 0 * * 0", () => {
-  winLoss();
+schedule.scheduleJob("35 21 * * *", () => {
+  winLosss();
 });
 
-const setReturns = async () => {
+/*const setReturns = async () => {
   var day = moment.utc().format("DD");
   var month = moment.utc().format("MM");
   var date = moment.utc().format("MM-DD HH:mm");
@@ -61,7 +61,7 @@ const setReturns = async () => {
 };
 schedule.scheduleJob("0 0 * * 0", () => {
   setReturns();
-});
+});*/
 
 
 

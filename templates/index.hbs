@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./css/main.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="icon" href="https://altvaton.sirv.com/Images/churros.png" />
+    <link rel="icon" href="https://altvaton.sirv.com/Images/nori%20(1).png" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMZX322G5J"></script>
      <meta name="description" 
 			content="Churro is a platform allowing you to bet on stock and crypto prices, ">
@@ -34,21 +34,23 @@
   }
   function tick() {
     var now = new Date;
-    console.log(now > start, now < end)
+    console.log(now > start, now < end, now > end)
     if (now > start && now < end) { // too late, go to tomorrow
       //start.setDate(start.getDate() + 1);
       document.getElementById('time').innerHTML =
       "Market Open. Commands placed will be for next trading day"
-    } if(now > end){
-      var remain = ((start - now) / 1000);
+    }
+    if(now < start){
+             var remain = ((start - now) / 1000);
     var hh = pad((remain / 60 / 60) % 60);
     var mm = pad((remain / 60) % 60);
     var ss = pad(remain % 60);
     document.getElementById('time').innerHTML =
       "Time to place command: " + hh + ":" + mm + ":" + ss;
-      start.setDate(start.getDate() + 1)
-      document.getElementById('time').innerHTML = hh + ":" + mm + ":" + ss;
+      
+
     }
+     
     
     setTimeout(tick, 1000);
   }
@@ -65,7 +67,7 @@
     <header id="header">
       <div class="inner">
         <a href="/" class="logo">
-					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/churros.png" style="height:50px;width:auto;"></a>
+					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/nori%20(1).png" style="height:50px;width:50px;border-radius:50%"></a>
         <!--<div class="desc" style="margin-top:0;">
           <h1 style="font-family:'Inter';font-size:20px;margin-top:10px;font-weight:800">DGX</h1>
         </div>-->
@@ -109,14 +111,14 @@
         <div class="desc">
           <!--<h1 style="width:90%;    font-family: 'Inter';
     font-weight: 300;line-height:1.1;margin-top:50px">Stock Race Bot 📈.</h1>-->
-          <p style="font-size:20px;font-weight:300;width:100%;color:white;font-family:'Press start 2p'">Pick your stock of the day/week. <br>Place in the top 33% to triple your Gems 💎</p>
+          <p style="font-size:20px;font-weight:300;width:100%;color:white;font-family:'Press start 2p'">Pick your stock of the day/week 📈 🚀 <br>Place in the top 33% to triple your Gems 💎</p>
       
       
       
-      <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:205px">
-          <p style="margin-bottom: 0;font-size:12px;font-family: 'Press Start 2p';
+      <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:185px">
+          <p style="margin-bottom: 0;font-size:14px;font-family: 'Avenir Light';
     font-weight: 300;width:100%;margin-top:10px">!invest &lt;Day/Week&gt; &lt;Ticker&gt;</p>
-                            <p style="font-size:12px;font-family: 'Press Start 2p';
+                            <p style="font-size:14px;font-family:'Avenir Light';
     font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span> !invest Day AAPL</p>
     <a
             style="color:white;text-decoration:none;margin-top:0px;margin-bottom:5px"
@@ -124,7 +126,7 @@
             target="_blank"
           >                   <img src="https://altvaton.sirv.com/Images/discord.png" style="height:30px;text-align:left;margin-left:3px;margin-bottom:10px" alt="" />
 </a>
-          <p style="width:100%;color:white;font-size:15px;font-weight:300;margin:0"><span id='time'></span></p>
+          <p style="width:100%;color:white;font-size:13px;font-weight:300;margin:0"><span id='time'></span></p>
       </div>
        
            

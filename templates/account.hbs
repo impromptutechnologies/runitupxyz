@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="./css/main.css" />
-        <link rel="icon" href="https://altvaton.sirv.com/Images/churros.png">
+        <link rel="icon" href="https://altvaton.sirv.com/Images/nori%20(1).png">
          <meta name="description" 
 			content="Login with Discord! Simple as that.">
             <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +38,7 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
-					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/churros.png" style="height:50px;width:auto;"></a>
+					<a href="/" class="logo"><img src="https://altvaton.sirv.com/Images/nori%20(1).png" style="height:60px;width:auto;border-radius:50%"></a>
 					<nav id="nav">
           <a href="/">Home</a>
           <!--<a href="bets">About</a>-->
@@ -231,12 +231,12 @@
                         {{/each}}
                         {{else}}
 						<h1>Withdraw</h1>
-						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH Address</p>
+						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH or SOL Address</p>
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
 									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px;font-size:15px" placeholder="Gems" name="tokens">
-									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="Ethereum Address" name="address">
+									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="ETH/SOL Address" name="address">
 									
                                     <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
                         >Withdraw</button>

@@ -1277,7 +1277,7 @@ if (cluster.isMaster) {
     completePayment(req.oidc.user.sub.substring(15, 34), tokens, paymentId, execute_payment_json);
     return res.redirect("/account");
   });*/
-  app.get("/betzeee", async (req, res) => {
+  app.get("/betzeeee", async (req, res) => {
     await setReturns();
     return res.redirect("/");
   });
