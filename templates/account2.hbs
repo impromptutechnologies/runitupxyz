@@ -108,6 +108,9 @@
                             <div style="margin-left:10px;padding: 0.6em;">
                                 <h2 style="font-weight: bold">Status</h2>
                             </div>
+                            <div style="margin-left:10px;padding: 0.6em;">
+                                <h2 style="font-weight: bold">Claim</h2>
+                            </div>
                         </div>
                                                 <hr style="margin: 0;">
 
@@ -120,14 +123,19 @@
                                 <div style="padding: 0.6em;width:80%">
                                     <h2>{{this.Code}}</h2>
                                 </div>
-                                <div style="padding: 0.6em;margin-left:30px;">
+                                <div style="padding: 0.6em;margin-left:20px;">
                                     <h2>{{this.dayWeek}}</h2>
                                 </div>
-								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
+								<div style="padding: 0.6em;margin-left:10px;width: 60px;overflow: hidden;">
                                     <h2>{{this.investAmount}}</h2>
                                 </div>
                                 <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
                                     <h2>{{this.status}}</h2>
+                                </div>
+                                <div style="margin-left:10px;padding: 0.2em;">
+                                    <form method="POST" action="/auth/claim">
+                                        <button style="font-weight: bold;font-size:10px;height:30px">Claim</button>
+                                    </form>     
                                 </div>
                             </div>
                         </div>
@@ -139,8 +147,10 @@
 
 						
                             	<div class="desc" style="margin-top:70px">
-                        <a href="/logout">    <button  id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
-                        >Logout</button></a>
+                        <a href="/logout">    
+                            <button  id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
+                            >Logout</button>
+                        </a>
                         
                         <!--<h1 style="margin-top: 70px;font-family: 'Avenir Light';font-size:20px">Invests</h1>
 						<div style="display: flex;padding: 0.2em;">
@@ -231,12 +241,12 @@
                         {{/each}}
                         {{else}}
 						<h1>Withdraw</h1>
-						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH Address</p>
+						<p style="margin-top:5px;font-family:Avenir Light">Enter ETH or SOL Address</p>
                         <div style="display: flex;height: fit-content;margin-top: 3px;padding: 0.2em;">
                             <div style="display:flex;width: 100%;">
                                 <form action="/auth/withdraw" method="POST">
 									<input type="number" min="10000" max="{{tokens}}" style="background:none;border:1px solid white;padding:10px;width:100px;margin-top:20px;color: white;border-radius:4px;font-size:15px" placeholder="Gems" name="tokens">
-									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="Ethereum Address" name="address">
+									<input style="background:none;border:1px solid white;padding:10px;width:300px;margin-top:20px;color: white;border-radius:4px;font-size:18px" placeholder="ETH/SOL Address" name="address">
 									
                                     <button type="submit" type="submit" style="font-weight: 600;font-family:'Avenir Light';margin-top:50px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
                         >Withdraw</button>

@@ -33,23 +33,29 @@
     return ("0" + parseInt(num)).substr(-2);
   }
   function tick() {
-    var now = new Date;
-    console.log(now > start, now < end, now > end)
-    if (now > start && now < end) { // too late, go to tomorrow
-      //start.setDate(start.getDate() + 1);
+    
+    var date = new Date;
+    var now_utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    console.log(now_utc, start, end)
+    console.log(now_utc > start, now_utc < end, now_utc > end)
+    if (now_utc > start && now_utc < end && date.getDay() !== 6 && date.getDay() !== 0) { 
       document.getElementById('time').innerHTML =
       "Market Open. Commands placed will be for next trading day"
     }
-    if(now < start){
-             var remain = ((start - now) / 1000);
-    var hh = pad((remain / 60 / 60) % 60);
-    var mm = pad((remain / 60) % 60);
-    var ss = pad(remain % 60);
-    document.getElementById('time').innerHTML =
-      "Time to place command: " + hh + ":" + mm + ":" + ss;
-      
-
+    if(date.getDay() == 6 || date.getDay() == 0){
+       document.getElementById('time').innerHTML =
+        "Its the weekend. Have some fun :)"
     }
+    if(now_utc < start && date.getDay() !== 6){
+      var remain = ((start - now_utc) / 1000);
+      var hh = pad((remain / 60 / 60) % 60);
+      var mm = pad((remain / 60) % 60);
+      var ss = pad(remain % 60);
+      document.getElementById('time').innerHTML =
+        "Time to place command: " + hh + ":" + mm + ":" + ss;
+    }
+    
      
     
     setTimeout(tick, 1000);
@@ -76,10 +82,11 @@
           <a href="/">Home</a>
           <!--<a href="bets">About</a>-->
 
-          <!--<a href="DAO">GeniusDAO</a>->
+         
 					<!--<a href="/arena">Gaming<sub style="font-size: 10px;">soon!</sub></a>-->
           
           <a href="about">About</a>
+           <a href="DAO">NoriDAO</a>
           <a href="account">Account</a>
             
           <a
@@ -88,6 +95,7 @@
             target="_blank"
           >          <button type="submit" id="ethbut" style="font-weight: 600;color:white!important;font-family:'Avenir Light';background:linear-gradient(90deg,#0f36ff,#f55);;border-radius:35px;width: 167px;border:none;margin-top:15px"; 
                         {{buttondis}}>Invite</button></a>
+                   
 
 
        
@@ -111,14 +119,14 @@
         <div class="desc">
           <!--<h1 style="width:90%;    font-family: 'Inter';
     font-weight: 300;line-height:1.1;margin-top:50px">Stock Race Bot 📈.</h1>-->
-          <p style="font-size:20px;font-weight:300;width:100%;color:white;font-family:'Press start 2p'">Pick your stock of the day/week 📈 🚀 <br>Place in the top 33% to triple your Gems 💎</p>
+          <p style="font-size:20px;font-weight:300;width:100%;color:white;font-family:'Press start 2p'">Pick your stock of the day/week 📈 🚀 <br>Place in the top 50% to double your Gems 💎</p>
       
       
       
       <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:185px">
-          <p style="margin-bottom: 0;font-size:14px;font-family: 'Avenir Light';
+          <p style="margin-bottom: 0;font-size:16px;font-family: 'Avenir Light';
     font-weight: 300;width:100%;margin-top:10px">!invest &lt;Day/Week&gt; &lt;Ticker&gt;</p>
-                            <p style="font-size:14px;font-family:'Avenir Light';
+                            <p style="font-size:16px;font-family:'Avenir Light';
     font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span> !invest Day AAPL</p>
     <a
             style="color:white;text-decoration:none;margin-top:0px;margin-bottom:5px"
@@ -141,14 +149,14 @@
                             {{#each invests}}
                         
                         <div style="display: flex;background:#1f262f;height: fit-content;margin-top:5px;padding: 0.2em;width:330px;border-radius:10px">
-                            <div style="width:330px">
+                            <div style="width:180px">
                                 <div style="padding: 0.6em;">
                                     <h2>{{this.creatorName}}</h2>
                                 </div>
                             </div>
                             <div>
                                 <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.investAmount}}</h2>
+                                    <h2 style="color:rgb(12, 212, 99)">{{this.investAmount}} 💎</h2>
                                 </div>
                             </div>
                             <div style="margin-left:10px">
@@ -192,8 +200,10 @@
             <header>
               <span style="font-size: 30px;">💎</span>
               <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Acquire Gems</h3>
+
             </header>
-            <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Between 500-1000 free gems weekly!</p>
+            <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">500 Gems Free for Everyone! If your balance reaches 0, just enter !downbad</p>
+
             <!--<footer>
 								<a href="#" class="button special" style="margin-left: 0">More</a>
 							</footer>-->
@@ -205,6 +215,9 @@
                 style="height:35px;margin-bottom:10px"
               />
               <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Stake</h3>
+                            <!--<img src="https://altvaton.sirv.com/Images/be7c1a2b6e118d9379cf52cc8f23e4a4.gif" style="height: 90px;margin-top:0px;margin-bottom:10px;border-radius:15px">-->
+
+
             </header>
             <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Pick your stock of the day/week! Finish in the top 50% of picks for the day/week to double your Gems.</p>
             <!--<footer>
@@ -217,7 +230,9 @@
                 src="https://altvaton.sirv.com/Images/1200px-Ethereum-icon-purple.svg.png"
                 style="height:35px;margin-bottom:10px;margin-left: -8px;"
               />
-              <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Exit</h3>
+              <h3 style="font-size: 16px;font-family:'Press start 2p';font-weight:300">Exit n Chill</h3>
+              <!--<img src="https://altvaton.sirv.com/Images/smoking-anime.gif" style="height: 90px;margin-top:0px;margin-bottom:10px;border-radius:15px">-->
+
             </header>
             <p style="font-size: 16px;font-family:'Avenir Light';color:rgba(242, 235, 235, 0.842)">Use your Gems to purchase ETH, SOL or enter our weekly giveaway.</p>
             <!--<footer>

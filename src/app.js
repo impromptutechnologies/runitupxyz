@@ -679,6 +679,11 @@ if (cluster.isMaster) {
     }
   });
 
+    //ADMIN PANEL
+    app.get("/dao", async (req, res) => {
+      return res.render("arena");
+    });
+
   //requiresAuth(),
 
   //requiresAuth(),
