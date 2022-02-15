@@ -275,8 +275,10 @@ if (cluster.isMaster) {
 
 
   app.post("/auth/claim",requiresAuth(), async (req, res) => {
-    const tokens = await Profile.findOneAndUpdate({
-      userID: req.oidc.user.sub.substring(15, 34), $inc: {tokens: 1000}
+    const tokens = await Profile.findOneAndUpdate(
+      {userID: req.oidc.user.sub.substring(15, 34)},
+      {
+      $inc: {tokens: 1000}
     })
     const deleted = await Invest.findOneAndDelete({
       creatorID: req.oidc.user.sub.substring(15, 34), Code: req.body.code
