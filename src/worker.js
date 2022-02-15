@@ -4,6 +4,8 @@ const Stock = require("./models/stockSchema");
 const moment = require("moment-timezone");
 const betResultInv = require("./utils/betResultInv");
 const setReturns = require("./utils/setReturns");
+const setReturns2 = require("./utils/setReturns2");
+
 const winLoss = require("./utils/winLoss");
 const schedule = require("node-schedule");
 require("./db/mongoose");
@@ -14,6 +16,13 @@ const setReturnss = async () => {
 };
 schedule.scheduleJob("30 21 * * *", () => {
   setReturnss();
+});
+
+const setReturnss2 = async () => {
+  setReturns2();
+};
+schedule.scheduleJob("30 21 * * FRI", () => {
+  setReturnss2();
 });
 
 
