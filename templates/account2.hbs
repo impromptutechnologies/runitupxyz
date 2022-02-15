@@ -123,20 +123,31 @@
                                 <div style="padding: 0.6em;width:80%">
                                     <h2>{{this.Code}}</h2>
                                 </div>
-                                <div style="padding: 0.6em;margin-left:20px;">
+                                <div style="padding: 0.6em;margin-left:30px;">
                                     <h2>{{this.dayWeek}}</h2>
                                 </div>
-								<div style="padding: 0.6em;margin-left:10px;width: 60px;overflow: hidden;">
+								<div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;">
                                     <h2>{{this.investAmount}}</h2>
                                 </div>
-                                <div style="padding: 0.6em;margin-left:20px;width: 60px;overflow: hidden;padding-right: 2em;">
+                                <div style="padding: 0.6em;margin-left:20px;width: 73px;overflow: hidden;padding-right: 2em;">
                                     <h2>{{this.status}}</h2>
                                 </div>
-                                <div style="margin-left:10px;padding: 0.2em;">
-                                    <form method="POST" action="/auth/claim">
-                                        <button style="font-weight: bold;font-size:10px;height:30px">Claim</button>
-                                    </form>     
-                                </div>
+                                {{#ifCond this.status}}
+
+                                    <div style="margin-left:10px;padding: 0.3em;">
+                                        <form action="/auth/claim" method="POST" style="margin-bottom: 0;">
+                                            <input name="code" value="{{this.Code}}" hidden>
+                                            <input name="time" value="{{this.dayWeek}}" hidden>
+                                            <button style="font-weight: bold;font-weight: bold;font-size: 11px;height: 31px;">Claim</button>
+                                        </form>
+                                    </div>
+                                {{else}}
+                                <div style="margin-left:10px;padding: 0.3em;">
+                                        <button style="font-weight: bold;font-weight: bold;font-size: 11px;height: 31px;" disabled>Claim</button>
+                                    </div>
+                                    
+                                {{/ifCond}}
+
                             </div>
                         </div>
                         {{/each}}
@@ -147,10 +158,8 @@
 
 						
                             	<div class="desc" style="margin-top:70px">
-                        <a href="/logout">    
-                            <button  id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
-                            >Logout</button>
-                        </a>
+                        <a href="/logout">    <button  id="ethbut" style="font-weight: 600;font-family:'Avenir Light';margin-top:20px;background:linear-gradient(90deg,#0f36ff,#f55);border-radius:35px;width: 227px;border:none"; 
+                        >Logout</button></a>
                         
                         <!--<h1 style="margin-top: 70px;font-family: 'Avenir Light';font-size:20px">Invests</h1>
 						<div style="display: flex;padding: 0.2em;">

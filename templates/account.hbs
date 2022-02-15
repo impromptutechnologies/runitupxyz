@@ -132,9 +132,22 @@
                                 <div style="padding: 0.6em;margin-left:20px;width: 73px;overflow: hidden;padding-right: 2em;">
                                     <h2>{{this.status}}</h2>
                                 </div>
+                                {{#ifCond this.status}}
+
+                                    <div style="margin-left:10px;padding: 0.3em;">
+                                        <form action="/auth/claim" method="POST" style="margin-bottom: 0;">
+                                            <input name="code" value="{{this.Code}}" hidden>
+                                            <input name="time" value="{{this.dayWeek}}" hidden>
+                                            <button style="font-weight: bold;font-weight: bold;font-size: 11px;height: 31px;">Claim</button>
+                                        </form>
+                                    </div>
+                                {{else}}
                                 <div style="margin-left:10px;padding: 0.3em;">
-                                    <button style="font-weight: bold;font-weight: bold;font-size: 11px;height: 31px;">Claim</button>
-                                </div>
+                                        <button style="font-weight: bold;font-weight: bold;font-size: 11px;height: 31px;" disabled>Claim</button>
+                                    </div>
+                                    
+                                {{/ifCond}}
+
                             </div>
                         </div>
                         {{/each}}

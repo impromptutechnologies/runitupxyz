@@ -17,6 +17,7 @@ schedule.scheduleJob("30 21 * * *", () => {
 });
 
 
+
 const winLosss = async () => {
   const investmentstock = await Invest.find({ category: "stocks", dayWeek: "day" });
     winLoss((data) => {
@@ -82,7 +83,7 @@ schedule.scheduleJob("0 0 * * 0", () => {
 
 
 
-const checkReturn = async () => {
+/*const checkReturn = async () => {
   var day = moment.utc().format("DD");
   var month = moment.utc().format("MM");
   var date = moment.utc().format("MM-DD HH:mm");
@@ -116,7 +117,7 @@ const checkReturn = async () => {
   };
 
 };
-setInterval(checkReturn, 60000);
+setInterval(checkReturn, 60000);*/
 
 
 

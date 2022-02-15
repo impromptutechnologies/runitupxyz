@@ -97,6 +97,12 @@ if (cluster.isMaster) {
     }
     next();
   };
+  hbs.registerHelper('ifCond', function(v1, options) {
+    if(v1 === "won") {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
   app.use(setCache);
   const port = process.env.PORT || 3000;
   const date = moment.utc().format("MM-DD HH:mm");
@@ -266,6 +272,18 @@ if (cluster.isMaster) {
     updateBalance(req.body.address, tokens.cryptoBalance);
     res.redirect("/accounttest");
   });
+
+
+  app.post("/auth/claim",requiresAuth(), async (req, res) => {
+    const tokens = await Profile.findOneAndUpdate({
+      userID: req.oidc.user.sub.substring(15, 34), "$inc": {tokens: 1000}
+    })
+    const deleted = await Invest.findOneAndDelete({
+      creatorID: req.oidc.user.sub.substring(15, 34), Code: req.body.code
+    })
+    res.redirect("/account");
+  });
+
 
   app.post("/auth/refreshBalance1", async (req, res) => {
     const tokens = await Profile.findOne({
