@@ -41,7 +41,7 @@
     console.log(now_utc > start, now_utc < end, now_utc > end)
     if (now_utc > start && now_utc < end && date.getDay() !== 6 && date.getDay() !== 0) { 
       document.getElementById('time').innerHTML =
-      "Market Open. Commands placed will be for next trading day"
+      "Market Open. Place commands after market close."
     }
     if(date.getDay() == 6 || date.getDay() == 0){
        document.getElementById('time').innerHTML =
