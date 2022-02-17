@@ -12,7 +12,7 @@ const setReturns = async (callback) => {
           if(stock.status == "open"){
             console.log(stock.Code, date)
             //const url = `http://api.marketstack.com/v1/eod/${date}?access_key=${process.env.STOCK_API}&symbols=${stock.Code}&limit=1`;
-            const url = `https://api.polygon.io/v1/open-close/${stock.Code}/2022-01-21?adjusted=true&apiKey=frJF3PXjMq3iUKYOJP9pEJxVB0dMIMdP`;
+            const url = `https://api.polygon.io/v1/open-close/${stock.Code}/${date}?adjusted=true&apiKey=frJF3PXjMq3iUKYOJP9pEJxVB0dMIMdP`;
             console.log(url)
             request ({ url, json: true },(error, { body }) => {
                 //console.log(body["data"][stock.ticker])
