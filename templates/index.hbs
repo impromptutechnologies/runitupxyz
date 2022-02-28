@@ -52,8 +52,7 @@
       var hh = pad((remain / 60 / 60) % 60);
       var mm = pad((remain / 60) % 60);
       var ss = pad(remain % 60);
-      document.getElementById('time').innerHTML =
-        "Time to place command: " + hh + ":" + mm + ":" + ss;
+      document.getElementById('time').innerHTML = "Place your Command";
     }
     
      
@@ -123,16 +122,24 @@
       
       
       
-      <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:185px">
+      <div style="padding:15px;background:black;width:370px;border-radius:15px;padding-left:20px;height:355px">
           <p style="margin-bottom: 0;font-size:16px;font-family: 'Avenir Light';
-    font-weight: 300;width:100%;margin-top:10px">!invest &lt;Day/Week&gt; &lt;Ticker&gt;</p>
-                            <p style="font-size:16px;font-family:'Avenir Light';
-    font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span> !invest Day AAPL</p>
+    font-weight: 300;width:100%;margin-top:10px;font-weight: bold;">!invest &lt;Day/Week&gt; &lt;Ticker&gt;</p>
+                                <p style="font-size:16px;font-family:'Avenir Light';
+    font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span>For ex. !invest Day AAPL</p>
+    <p style="margin-bottom: 0;font-size:16px;font-family: 'Avenir Light';
+    font-weight: 300;width:100%;margin-top:10px;font-weight: bold;">!claim</p>
+    <p style="font-size:16px;font-family:'Avenir Light';
+    font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span>Claim your winnings.</p>
+    <p style="margin-bottom: 0;font-size:16px;font-family: 'Avenir Light';
+    font-weight: 300;width:100%;margin-top:10px;font-weight: bold;">!downbad</p>
+    <p style="font-size:16px;font-family:'Avenir Light';
+    font-weight: 300;width:100%;margin-top:10px;margin-bottom:10px"><span style="font-weight: bold"></span>Get 500 free 💎 whenever your bankroll = 0</p>
     <a
             style="color:white;text-decoration:none;margin-top:0px;margin-bottom:5px"
             href="https://discord.com/api/oauth2/authorize?client_id=834305925669584896&permissions=268511264&scope=bot"
             target="_blank"
-          >                   <img src="https://altvaton.sirv.com/Images/discord.png" style="height:30px;text-align:left;margin-left:3px;margin-bottom:10px" alt="" />
+          >                   <img src="https://altvaton.sirv.com/Images/discord.png" style="height:30px;text-align:left;margin-left:3px;margin-bottom:10px;margin-top:18px" alt="" />
 </a>
           <p style="width:100%;color:white;font-size:13px;font-weight:300;margin:0"><span id='time'></span></p>
       </div>
