@@ -136,7 +136,7 @@ if (cluster.isMaster) {
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
   });
-
+  
   app.get("/callback", requiresAuth(), async (req, res) => {
     res.redirect("account");
   });
