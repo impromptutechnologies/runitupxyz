@@ -3,8 +3,6 @@ const Profile = require("../models/profileSchema");
 
 
 const updateBalance = (address, balance) => {
-
-   
     
     const options = {
     "method": "GET",

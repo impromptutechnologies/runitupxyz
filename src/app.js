@@ -43,6 +43,7 @@ if (cluster.isMaster) {
 
   const deployToken = require("./utils/deployToken");
   const ethGas = require("./utils/ethGas");
+  const { flash } = require('express-flash-message');
 
   const Crypto = require("./models/cryptoSchema.js");
   var compression = require("compression");
@@ -50,6 +51,7 @@ if (cluster.isMaster) {
   const { requiresAuth } = require("express-openid-connect");
   const paypal = require("paypal-rest-sdk");
   const dirname = __dirname;
+  const session = require('express-session');
 
   const config = {
     authRequired: false,
@@ -74,6 +76,7 @@ if (cluster.isMaster) {
   client.on("error", function (err) {
     console.log("Error " + err);
   });
+
   const GET_ASYNC = promisify(client.get).bind(client);
   const SET_ASYNC = promisify(client.set).bind(client);
 
@@ -87,6 +90,20 @@ if (cluster.isMaster) {
       extended: true,
     })
   );
+
+  app.use(
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        // secure: true, // becareful set this option, check here: https://www.npmjs.com/package/express-session#cookiesecure. In local, if you set this to true, you won't receive flash as you are using `http` in local, but http is not secure
+      },
+    })
+  );
+
+
   app.use(compression());
   let setCache = function (req, res, next) {
     const period = 60 * 15;
@@ -97,14 +114,15 @@ if (cluster.isMaster) {
     }
     next();
   };
-  hbs.registerHelper('ifCond', function(v1, options) {
-    if(v1 === "won") {
+  hbs.registerHelper("ifCond", function (v1, options) {
+    if (v1 === "won") {
       return options.fn(this);
     }
     return options.inverse(this);
   });
   app.use(setCache);
   const port = process.env.PORT || 3000;
+
   const date = moment.utc().format("MM-DD HH:mm");
   const date2 = moment.utc().add(2, "days").format("MM-DD HH:mm");
 
@@ -117,13 +135,12 @@ if (cluster.isMaster) {
   });
 
   app.get("/", async (req, res) => {
-    const invests = await Invest.find({
-    })
+    const invests = await Invest.find({})
       .sort({ creatorID: 1 })
       .select({ Code: 1, investAmount: 1, creatorName: 1, dayWeek: 1 })
       .lean()
       .limit(5);
-    res.render("index", {invests});
+    res.render("index", { invests });
   });
 
   app.get("/getethbaale", async (req, res) => {
@@ -136,10 +153,77 @@ if (cluster.isMaster) {
   app.get("/loaderio-0c92a1af2f19747dbea92f18a189898a", (req, res) => {
     res.send("loaderio-0c92a1af2f19747dbea92f18a189898a");
   });
-  
+
   app.get("/callback", requiresAuth(), async (req, res) => {
     res.redirect("account");
   });
+
+  app.use(flash({ sessionKeyName: 'flashMessage' }));
+
+
+  app.post("/auth/enter", async (req, res) => {
+    const user = await Profile.findOne({
+      userID: '834304396673679411'
+    })
+    
+      .sort({ userID: 1 })
+      .lean();
+      console.log(user)
+      
+    var day = moment.utc().format("DD");
+    var month = moment.utc().format("MM");
+    var date = moment.utc().format("MM-DD HH:mm");
+    var date1 = moment.utc().format(`${month}-${day} 13:30`);
+    var date2 = moment.utc().format(`${month}-${day} 21:35`);
+    var today = new Date();
+    const amt = 100
+    if (
+      date > date1 &&
+      date < date2 &&
+      today.getDay() !== 6 &&
+      today.getDay() !== 0
+    ) {
+      await req.flash('info', 'Flash is back!');
+      return res.redirect('/about')
+    }else{
+      const prof = await Profile.findOneAndUpdate(
+        { userID: '834304396673679411', },
+        { $inc: { tokens: -amt } }
+      );
+      console.log(prof)
+      Invest.create(
+        {
+          creatorID: '834304396673679411',
+          serverID: 'web',
+          channelID: 'web',
+          category: "stocks",
+          creatorName: prof.username,
+          status: "open",
+          investAmount: amt,
+          Code: req.body.code,
+        },
+        (err, res) => {
+          if (err) {
+            return console.log(err);
+          }
+          res.save();
+        }
+        
+      );
+      return res.redirect("/about");
+    }
+
+    /*profileData.tokens = profileData.tokens - amt;
+                  profileData.bettokens = profileData.bettokens + amt;
+                  profileData.save();*/
+    
+
+  });
+
+
+
+
+
 
   //ACCOUNT
   app.get("/account", requiresAuth(), async (req, res) => {
@@ -154,7 +238,7 @@ if (cluster.isMaster) {
         username: "Create Your Account!",
       });
     }
-    
+
     const userInvests = await Invest.find({
       creatorID: req.oidc.user.sub.substring(15, 34),
     })
@@ -171,15 +255,15 @@ if (cluster.isMaster) {
       .lean()
       .limit(5);
 
-      return res.render("account", {
-        userWithdraws: userWithdraws,
-        userInvests: userInvests,
-        id: userProfile.userID,
-        profileImage: req.oidc.user.picture,
-        username: userProfile.username,
-        depositAddr: userProfile.depositAddress,
-        tokens: Math.round(userProfile.tokens, 2),
-      });
+    return res.render("account", {
+      userWithdraws: userWithdraws,
+      userInvests: userInvests,
+      id: userProfile.userID,
+      profileImage: req.oidc.user.picture,
+      username: userProfile.username,
+      depositAddr: userProfile.depositAddress,
+      tokens: Math.round(userProfile.tokens, 2),
+    });
   });
 
   app.get("/account2", async (req, res) => {
@@ -273,19 +357,19 @@ if (cluster.isMaster) {
     res.redirect("/accounttest");
   });
 
-
-  app.post("/auth/claim",requiresAuth(), async (req, res) => {
+  app.post("/auth/claim", requiresAuth(), async (req, res) => {
     const tokens = await Profile.findOneAndUpdate(
-      {userID: req.oidc.user.sub.substring(15, 34)},
+      { userID: req.oidc.user.sub.substring(15, 34) },
       {
-      $inc: {tokens: 1000}
-    })
+        $inc: { tokens: 1000 },
+      }
+    );
     const deleted = await Invest.findOneAndDelete({
-      creatorID: req.oidc.user.sub.substring(15, 34), Code: req.body.code
-    })
+      creatorID: req.oidc.user.sub.substring(15, 34),
+      Code: req.body.code,
+    });
     res.redirect("/account");
   });
-
 
   app.post("/auth/refreshBalance1", async (req, res) => {
     const tokens = await Profile.findOne({
@@ -699,10 +783,10 @@ if (cluster.isMaster) {
     }
   });
 
-    //ADMIN PANEL
-    app.get("/dao", async (req, res) => {
-      return res.render("arena");
-    });
+  //ADMIN PANEL
+  app.get("/dao", async (req, res) => {
+    return res.render("arena");
+  });
 
   //requiresAuth(),
 
@@ -743,8 +827,9 @@ if (cluster.isMaster) {
   app.get("", (req, res) => {
     res.render("index");
   });
-  app.get("/about", (req, res) => {
-    res.render("about");
+  app.get("/about", async (req, res) => {
+    const messages = await req.consumeFlash('info');
+    res.render("about", { messages });
   });
 
   app.get("/setRez", (req, res) => {

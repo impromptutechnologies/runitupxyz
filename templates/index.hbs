@@ -65,7 +65,7 @@
 </script>
 
   </head>
-  <body style="background-color:  rgb(26, 33, 42);!important">
+  <body style="background-color:  black!important">
 
 
     <!-- Header -->
@@ -92,7 +92,7 @@
     </header>
 
     <!-- Banner -->
-    <section id="banner" style="background-color:  rgb(26, 33, 42);">
+    <section id="banner" style="background-color:  black;">
 
 
 
@@ -102,16 +102,18 @@
         <div class="desc">
           <!--<h1 style="width:90%;    font-family: 'Inter';
     font-weight: 300;line-height:1.1;margin-top:50px">Stock Race Bot 📈.</h1>-->
-          <p style="font-size:25px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:25px">Enter Your Ticker</p>
-          <p style="font-size:15px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:35px"><span style="font-size: 23px;">💎</span> 100</p>
-          <form action="/auth/enter" method="POST" >
-            <input placeholder="Ticker" style="padding:10px;height:54px;background:transparent;border:2px solid white;border-radius:10px">
+          <p style="font-size:16px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:25px">Enter Your Stock Of the Day.<br> Finish in the top 33% and triple your Gems <span style="font-size: 23px;">💎</span></p>
+          <p style="font-size:14px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:45px"><span style="font-size: 23px;">💎</span> 100</p>
+
+          <form action="/auth/enter" method="POST" style="margin-top:30px">
+            <input required placeholder="AAPL" name="code" style="padding:10px;height:54px;background:transparent;border:2px solid white;border-radius:10px">
             <button style="margin-left:12px;font-family:'Press start 2p';font-size:13px;height:54px;    background: linear-gradient(90deg,#0f36ff,#f55);">Enter</button>
           </form>
+
           <p style="margin-top: 45px;font-family: 'Press Start 2P';font-size:11px;color:white;">Or Via Discord Command</p>
-          <div style="background-color: black;height:120px;width:350px;padding:20px;font-family:'Press Start 2P';border-radius:20px;padding-top:10px;margin-top:40px">
-            <p style="font-family: 'Press Start 2P';font-size:11px;width:100%">!invest &lt;ticker&gt;</p>
-            <p style="font-family: 'Press Start 2P';font-size:11px;width:100%">!invest AAPL</p>
+          <div style="background-color: white;height:110px;width:350px;padding:20px;font-family:'Press Start 2P';border-radius:20px;padding-top:10px;margin-top:40px">
+            <p style="font-family: 'Press Start 2P';font-size:11px;width:100%;color:black">!invest &lt;ticker&gt;</p>
+            <p style="font-family: 'Press Start 2P';font-size:11px;width:100%;color:black">!invest AAPL</p>
           </div>
       
 
@@ -121,23 +123,19 @@
         </div>
       
         <div class="desc" style="width: 100%;">
-          <h1 style="font-size:18px;font-weight:300;width:100%;margin-top:80px;font-family: 'Press Start 2P'">Latest</h1>
+          <h1 style="font-size:14px;font-weight:300;width:100%;margin-top:80px;font-family: 'Press Start 2P';margin-bottom:15px;">Latest</h1>
 
           {{#if invests}}
 
                             {{#each invests}}
                         
-                        <div style="display: flex;background:#1f262f;height: fit-content;margin-top:5px;padding: 0.2em;width:330px;border-radius:10px">
-                            <div style="width:180px">
+                        <div style="display: flex;background:#1f262f;height: fit-content;margin-top:5px;padding: 0.2em;width:300px;border-radius:10px">
+                            <div style="width:280px">
                                 <div style="padding: 0.6em;">
                                     <h2>{{this.creatorName}}</h2>
                                 </div>
                             </div>
-                            <div>
-                                <div style="padding: 0.6em;">
-                                    <h2 style="color:rgb(12, 212, 99)">{{this.investAmount}} 💎</h2>
-                                </div>
-                            </div>
+                           
                             <div style="margin-left:10px">
                                 <div style="padding: 0.2em;">
                                     <h2 style="background-color:rgb(26, 33, 42);padding: 0.65em;border-radius: 4px">{{this.Code}}</h2>
