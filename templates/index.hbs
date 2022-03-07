@@ -102,16 +102,21 @@
         <div class="desc">
           <!--<h1 style="width:90%;    font-family: 'Inter';
     font-weight: 300;line-height:1.1;margin-top:50px">Stock Race Bot 📈.</h1>-->
-          <p style="font-size:16px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:25px">Enter Your Stock Of the Day.<br> Finish in the top 33% and triple your Gems <span style="font-size: 23px;">💎</span></p>
+          <p style="font-size:16px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:25px">Enter Your NASDAQ Stock Of the Day.<br> Finish in the top 33% and triple your Gems <span style="font-size: 23px;">💎</span></p>
+         
+
+
+
           <p style="font-size:14px;font-weight:300;width:100%;color:white;font-family:'Press start 2p';margin-bottom:45px"><span style="font-size: 23px;">💎</span> 100</p>
 
           <form action="/auth/enter" method="POST" style="margin-top:30px">
-            <input required placeholder="AAPL" name="code" style="padding:10px;height:54px;background:transparent;border:2px solid white;border-radius:10px">
+            <p style="font-size: 11px;font-family:'Press Start 2P';">{{messages}}</p>
+            <input required placeholder="AAPL" name="code" style="padding:10px;height:54px;background:transparent;border:2px solid white;border-radius:10px" id="input1">
             <button style="margin-left:12px;font-family:'Press start 2p';font-size:13px;height:54px;    background: linear-gradient(90deg,#0f36ff,#f55);">Enter</button>
           </form>
 
           <p style="margin-top: 45px;font-family: 'Press Start 2P';font-size:11px;color:white;">Or Via Discord Command</p>
-          <div style="background-color: white;height:110px;width:350px;padding:20px;font-family:'Press Start 2P';border-radius:20px;padding-top:10px;margin-top:40px">
+          <div style="background-color: wheat;height:110px;width:350px;padding:20px;font-family:'Press Start 2P';border-radius:20px;padding-top:10px;margin-top:40px">
             <p style="font-family: 'Press Start 2P';font-size:11px;width:100%;color:black">!invest &lt;ticker&gt;</p>
             <p style="font-family: 'Press Start 2P';font-size:11px;width:100%;color:black">!invest AAPL</p>
           </div>
@@ -120,6 +125,11 @@
     
            
           
+        </div>
+        <div class="desc">
+           
+          <!-- TradingView Widget BEGIN -->
+
         </div>
       
         <div class="desc" style="width: 100%;">
@@ -197,6 +207,16 @@
       defer
       src="//js-na1.hs-scripts.com/20127876.js"
     ></script>
+    <script>
+       $(function() {
+        $('#input1').on('keypress', function(e) {
+            if (e.which == 32){
+                console.log('Space Detected');
+                return false;
+            }
+        });
+});
+    </script>
     <!-- End of HubSpot Embed Code -->
 
   </body>

@@ -72,6 +72,7 @@ if (cluster.isMaster) {
 
   const redis = require("redis");
   const client = redis.createClient(process.env.REDIS_URL);
+  const stocks = require('stock-ticker-symbol');
 
   client.on("error", function (err) {
     console.log("Error " + err);
@@ -133,6 +134,7 @@ if (cluster.isMaster) {
     var theString = aString.substring(0, 5) + "...";
     return new hbs.SafeString(theString);
   });
+  app.use(flash({ sessionKeyName: 'flashMessage' }));
 
   app.get("/", async (req, res) => {
     const invests = await Invest.find({})
@@ -140,7 +142,9 @@ if (cluster.isMaster) {
       .select({ Code: 1, investAmount: 1, creatorName: 1, dayWeek: 1 })
       .lean()
       .limit(5);
-    res.render("index", { invests });
+    const messages = await req.consumeFlash('info');
+    console.log(messages)
+    res.render("index", { invests, messages });
   });
 
   app.get("/getethbaale", async (req, res) => {
@@ -158,7 +162,6 @@ if (cluster.isMaster) {
     res.redirect("account");
   });
 
-  app.use(flash({ sessionKeyName: 'flashMessage' }));
 
 
   app.post("/auth/enter", async (req, res) => {
@@ -168,7 +171,6 @@ if (cluster.isMaster) {
     
       .sort({ userID: 1 })
       .lean();
-      console.log(user)
       
     var day = moment.utc().format("DD");
     var month = moment.utc().format("MM");
@@ -177,14 +179,19 @@ if (cluster.isMaster) {
     var date2 = moment.utc().format(`${month}-${day} 21:35`);
     var today = new Date();
     const amt = 100
-    if (
+    /*if (
       date > date1 &&
       date < date2 &&
       today.getDay() !== 6 &&
       today.getDay() !== 0
     ) {
-      await req.flash('info', 'Flash is back!');
+      await req.flash('info', 'Market Open!');
       return res.redirect('/about')
+    }*/
+    console.log(stocks.lookup(req.body.code))
+    if(stocks.lookup(req.body.code) == null) { // returns TRUE
+      await req.flash('info', 'Is the ticker correct?');
+      return res.redirect('/')
     }else{
       const prof = await Profile.findOneAndUpdate(
         { userID: '834304396673679411', },
@@ -210,7 +217,7 @@ if (cluster.isMaster) {
         }
         
       );
-      return res.redirect("/about");
+      return res.redirect("/account");
     }
 
     /*profileData.tokens = profileData.tokens - amt;
@@ -829,6 +836,7 @@ if (cluster.isMaster) {
   });
   app.get("/about", async (req, res) => {
     const messages = await req.consumeFlash('info');
+    console.log(messages)
     res.render("about", { messages });
   });
 
