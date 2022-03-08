@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 
 const setReturns = async (callback) => {
 
-    Invest.find({dayWeek: 'day'}, (error, stocks) => {
+    Invest.find({}, (error, stocks) => {
         const date = moment.utc().subtract(1, "days").format("YYYY-MM-DD");
         stocks.forEach((stock) => {
           console.log(stock)
