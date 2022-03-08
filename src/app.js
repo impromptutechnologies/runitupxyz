@@ -179,7 +179,7 @@ if (cluster.isMaster) {
     var date2 = moment.utc().format(`${month}-${day} 21:35`);
     var today = new Date();
     const amt = 100
-    /*if (
+    if (
       date > date1 &&
       date < date2 &&
       today.getDay() !== 6 &&
@@ -187,7 +187,7 @@ if (cluster.isMaster) {
     ) {
       await req.flash('info', 'Market Open!');
       return res.redirect('/about')
-    }*/
+    }
     console.log(stocks.lookup(req.body.code))
     if(stocks.lookup(req.body.code) == null) { // returns TRUE
       await req.flash('info', 'Is the ticker correct?');
