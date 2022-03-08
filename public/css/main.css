@@ -1725,9 +1725,10 @@
 		}
 
 	h2 {
-		font-size: 13px;
+		font-size: 9px;
 		font-weight: 100;
         margin-bottom: 0;
+		font-family: 'Press Start 2P';
 	}
 	.date{
 		color:#9a9a9a
