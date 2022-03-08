@@ -18,17 +18,18 @@ schedule.scheduleJob("30 21 * * *", () => {
   setReturnss();
 });
 
-const setReturnss2 = async () => {
+
+/*const setReturnss2 = async () => {
   setReturns2();
 };
 schedule.scheduleJob("30 21 * * FRI", () => {
   setReturnss2();
-});
+});*/
 
 
 
 const winLosss = async () => {
-  const investmentstock = await Invest.find({ category: "stocks", dayWeek: "day" });
+  const investmentstock = await Invest.find({ category: "stocks" });
     winLoss((data) => {
       investmentstock.forEach(async (stock) => {
         console.log(stock.Code, stock.change, data);
