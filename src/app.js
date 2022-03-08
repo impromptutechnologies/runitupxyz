@@ -138,8 +138,8 @@ if (cluster.isMaster) {
 
   app.get("/", async (req, res) => {
     const invests = await Invest.find({})
-      .sort({ creatorID: 1 })
-      .select({ Code: 1, investAmount: 1, creatorName: 1, dayWeek: 1 })
+      .sort({ creatorID: -1 })
+      .select({ Code: 1, investAmount: 1, creatorName: 1 })
       .lean()
       .limit(5);
     const messages = await req.consumeFlash('info');
